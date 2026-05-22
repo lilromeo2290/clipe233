@@ -304,7 +304,7 @@ export default function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Expert Team Highlight */}
+        {/* Our Team */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -312,36 +312,87 @@ export default function AboutSection() {
           id="team"
           className="scroll-mt-24"
         >
-          <div className="glass-card rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto hover-lift">
-            <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-6">
-              <Users className="h-8 w-8 text-falu-light" />
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-              Our Expert Team
-            </h3>
-            <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed max-w-3xl mx-auto">
-              Our select team of strategists, networking engineers, website
-              developers and programmers combine extensive experience and skills
-              to answer the questions that arise as technology and applications
-              develop. Through direct interaction between our expert project
-              team and yours, we refine our work with your feedback to deliver
-              high-value, measurable results — always ensuring more efficient
-              relations.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-              {[
-                "Strategists",
-                "Networking Engineers",
-                "Website Developers",
-                "Programmers",
-              ].map((role, i) => (
-                <span
-                  key={i}
-                  className="px-4 py-2 rounded-full text-sm border border-falu/20 text-falu-light bg-falu/5 font-[family-name:var(--font-inter)]"
-                >
-                  {role}
+          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
+            Our Team
+          </h3>
+
+          <div className="glass-card rounded-2xl p-8 md:p-12 max-w-4xl mx-auto hover-lift">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+              {/* Photo */}
+              <div className="flex-shrink-0">
+                <div className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm">
+                  <img
+                    src="/team-raymond.png"
+                    alt="Eng. Raymond Romeo Dravie"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 text-center md:text-left">
+                <h4 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">
+                  Raymond Romeo Dravie
+                </h4>
+                <span className="text-falu-light font-semibold text-sm font-[family-name:var(--font-inter)] block mt-1">
+                  CEO, Founder & Snr. Engineer
                 </span>
-              ))}
+
+                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
+                  Has more than 7 years experience in ICT with a strong
+                  background in Algorithmic Designs, Data Centers, IT
+                  Infrastructure, Software Development, Network, Management and
+                  Leadership. He has been the key personnel in many project
+                  executions in Clipe233 Engineers and took part in the
+                  development of most of our products.
+                </p>
+
+                {/* Expertise */}
+                <div className="mt-6">
+                  <h5 className="text-white font-semibold text-sm mb-2 font-[family-name:var(--font-inter)]">
+                    Expertise:
+                  </h5>
+                  <ul className="text-silver/60 text-sm font-[family-name:var(--font-inter)] space-y-1">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Knowledge and experience in Networking
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Programming and Databases: C++, PHP, CSS, JavaScript, VB.NET, Java, MySQL
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Website Development: WordPress, Joomla, Drupal
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Qualifications */}
+                <div className="mt-6">
+                  <h5 className="text-white font-semibold text-sm mb-2 font-[family-name:var(--font-inter)]">
+                    Qualifications:
+                  </h5>
+                  <ul className="text-silver/60 text-sm font-[family-name:var(--font-inter)] space-y-1">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Certificate in Introduction to Cyber Intelligence and Malware
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Diploma in Hardware and Networking
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Bachelor of Science in ICT — Presbyterian University College, Ghana
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                      Bachelor of Science in IT — Ghana Communication Technology University
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
