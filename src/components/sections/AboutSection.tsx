@@ -316,84 +316,173 @@ export default function AboutSection() {
             Our Team
           </h3>
 
-          <div className="glass-card rounded-2xl p-8 md:p-12 max-w-4xl mx-auto hover-lift">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-              {/* Photo */}
-              <div className="flex-shrink-0">
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm">
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Raymond Romeo Dravie */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="glass-card rounded-2xl p-8 hover-lift"
+            >
+              <div className="flex flex-col items-center text-center mb-6">
+                <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
                   <img
                     src="/team-raymond.png"
                     alt="Eng. Raymond Romeo Dravie"
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </div>
-
-              {/* Info */}
-              <div className="flex-1 text-center md:text-left">
-                <h4 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">
+                <h4 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
                   Raymond Romeo Dravie
                 </h4>
-                <span className="text-falu-light font-semibold text-sm font-[family-name:var(--font-inter)] block mt-1">
+                <span className="text-falu-light font-semibold text-xs font-[family-name:var(--font-inter)] mt-1">
                   CEO, Founder & Snr. Engineer
                 </span>
-
-                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
-                  Has more than 7 years experience in ICT with a strong
-                  background in Algorithmic Designs, Data Centers, IT
-                  Infrastructure, Software Development, Network, Management and
-                  Leadership. He has been the key personnel in many project
-                  executions in Clipe233 Engineers and took part in the
-                  development of most of our products.
-                </p>
-
-                {/* Expertise */}
-                <div className="mt-6">
-                  <h5 className="text-white font-semibold text-sm mb-2 font-[family-name:var(--font-inter)]">
-                    Expertise:
-                  </h5>
-                  <ul className="text-silver/60 text-sm font-[family-name:var(--font-inter)] space-y-1">
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Knowledge and experience in Networking
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Programming and Databases: C++, PHP, CSS, JavaScript, VB.NET, Java, MySQL
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Website Development: WordPress, Joomla, Drupal
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Qualifications */}
-                <div className="mt-6">
-                  <h5 className="text-white font-semibold text-sm mb-2 font-[family-name:var(--font-inter)]">
-                    Qualifications:
-                  </h5>
-                  <ul className="text-silver/60 text-sm font-[family-name:var(--font-inter)] space-y-1">
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Certificate in Introduction to Cyber Intelligence and Malware
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Diploma in Hardware and Networking
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Bachelor of Science in ICT — Presbyterian University College, Ghana
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
-                      Bachelor of Science in IT — Ghana Communication Technology University
-                    </li>
-                  </ul>
-                </div>
               </div>
-            </div>
+
+              <p className="text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+                Has more than 7 years experience in ICT with a strong
+                background in Algorithmic Designs, Data Centers, IT
+                Infrastructure, Software Development, Network, Management and
+                Leadership. He has been the key personnel in many project
+                executions in Clipe233 Engineers and took part in the
+                development of most of our products.
+              </p>
+
+              <div>
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Expertise:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Knowledge and experience in Networking
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Programming & Databases: C++, PHP, CSS, JavaScript, VB.NET, Java, MySQL
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Website Development: WordPress, Joomla, Drupal
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-4">
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Qualifications:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Certificate in Cyber Intelligence and Malware
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Diploma in Hardware and Networking
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    BSc ICT — Presbyterian University College, Ghana
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    BSc IT — Ghana Communication Technology University
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Frank Hope Tachie */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="glass-card rounded-2xl p-8 hover-lift"
+            >
+              <div className="flex flex-col items-center text-center mb-6">
+                <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
+                  <img
+                    src="/team-frank.jpg"
+                    alt="Eng. Frank Hope Tachie"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h4 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+                  Frank Hope Tachie
+                </h4>
+                <span className="text-falu-light font-semibold text-xs font-[family-name:var(--font-inter)] mt-1">
+                  Co-Founder & Snr. Engineer
+                </span>
+              </div>
+
+              <p className="text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+                Results-driven IT expert with 4+ years of experience in ICT,
+                education, and network architecture. Skilled in designing
+                secure networks, developing software, and leading projects.
+              </p>
+
+              <div>
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Expertise:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Network Architecture and Security
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Software Development & IT Infrastructure
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Data Centers & Integrated Digital Systems (IDS)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Leadership and Project Management
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-4">
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Qualifications:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Certificate in Hardware & Networking, Cybersecurity, and Malware Intrusion
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    BSc Information Technology (ICT) — GCTU
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-4">
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Technical Skills:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Programming: C++, PHP, JavaScript, Java
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Database: MySQL
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Web Development: WordPress, Joomla, Drupal
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
