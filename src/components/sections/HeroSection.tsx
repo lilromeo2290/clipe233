@@ -201,14 +201,14 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight font-[family-name:var(--font-poppins)] mb-6"
           >
-            Engineering{" "}
+            Building{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light via-red-400 to-falu">
-              Smart Digital
+              Innovations,
             </span>
             <br />
-            Solutions for Modern
+            Engineering
             <br />
-            Businesses
+            Excellence
           </motion.h1>
 
           {/* Subheadline */}
