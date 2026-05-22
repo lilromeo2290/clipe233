@@ -22,12 +22,12 @@ const testimonials = [
     metric: "3x revenue increase online",
   },
   {
-    name: "Rev. Patrick K. Adzotor",
-    role: "Senior Pastor, Grace Community Church",
+    name: "Mr. Emmanuel Ketaman Evortepe",
+    role: "CEO Fafaa FM & President Duamenefa Foundation, Dzodze",
     content:
-      "From our website to the live streaming setup, Clipe233 Engineers delivered everything perfectly. Our online congregation has grown from 200 to over 1,500 viewers. They understood the spiritual and technical needs of our ministry and exceeded all expectations.",
+      "From our website to the live streaming setup, Clipe233 Engineers delivered everything perfectly. Our online viewers and listeners has grown. They understood the spiritual and technical needs of our ministry and exceeded all expectations.",
     rating: 5,
-    metric: "7x growth in online congregation",
+    metric: "Growing online viewers & listeners",
   },
   {
     name: "Esi Dey",
