@@ -158,7 +158,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2 text-sm text-silver/50 font-[family-name:var(--font-inter)]">
                 <Phone className="h-4 w-4 text-falu-light" />
-                +233 XX XXX XXXX
+                +233 24 978 3736
               </div>
               <div className="flex items-center gap-2 text-sm text-silver/50 font-[family-name:var(--font-inter)]">
                 <MapPin className="h-4 w-4 text-falu-light" />

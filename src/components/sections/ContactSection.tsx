@@ -28,8 +28,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+233 XX XXX XXXX",
-    href: "tel:+233XXXXXXXX",
+    value: "+233 24 978 3736",
+    href: "tel:+233249783736",
   },
   {
     icon: MapPin,
@@ -134,7 +134,7 @@ export default function ContactSection() {
                       Phone Number
                     </label>
                     <Input
-                      placeholder="+233 XX XXX XXXX"
+                      placeholder="+233 24 978 3736"
                       className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
@@ -200,7 +200,7 @@ export default function ContactSection() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/233XXXXXXXX"
+              href="https://wa.me/233249783736"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-card rounded-xl p-5 flex items-center gap-4 hover-lift group block border-green-600/30"

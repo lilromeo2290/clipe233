@@ -44,7 +44,7 @@ export default function WhatsAppFloat() {
                 </span>
               </div>
               <a
-                href="https://wa.me/233XXXXXXXX"
+                href="https://wa.me/233249783736"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-green-600 hover:bg-green-500 text-white text-center py-2.5 rounded-lg text-sm font-medium transition-colors font-[family-name:var(--font-inter)]"
