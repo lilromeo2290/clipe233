@@ -316,7 +316,7 @@ export default function AboutSection() {
             Our Team
           </h3>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {/* Raymond Romeo Dravie */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -479,6 +479,75 @@ export default function AboutSection() {
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Web Development: WordPress, Joomla, Drupal
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Senyo Kofi Dzakah */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="glass-card rounded-2xl p-8 hover-lift"
+            >
+              <div className="flex flex-col items-center text-center mb-6">
+                <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
+                  <img
+                    src="/team-senyo.png"
+                    alt="Senyo Kofi Dzakah"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h4 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+                  Senyo Kofi Dzakah
+                </h4>
+                <span className="text-falu-light font-semibold text-xs font-[family-name:var(--font-inter)] mt-1">
+                  Admin and Finance
+                </span>
+              </div>
+
+              <p className="text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+                Ten (10) years experience in Accounting and Administration
+                across both Small and Medium Enterprises and Construction. He
+                has been the key in managing finances of Battis Company Limited
+                on various projects. Currently the Director of Finance and
+                Administration of Miai Ltd Company, which majors in the
+                construction of roads and Agriculture products and Services.
+              </p>
+
+              <div>
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Expertise:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Monitory and Execution of projects from start to finish
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Knowledge in accounting software like Tally and QuickBooks
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-4">
+                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                  Qualifications:
+                </h5>
+                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Institute of Chartered Accountant Ghana (Associate Member)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Bachelor of Commerce, University of Cape Coast
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+                    Higher National Diploma (HND), Accounting — Ho Polytechnic
                   </li>
                 </ul>
               </div>
