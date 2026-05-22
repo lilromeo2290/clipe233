@@ -20,6 +20,13 @@ const slides = [
       "From software development to network architecture, we provide end-to-end IT and engineering solutions that drive growth and efficiency for organizations of all sizes.",
     badge: "Your Trusted IT & Engineering Partner",
   },
+  {
+    image: "/slide-3.jpg",
+    headline: ["Code.", "Design.", "Deploy.", "Transform."],
+    subheadline:
+      "Our expert developers and engineers bring your vision to life with cutting-edge software, robust infrastructure, and seamless digital experiences that set you apart.",
+    badge: "Where Code Meets Creativity",
+  },
 ];
 
 const stats = [
@@ -205,7 +212,11 @@ export default function HeroSection() {
                   word === "Innovations," ||
                   word === "Excellence" ||
                   word === "Businesses" ||
-                  word === "Technology";
+                  word === "Technology" ||
+                  word === "Code." ||
+                  word === "Design." ||
+                  word === "Deploy." ||
+                  word === "Transform.";
                 return (
                   <span key={i}>
                     {isHighlight ? (
