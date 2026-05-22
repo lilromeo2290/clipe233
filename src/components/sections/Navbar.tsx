@@ -98,14 +98,6 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <Button
                 onClick={() => scrollTo("#contact")}
-                variant="outline"
-                size="sm"
-                className="border-falu/50 text-falu-light hover:bg-falu/10 hover:border-falu font-[family-name:var(--font-inter)]"
-              >
-                Get Started
-              </Button>
-              <Button
-                onClick={() => scrollTo("#contact")}
                 size="sm"
                 className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
               >
@@ -157,13 +149,6 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <div className="flex flex-col gap-3 w-full mt-4">
-                <Button
-                  onClick={() => scrollTo("#contact")}
-                  variant="outline"
-                  className="border-falu/50 text-falu-light hover:bg-falu/10 w-full font-[family-name:var(--font-inter)]"
-                >
-                  Get Started
-                </Button>
                 <Button
                   onClick={() => scrollTo("#contact")}
                   className="bg-falu hover:bg-falu-light text-white w-full font-[family-name:var(--font-inter)]"
