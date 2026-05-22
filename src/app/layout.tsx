@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Clipe233 Engineers" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/logo.jpg",
   },
   openGraph: {
     title: "Clipe233 Engineers | Engineering Smart Digital Solutions",

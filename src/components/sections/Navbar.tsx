@@ -70,21 +70,13 @@ export default function Navbar() {
                 e.preventDefault();
                 scrollTo("#home");
               }}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2.5 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-falu flex items-center justify-center glow-red-sm group-hover:glow-red transition-all duration-300">
-                <span className="text-white font-bold text-lg font-[family-name:var(--font-space-grotesk)]">
-                  C
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-white font-bold text-lg leading-tight font-[family-name:var(--font-poppins)]">
-                  Clipe<span className="text-falu-light">233</span>
-                </span>
-                <span className="text-silver/60 text-[10px] tracking-[0.2em] uppercase leading-tight">
-                  Engineers
-                </span>
-              </div>
+              <img
+                src="/logo.jpg"
+                alt="Clipe233 Engineers Logo"
+                className="h-10 w-auto rounded-lg group-hover:glow-red transition-all duration-300"
+              />
             </a>
 
             {/* Desktop Nav */}

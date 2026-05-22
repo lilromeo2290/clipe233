@@ -53,20 +53,12 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-falu flex items-center justify-center glow-red-sm">
-                <span className="text-white font-bold text-lg font-[family-name:var(--font-space-grotesk)]">
-                  C
-                </span>
-              </div>
-              <div>
-                <span className="text-white font-bold text-lg font-[family-name:var(--font-poppins)]">
-                  Clipe<span className="text-falu-light">233</span>
-                </span>
-                <span className="block text-[10px] text-silver/60 tracking-[0.2em] uppercase leading-tight">
-                  Engineers
-                </span>
-              </div>
+            <div className="flex items-center gap-2.5 mb-4">
+              <img
+                src="/logo.jpg"
+                alt="Clipe233 Engineers Logo"
+                className="h-10 w-auto rounded-lg"
+              />
             </div>
             <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
               Engineering Digital Possibilities. We deliver innovative
