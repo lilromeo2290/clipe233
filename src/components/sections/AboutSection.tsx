@@ -11,6 +11,8 @@ import {
   Zap,
   Users,
   Award,
+  MapPin,
+  Radio,
 } from "lucide-react";
 
 const timelineItems = [
@@ -18,31 +20,13 @@ const timelineItems = [
     year: "2016",
     title: "Founded as Clipe Technologies",
     description:
-      "Clipe Technologies (Clipetech) was established on April 20, 2016, with a vision to deliver innovative technology solutions to businesses in Ghana's Volta Region and beyond. Starting with a small but passionate team, the company focused on software development and IT support services.",
-  },
-  {
-    year: "2018",
-    title: "Expanded Service Portfolio",
-    description:
-      "The company expanded its offerings to include website design, graphic design, and networking installation services. This growth allowed Clipe Technologies to serve a wider range of clients including schools, churches, and small businesses.",
-  },
-  {
-    year: "2020",
-    title: "Digital Transformation Push",
-    description:
-      "In response to the global shift towards digital operations, Clipe Technologies intensified its focus on digital business solutions, helping organizations transition to cloud-based systems and remote work infrastructure during challenging times.",
-  },
-  {
-    year: "2022",
-    title: "Enterprise Solutions & Consulting",
-    description:
-      "Launched a dedicated IT consultancy division, providing strategic technology audits, infrastructure planning, and business automation services to SMEs and institutional clients across multiple regions in Ghana.",
+      "Clipe Technologies (Clipetech) was initiated on 20th April, 2016 in a dorm studio of Kull FM, in Ho. From these humble beginnings, the company set out with a clear emphasis on software development, website designing, graphic designing, network installation, software/hardware supply and consultations in different fields utilizing Information Technology.",
   },
   {
     year: "2025",
     title: "Rebranded as Clipe233 Engineers",
     description:
-      "Marking a significant milestone, the company officially rebranded to Clipe233 Engineers, reflecting its evolved identity, expanded engineering capabilities, and commitment to delivering world-class technology solutions rooted in African excellence.",
+      "In 2025, Clipe Technologies (Clipetech) was rebranded and officially registered as Clipe233 Engineers. The rebrand marked a new era of growth, reflecting evolved capabilities and a renewed commitment to providing quality orientated products and services to each and every client that it services.",
   },
 ];
 
@@ -55,9 +39,9 @@ const values = [
   },
   {
     icon: Shield,
-    title: "Integrity",
+    title: "Quality Orientation",
     description:
-      "We operate with transparency, honesty, and ethical standards in every project, building lasting trust with our clients and partners.",
+      "We aim to provide quality orientated products and services to each and every client that we service, ensuring every deliverable meets the highest standards of excellence.",
   },
   {
     icon: Zap,
@@ -69,40 +53,19 @@ const values = [
     icon: Users,
     title: "Collaboration",
     description:
-      "We believe in the power of teamwork, working closely with our clients to understand their needs and co-create solutions that drive real impact.",
+      "Our process involves direct interaction between our expert project team and yours. With your feedback and a stimulating back-and-forth dynamics, we refine our work to deliver high-value, measurable results.",
   },
   {
     icon: Heart,
-    title: "Customer Focus",
+    title: "Youthful Passion",
     description:
-      "Our clients are at the center of everything we do. We listen, adapt, and deliver personalized solutions that exceed expectations.",
+      "Our youthful passion drives us to help businesses, companies and entities understand, build and express their message to support communication and business processes into a single marketing strategy.",
   },
   {
     icon: Award,
     title: "African Excellence",
     description:
       "We take pride in our roots, showcasing African tech talent on the global stage and building solutions that address local and continental challenges.",
-  },
-];
-
-const teamMembers = [
-  {
-    name: "Leadership Team",
-    role: "Strategic Direction",
-    description:
-      "Our leadership brings together decades of combined experience in technology, engineering, and business strategy to guide Clipe233 Engineers toward its vision.",
-  },
-  {
-    name: "Engineering Team",
-    role: "Technical Excellence",
-    description:
-      "Skilled software engineers, network specialists, and designers who turn complex requirements into elegant, reliable digital solutions.",
-  },
-  {
-    name: "Consulting Team",
-    role: "Client Success",
-    description:
-      "Dedicated consultants and project managers who ensure every engagement delivers measurable value and aligns with client objectives.",
   },
 ];
 
@@ -134,66 +97,135 @@ export default function AboutSection() {
             </span>
           </h2>
           <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-            Founded on April 20, 2016, as Clipe Technologies, we have grown
-            from a small tech startup into a comprehensive IT and engineering
-            firm serving businesses across Ghana. Our 2025 rebrand marks a new
-            chapter of innovation, expanded capabilities, and unwavering
-            commitment to engineering digital possibilities.
+            What started in a dorm studio of Kull FM in Ho has grown into a
+            trusted IT and engineering firm. Our story is one of passion,
+            resilience, and an unwavering commitment to engineering digital
+            possibilities for businesses across Ghana.
           </p>
         </motion.div>
 
-        {/* Mission & Vision */}
-        <div className="grid md:grid-cols-2 gap-8 mb-20">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card rounded-2xl p-8 hover-lift"
-          >
-            <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center mb-6">
-              <Target className="h-7 w-7 text-falu-light" />
+        {/* Company Story */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="max-w-4xl mx-auto mb-20"
+        >
+          <div className="glass-card rounded-2xl p-8 md:p-12">
+            {/* Origin */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <Radio className="h-6 w-6 text-falu-light" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+                  Our Origin
+                </h3>
+                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                  Clipe Technologies (Clipetech) was initiated on 20th April,
+                  2016 in a dorm studio of Kull FM, in Ho with clear emphasis
+                  in software development, website designing, graphic
+                  designing, network installation, software/hardware supply and
+                  consultations in different fields utilizing Information
+                  Technology.
+                </p>
+              </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-              Our Mission
-            </h3>
-            <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              To empower businesses and organizations with innovative,
-              reliable, and affordable technology solutions that drive digital
-              transformation, operational efficiency, and sustainable growth.
-              We are dedicated to bridging the technology gap in Africa by
-              delivering world-class IT services tailored to the unique
-              challenges and opportunities of our markets.
-            </p>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="glass-card rounded-2xl p-8 hover-lift"
-          >
-            <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center mb-6">
-              <Eye className="h-7 w-7 text-falu-light" />
+            {/* Separator */}
+            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+
+            {/* Rebrand */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <Award className="h-6 w-6 text-falu-light" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+                  Our Evolution
+                </h3>
+                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                  In 2025, Clipe Technologies (Clipetech) was rebranded and
+                  officially registered as Clipe233 Engineers. The company aims
+                  to provide quality orientated products and services to each
+                  and every client that it services.
+                </p>
+              </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-              Our Vision
-            </h3>
-            <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              To become the leading IT and engineering firm in West Africa,
-              recognized for excellence in software innovation, digital
-              infrastructure, and technology consultancy. We envision a future
-              where every business, regardless of size, has access to
-              intelligent technology solutions that unlock their full
-              potential and contribute to Africa's digital economy.
-            </p>
-          </motion.div>
-        </div>
+
+            {/* Separator */}
+            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+
+            {/* Philosophy */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <Target className="h-6 w-6 text-falu-light" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+                  Our Philosophy
+                </h3>
+                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                  The company&apos;s youthful passion is to help businesses,
+                  companies and entities understand, build and express their
+                  message to support communication and business processes into a
+                  single marketing strategy. As technology and applications
+                  develop, questions arise about the implementation of the
+                  latest and greatest. Our select team of strategists, networking
+                  engineers, website developers and programmers combine
+                  extensive experience and skills to answer those questions.
+                </p>
+              </div>
+            </div>
+
+            {/* Separator */}
+            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+
+            {/* Process */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <Users className="h-6 w-6 text-falu-light" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+                  Our Process
+                </h3>
+                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                  Our process involves direct interaction between our expert
+                  project team and yours. With your feedback and a stimulating
+                  back-and-forth dynamics, we refine our work to deliver
+                  high-value, measurable results always ensuring more efficient
+                  relations.
+                </p>
+              </div>
+            </div>
+
+            {/* Separator */}
+            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+
+            {/* Location */}
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <MapPin className="h-6 w-6 text-falu-light" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+                  Our Location
+                </h3>
+                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                  Clipe233 Engineers main office is operated virtually from Ho,
+                  in the Volta Region of Ghana.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Timeline */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-20"
         >
           <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
@@ -209,7 +241,7 @@ export default function AboutSection() {
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
                   className={`relative flex flex-col md:flex-row items-start gap-6 ${
                     i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                   }`}
@@ -243,7 +275,7 @@ export default function AboutSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-20"
         >
           <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
@@ -255,7 +287,7 @@ export default function AboutSection() {
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.7 + i * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.08 }}
                 className="glass-card rounded-xl p-6 hover-lift group"
               >
                 <div className="w-12 h-12 rounded-lg bg-falu/20 flex items-center justify-center mb-4 group-hover:bg-falu/30 transition-colors">
@@ -272,38 +304,43 @@ export default function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Team */}
+        {/* Expert Team Highlight */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
-            Our Team
-          </h3>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {teamMembers.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
-                className="glass-card rounded-xl p-6 text-center hover-lift group"
-              >
-                <div className="w-20 h-20 rounded-full bg-falu/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-falu/30 transition-colors">
-                  <Users className="h-8 w-8 text-falu-light" />
-                </div>
-                <h4 className="text-lg font-semibold font-[family-name:var(--font-poppins)]">
-                  {member.name}
-                </h4>
-                <span className="text-falu-light text-sm font-[family-name:var(--font-inter)]">
-                  {member.role}
+          <div className="glass-card rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto hover-lift">
+            <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-6">
+              <Users className="h-8 w-8 text-falu-light" />
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
+              Our Expert Team
+            </h3>
+            <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed max-w-3xl mx-auto">
+              Our select team of strategists, networking engineers, website
+              developers and programmers combine extensive experience and skills
+              to answer the questions that arise as technology and applications
+              develop. Through direct interaction between our expert project
+              team and yours, we refine our work with your feedback to deliver
+              high-value, measurable results — always ensuring more efficient
+              relations.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
+              {[
+                "Strategists",
+                "Networking Engineers",
+                "Website Developers",
+                "Programmers",
+              ].map((role, i) => (
+                <span
+                  key={i}
+                  className="px-4 py-2 rounded-full text-sm border border-falu/20 text-falu-light bg-falu/5 font-[family-name:var(--font-inter)]"
+                >
+                  {role}
                 </span>
-                <p className="text-silver/60 text-sm mt-3 font-[family-name:var(--font-inter)] leading-relaxed">
-                  {member.description}
-                </p>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
