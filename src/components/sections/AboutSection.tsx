@@ -309,6 +309,8 @@ export default function AboutSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.7 }}
+          id="team"
+          className="scroll-mt-24"
         >
           <div className="glass-card rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto hover-lift">
             <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-6">
