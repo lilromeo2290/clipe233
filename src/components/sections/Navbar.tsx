@@ -6,14 +6,8 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Industries", href: "#industries" },
-  { label: "Blog", href: "#blog" },
-  { label: "Careers", href: "#careers" },
-  { label: "Contact", href: "#contact" },
+  { label: "About Us", href: "#about" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 export default function Navbar() {
