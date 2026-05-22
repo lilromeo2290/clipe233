@@ -155,12 +155,12 @@ export default function HeroSection() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Dark overlay for text readability - multi-layered for depth */}
-        <div className="absolute inset-0 bg-black/60 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/30 z-[1]" />
+        {/* Light overlay for readability while keeping images bright */}
+        <div className="absolute inset-0 bg-black/30 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-black/15 z-[1]" />
         {/* Falu Red tint overlay */}
-        <div className="absolute inset-0 bg-falu/10 z-[1]" />
+        <div className="absolute inset-0 bg-falu/5 z-[1]" />
 
         {/* Animated scan line effect */}
         <div className="absolute inset-0 z-[2] opacity-[0.03]">
