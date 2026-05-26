@@ -327,7 +327,7 @@ export default function AboutSection() {
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
                   <img
-                    src="/team-raymond.png"
+                    src="/team-raymond.jpg"
                     alt="Eng. Raymond Romeo Dravie"
                     className="w-full h-full object-cover"
                   />
@@ -494,7 +494,7 @@ export default function AboutSection() {
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
                   <img
-                    src="/team-senyo.png"
+                    src="/team-senyo.jpg"
                     alt="Senyo Kofi Dzakah"
                     className="w-full h-full object-cover"
                   />

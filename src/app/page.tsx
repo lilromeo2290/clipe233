@@ -1,18 +1,22 @@
 "use client";
 
-import Navbar from "@/components/sections/Navbar";
-import HeroSection from "@/components/sections/HeroSection";
-import AboutSection from "@/components/sections/AboutSection";
-import ServicesSection from "@/components/sections/ServicesSection";
-import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
-import TechStackSection from "@/components/sections/TechStackSection";
-import PortfolioSection from "@/components/sections/PortfolioSection";
-import IndustriesSection from "@/components/sections/IndustriesSection";
-import BlogSection from "@/components/sections/BlogSection";
-import CareersSection from "@/components/sections/CareersSection";
-import ContactSection from "@/components/sections/ContactSection";
-import Footer from "@/components/sections/Footer";
-import WhatsAppFloat from "@/components/sections/WhatsAppFloat";
+import dynamic from "next/dynamic";
+
+// Lazy-load all sections to reduce SSR memory footprint
+// This prevents the server from trying to render all heavy components at once
+const Navbar = dynamic(() => import("@/components/sections/Navbar"), { ssr: false });
+const HeroSection = dynamic(() => import("@/components/sections/HeroSection"), { ssr: false });
+const AboutSection = dynamic(() => import("@/components/sections/AboutSection"), { ssr: false });
+const ServicesSection = dynamic(() => import("@/components/sections/ServicesSection"), { ssr: false });
+const WhyChooseUsSection = dynamic(() => import("@/components/sections/WhyChooseUsSection"), { ssr: false });
+const TechStackSection = dynamic(() => import("@/components/sections/TechStackSection"), { ssr: false });
+const PortfolioSection = dynamic(() => import("@/components/sections/PortfolioSection"), { ssr: false });
+const IndustriesSection = dynamic(() => import("@/components/sections/IndustriesSection"), { ssr: false });
+const BlogSection = dynamic(() => import("@/components/sections/BlogSection"), { ssr: false });
+const CareersSection = dynamic(() => import("@/components/sections/CareersSection"), { ssr: false });
+const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), { ssr: false });
+const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
+const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
 export default function Home() {
   return (
