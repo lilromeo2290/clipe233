@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isDbAvailable, prisma } from "@/lib/prisma";
+import { ensureConnection } from "@/lib/prisma";
 import { getProjects, getProject } from "@/lib/strapi";
 
 // GET /api/projects - List projects
@@ -22,11 +22,12 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ data: result.data });
       }
 
-      if (!isDbAvailable()) {
+      const db = await ensureConnection();
+      if (!db) {
         return NextResponse.json({ error: "Project not found" }, { status: 404 });
       }
 
-      const project = await prisma!.project.findUnique({ where: { slug } });
+      const project = await db.project.findUnique({ where: { slug } });
       if (!project) {
         return NextResponse.json({ error: "Project not found" }, { status: 404 });
       }
@@ -40,7 +41,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+    if (!db) {
       return NextResponse.json({
         data: [],
         pagination: { page, pageSize, total: 0, pageCount: 0 },
@@ -54,13 +56,13 @@ export async function GET(request: NextRequest) {
     };
 
     const [projects, total] = await Promise.all([
-      prisma!.project.findMany({
+      db.project.findMany({
         where,
         orderBy: { createdAt: "desc" },
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),
-      prisma!.project.count({ where }),
+      db.project.count({ where }),
     ]);
 
     return NextResponse.json({

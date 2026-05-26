@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isDbAvailable, prisma } from "@/lib/prisma";
+import { ensureConnection } from "@/lib/prisma";
 
 // GET /api/contacts - List all contacts (admin)
 export async function GET(request: NextRequest) {
   try {
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+    if (!db) {
       return NextResponse.json({ data: [], pagination: { total: 0, limit: 50, offset: 0, hasMore: false } });
     }
 
@@ -16,13 +17,13 @@ export async function GET(request: NextRequest) {
     const where = status ? { status } : {};
 
     const [contacts, total] = await Promise.all([
-      prisma!.contact.findMany({
+      db.contact.findMany({
         where,
         orderBy: { createdAt: "desc" },
         take: limit,
         skip: offset,
       }),
-      prisma!.contact.count({ where }),
+      db.contact.count({ where }),
     ]);
 
     return NextResponse.json({
@@ -51,7 +52,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+    if (!db) {
       // Accept the submission but store it in memory / log it
       console.log("[Contact Form] Submission received (no DB):", { name, email, phone, company, subject, message });
       return NextResponse.json(
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const contact = await prisma!.contact.create({
+    const contact = await db.contact.create({
       data: {
         name,
         email,

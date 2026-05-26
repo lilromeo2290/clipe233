@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { isDbAvailable, prisma } from "@/lib/prisma";
+import { ensureConnection } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    // If no database, return healthy status without DB check
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+
+    if (!db) {
       return NextResponse.json({
         status: "healthy",
         service: "Clipe233 Engineers API",
@@ -34,7 +35,7 @@ export async function GET() {
     }
 
     // Check database connection
-    await prisma!.$queryRaw`SELECT 1`;
+    await db.$queryRaw`SELECT 1`;
 
     return NextResponse.json({
       status: "healthy",

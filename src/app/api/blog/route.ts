@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isDbAvailable, prisma } from "@/lib/prisma";
+import { ensureConnection } from "@/lib/prisma";
 import { getBlogPosts, getBlogPost } from "@/lib/strapi";
 
 // GET /api/blog - List blog posts
@@ -23,11 +23,12 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ data: result.data });
       }
 
-      if (!isDbAvailable()) {
+      const db = await ensureConnection();
+      if (!db) {
         return NextResponse.json({ error: "Post not found" }, { status: 404 });
       }
 
-      const post = await prisma!.post.findUnique({
+      const post = await db.post.findUnique({
         where: { slug },
         include: { author: { select: { id: true, name: true, email: true, avatar: true } } },
       });
@@ -47,7 +48,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Local database query
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+    if (!db) {
       return NextResponse.json({
         data: [],
         pagination: { page, pageSize, total: 0, pageCount: 0 },
@@ -61,14 +63,14 @@ export async function GET(request: NextRequest) {
     };
 
     const [posts, total] = await Promise.all([
-      prisma!.post.findMany({
+      db.post.findMany({
         where,
         orderBy: { createdAt: "desc" },
         include: { author: { select: { id: true, name: true, avatar: true } } },
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),
-      prisma!.post.count({ where }),
+      db.post.count({ where }),
     ]);
 
     return NextResponse.json({

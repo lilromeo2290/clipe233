@@ -34,3 +34,25 @@ Stage Summary:
 - Fully responsive design (mobile + desktop)
 - All sections use smooth scroll navigation
 - Lint passes clean, page loads successfully
+---
+Task ID: deployment-fix
+Agent: Main Agent
+Task: Fix "function is pending state" deployment error
+
+Work Log:
+- Investigated root cause: 5 issues identified causing serverless deployment failure
+- Rewrote src/lib/prisma.ts with lazy initialization (no top-level side effects)
+- Updated src/lib/db.ts with same serverless-safe pattern
+- Moved `prisma` CLI from dependencies to devDependencies in package.json
+- Created vercel.json with proper function configuration
+- Updated next.config.ts for Next.js 16 Turbopack compatibility
+- Rewrote all 10 API route files to use ensureConnection() instead of synchronous isDbAvailable()
+- Updated .env with clear documentation about SQLite vs PostgreSQL for serverless
+- Successfully built the project with `npm run build`
+
+Stage Summary:
+- Build succeeds with all 14 routes (3 static, 11 dynamic)
+- Root cause: SQLite + top-level Prisma connection + large bundle size = serverless function fails to initialize
+- Key fix: Lazy Prisma client initialization with async ensureConnection() pattern
+- The site will now work on serverless even without a database (graceful fallback)
+- User needs to set DATABASE_URL to PostgreSQL (e.g., Supabase) in deployment platform env vars for full DB functionality

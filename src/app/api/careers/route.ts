@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isDbAvailable, prisma } from "@/lib/prisma";
+import { ensureConnection } from "@/lib/prisma";
 import { getJobOpenings } from "@/lib/strapi";
 
 // GET /api/careers - List job openings
@@ -16,12 +16,13 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+    if (!db) {
       return NextResponse.json({ data: [] });
     }
 
     // Local database
-    const jobs = await prisma!.jobOpening.findMany({
+    const jobs = await db.jobOpening.findMany({
       where: { published: true },
       orderBy: { createdAt: "desc" },
       include: { _count: { select: { applications: true } } },
@@ -50,7 +51,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!isDbAvailable()) {
+    const db = await ensureConnection();
+    if (!db) {
       console.log("[Careers] Application received (no DB):", { jobId, name, email, phone });
       return NextResponse.json(
         { data: { jobId, name, email, phone, coverLetter, resumeUrl, portfolioUrl, status: "received" }, note: "Saved — database not connected, application logged." },
@@ -59,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify job exists and is published
-    const job = await prisma!.jobOpening.findFirst({
+    const job = await db.jobOpening.findFirst({
       where: { id: jobId, published: true },
     });
 
@@ -70,7 +72,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const application = await prisma!.jobApplication.create({
+    const application = await db.jobApplication.create({
       data: {
         jobId,
         name,
