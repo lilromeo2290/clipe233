@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 
 // GET /api/settings - Get site settings
 export async function GET(request: NextRequest) {
@@ -7,15 +7,19 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get("key");
 
+    if (!isDbAvailable()) {
+      return NextResponse.json({ data: [] });
+    }
+
     if (key) {
-      const setting = await prisma.siteSetting.findUnique({ where: { key } });
+      const setting = await prisma!.siteSetting.findUnique({ where: { key } });
       if (!setting) {
         return NextResponse.json({ error: "Setting not found" }, { status: 404 });
       }
       return NextResponse.json({ data: setting });
     }
 
-    const settings = await prisma.siteSetting.findMany();
+    const settings = await prisma!.siteSetting.findMany();
     return NextResponse.json({ data: settings });
   } catch (error) {
     console.error("Error fetching settings:", error);
@@ -39,7 +43,14 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const setting = await prisma.siteSetting.upsert({
+    if (!isDbAvailable()) {
+      return NextResponse.json(
+        { error: "Database not available — cannot update settings" },
+        { status: 503 }
+      );
+    }
+
+    const setting = await prisma!.siteSetting.upsert({
       where: { key },
       update: { value },
       create: { key, value },

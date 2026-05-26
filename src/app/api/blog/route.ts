@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 import { getBlogPosts, getBlogPost } from "@/lib/strapi";
 
 // GET /api/blog - List blog posts
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const pageSize = parseInt(searchParams.get("pageSize") || "10");
     const category = searchParams.get("category") || undefined;
     const featured = searchParams.get("featured") === "true" ? true : undefined;
-    const source = searchParams.get("source") || "local"; // local or strapi
+    const source = searchParams.get("source") || "local";
 
     // If slug is provided, get a single post
     if (slug) {
@@ -23,7 +23,11 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ data: result.data });
       }
 
-      const post = await prisma.post.findUnique({
+      if (!isDbAvailable()) {
+        return NextResponse.json({ error: "Post not found" }, { status: 404 });
+      }
+
+      const post = await prisma!.post.findUnique({
         where: { slug },
         include: { author: { select: { id: true, name: true, email: true, avatar: true } } },
       });
@@ -40,10 +44,16 @@ export async function GET(request: NextRequest) {
       if (!result.error) {
         return NextResponse.json({ data: result.data, meta: result.meta });
       }
-      // Fall through to local DB if Strapi fails
     }
 
     // Local database query
+    if (!isDbAvailable()) {
+      return NextResponse.json({
+        data: [],
+        pagination: { page, pageSize, total: 0, pageCount: 0 },
+      });
+    }
+
     const where = {
       published: true,
       ...(category ? { category } : {}),
@@ -51,24 +61,19 @@ export async function GET(request: NextRequest) {
     };
 
     const [posts, total] = await Promise.all([
-      prisma.post.findMany({
+      prisma!.post.findMany({
         where,
         orderBy: { createdAt: "desc" },
         include: { author: { select: { id: true, name: true, avatar: true } } },
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),
-      prisma.post.count({ where }),
+      prisma!.post.count({ where }),
     ]);
 
     return NextResponse.json({
       data: posts,
-      pagination: {
-        page,
-        pageSize,
-        total,
-        pageCount: Math.ceil(total / pageSize),
-      },
+      pagination: { page, pageSize, total, pageCount: Math.ceil(total / pageSize) },
     });
   } catch (error) {
     console.error("Error fetching blog posts:", error);

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 import { getTeamMembers } from "@/lib/strapi";
 
 // GET /api/team - List team members
@@ -11,8 +11,12 @@ export async function GET() {
       return NextResponse.json({ data: strapiResult.data });
     }
 
+    if (!isDbAvailable()) {
+      return NextResponse.json({ data: [] });
+    }
+
     // Local database fallback
-    const team = await prisma.teamMember.findMany({
+    const team = await prisma!.teamMember.findMany({
       where: { published: true },
       orderBy: { order: "asc" },
     });

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 import { getServices } from "@/lib/strapi";
 
 // GET /api/services - List services
@@ -11,8 +11,12 @@ export async function GET() {
       return NextResponse.json({ data: strapiResult.data });
     }
 
+    if (!isDbAvailable()) {
+      return NextResponse.json({ data: [] });
+    }
+
     // Local database fallback
-    const services = await prisma.service.findMany({
+    const services = await prisma!.service.findMany({
       where: { published: true },
       orderBy: { order: "asc" },
     });

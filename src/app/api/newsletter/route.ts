@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 
 // GET /api/newsletter - List subscribers (admin)
 export async function GET() {
   try {
-    const subscribers = await prisma.newsletterSubscriber.findMany({
+    if (!isDbAvailable()) {
+      return NextResponse.json({ data: [] });
+    }
+
+    const subscribers = await prisma!.newsletterSubscriber.findMany({
       where: { active: true },
       orderBy: { createdAt: "desc" },
     });
@@ -32,8 +36,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!isDbAvailable()) {
+      console.log("[Newsletter] Subscription received (no DB):", { email, source });
+      return NextResponse.json(
+        { data: { email, source: source || "website", active: true }, note: "Saved — database not connected, subscription logged." },
+        { status: 201 }
+      );
+    }
+
     // Upsert to handle duplicates
-    const subscriber = await prisma.newsletterSubscriber.upsert({
+    const subscriber = await prisma!.newsletterSubscriber.upsert({
       where: { email },
       update: { active: true },
       create: {

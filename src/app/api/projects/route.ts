@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 import { getProjects, getProject } from "@/lib/strapi";
 
 // GET /api/projects - List projects
@@ -22,7 +22,11 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ data: result.data });
       }
 
-      const project = await prisma.project.findUnique({ where: { slug } });
+      if (!isDbAvailable()) {
+        return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      }
+
+      const project = await prisma!.project.findUnique({ where: { slug } });
       if (!project) {
         return NextResponse.json({ error: "Project not found" }, { status: 404 });
       }
@@ -36,6 +40,13 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    if (!isDbAvailable()) {
+      return NextResponse.json({
+        data: [],
+        pagination: { page, pageSize, total: 0, pageCount: 0 },
+      });
+    }
+
     const where = {
       published: true,
       ...(category ? { category } : {}),
@@ -43,23 +54,18 @@ export async function GET(request: NextRequest) {
     };
 
     const [projects, total] = await Promise.all([
-      prisma.project.findMany({
+      prisma!.project.findMany({
         where,
         orderBy: { createdAt: "desc" },
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),
-      prisma.project.count({ where }),
+      prisma!.project.count({ where }),
     ]);
 
     return NextResponse.json({
       data: projects,
-      pagination: {
-        page,
-        pageSize,
-        total,
-        pageCount: Math.ceil(total / pageSize),
-      },
+      pagination: { page, pageSize, total, pageCount: Math.ceil(total / pageSize) },
     });
   } catch (error) {
     console.error("Error fetching projects:", error);

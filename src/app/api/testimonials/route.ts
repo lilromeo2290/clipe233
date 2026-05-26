@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { isDbAvailable, prisma } from "@/lib/prisma";
 import { getTestimonials } from "@/lib/strapi";
 
 // GET /api/testimonials - List testimonials
@@ -14,13 +14,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ data: strapiResult.data });
     }
 
+    if (!isDbAvailable()) {
+      return NextResponse.json({ data: [] });
+    }
+
     // Local database fallback
     const where = {
       published: true,
       ...(featured !== undefined ? { featured } : {}),
     };
 
-    const testimonials = await prisma.testimonial.findMany({
+    const testimonials = await prisma!.testimonial.findMany({
       where,
       orderBy: { createdAt: "desc" },
     });
