@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,20 +10,215 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─── Users & Auth ──────────────────────────────────────────────────────────────
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
+  role      String   @default("user") // admin, editor, user
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts     Post[]
+  comments  Comment[]
+}
+
+// ─── Blog / CMS ────────────────────────────────────────────────────────────────
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String?
+  coverImage  String?
+  category    String?
+  tags        String?  // comma-separated
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  author   User      @relation(fields: [authorId], references: [id])
+  comments Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  postId    String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
+}
+
+model Category {
+  id          String @id @default(cuid())
+  name        String @unique
+  slug        String @unique
+  description String?
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+}
+
+// ─── Portfolio / Projects ──────────────────────────────────────────────────────
+
+model Project {
+  id           String    @id @default(cuid())
+  title        String
+  slug         String    @unique
+  description  String?
+  content      String?
+  coverImage   String?
+  images       String?   // comma-separated image URLs
+  category     String?
+  client       String?
+  technologies String?   // comma-separated
+  liveUrl      String?
+  githubUrl    String?
+  featured     Boolean   @default(false)
+  published    Boolean   @default(false)
+  startDate    DateTime?
+  endDate      DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+// ─── Team ──────────────────────────────────────────────────────────────────────
+
+model TeamMember {
+  id              String   @id @default(cuid())
+  name            String
+  title           String
+  bio             String?
+  image           String?
+  expertise       String?   // comma-separated
+  qualifications  String?   // comma-separated
+  technicalSkills String?   // comma-separated
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ─── Services ──────────────────────────────────────────────────────────────────
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  icon        String?
+  features    String?   // comma-separated
+  benefits    String?   // comma-separated
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Contact / Leads ───────────────────────────────────────────────────────────
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  subject   String?
+  message   String?
+  service   String?
+  budget    String?
+  status    String   @default("new") // new, contacted, qualified, closed
+  source    String?  // website, whatsapp, referral, etc.
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Post {
+// ─── Newsletter ────────────────────────────────────────────────────────────────
+
+model NewsletterSubscriber {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  email     String   @unique
+  active    Boolean  @default(true)
+  source    String?  // footer, popup, etc.
+  createdAt DateTime @default(now())
+}
+
+// ─── Careers / Job Applications ────────────────────────────────────────────────
+
+model JobOpening {
+  id           String            @id @default(cuid())
+  title        String
+  slug         String            @unique
+  department   String?
+  location     String?
+  type         String?           // full-time, part-time, contract, internship
+  description  String?
+  requirements String?
+  salary       String?
+  published    Boolean           @default(false)
+  deadline     DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  applications JobApplication[]
+}
+
+model JobApplication {
+  id           String   @id @default(cuid())
+  jobId        String
+  name         String
+  email        String
+  phone        String?
+  coverLetter  String?
+  resumeUrl    String?
+  portfolioUrl String?
+  status       String   @default("submitted")
+  createdAt    DateTime @default(now())
+
+  job JobOpening @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+// ─── Testimonials ──────────────────────────────────────────────────────────────
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  title     String?
+  company   String?
+  avatar    String?
+  content   String
+  rating    Int?
+  featured  Boolean  @default(false)
+  published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ─── Site Settings / Configuration ─────────────────────────────────────────────
+
+model SiteSetting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+// ─── Analytics / Page Views ────────────────────────────────────────────────────
+
+model PageView {
+  id        String   @id @default(cuid())
+  page      String
+  referrer  String?
+  country   String?
+  createdAt DateTime @default(now())
 }
