@@ -90,7 +90,7 @@ export default function CareersSection() {
               <h4 className="text-base font-semibold mb-2 font-[family-name:var(--font-poppins)]">
                 {item.title}
               </h4>
-              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
+              <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
                 {item.description}
               </p>
             </motion.div>
@@ -107,7 +107,7 @@ export default function CareersSection() {
             <h3 className="text-2xl font-bold mb-2 font-[family-name:var(--font-poppins)]">
               Apply Now
             </h3>
-            <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
+            <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
               Send us your details and we will get back to you.
             </p>
             <form

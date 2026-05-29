@@ -201,3 +201,47 @@ Work Log:
 Stage Summary:
 - Successfully synced local changes to GitHub repository
 - Repository: https://github.com/lilromeo2290/clipe233.git
+
+---
+Task ID: auto-sync
+Agent: git-sync.sh
+Task: Periodic auto-commit and push to GitHub
+
+Work Log:
+- Staged all changes with git add -A
+- Committed with message: auto-sync: 2026-05-29 17:07:16 - project update
+- Pushed to origin/main
+
+Stage Summary:
+- Successfully synced local changes to GitHub repository
+- Repository: https://github.com/lilromeo2290/clipe233.git
+
+---
+Task ID: dark-light-mode
+Agent: Main Agent
+Task: Implement light/dark mode toggle with client preference persistence
+
+Work Log:
+- Previous session created ThemeProvider.tsx, ThemeToggle.tsx, updated globals.css with light/dark CSS variables, and added toggle to Navbar
+- This session completed the remaining work:
+- Added flash-prevention blocking script in layout.tsx <head> to prevent FOUC on page load
+- Fixed all form input fields (CareersSection, ContactSection, Footer) - replaced hardcoded text-white with text-gray-900 dark:text-white
+- Fixed placeholder text colors - replaced hardcoded placeholder:text-gray-300 with placeholder:text-gray-400 dark:placeholder:text-silver/40
+- Fixed Footer background - replaced hardcoded bg-black with bg-gray-100 dark:bg-black
+- Fixed Footer newsletter input text color for light mode
+- Fixed WhatsApp chat popup - replaced hardcoded dark backgrounds with light mode variants
+- Fixed text-gray-400 dark:text-silver/60 patterns across all sections to text-gray-500 dark:text-silver/60
+- Fixed text-gray-300 dark:text-silver/40 patterns in Footer bottom bar to text-gray-400 dark:text-silver/40
+- Fixed TechStack category text color for light mode
+- Fixed Blog section date/time text for light mode
+- Fixed Portfolio tags text color for light mode
+- Fixed Testimonials navigation dots hover color for light mode
+- Successfully built project with npx next build - all routes compile cleanly
+
+Stage Summary:
+- Light/dark mode toggle fully functional with localStorage persistence
+- No flash of wrong theme on page load (blocking script)
+- All 13 section components properly styled for both light and dark modes
+- ThemeToggle button with Sun/Moon animation in Navbar (both desktop and mobile)
+- CSS variables in globals.css handle automatic color switching via .dark class
+- Build passes cleanly with 14 routes (3 static, 11 dynamic)

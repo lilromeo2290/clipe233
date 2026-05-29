@@ -148,7 +148,7 @@ export default function TestimonialsSection() {
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       i === current
                         ? "w-8 bg-falu-light"
-                        : "bg-gray-300 dark:bg-white/20 hover:bg-white/40"
+                        : "bg-gray-300 dark:bg-white/20 hover:bg-gray-400 dark:hover:bg-white/40"
                     }`}
                     aria-label={`Go to testimonial ${i + 1}`}
                   />

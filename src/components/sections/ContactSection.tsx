@@ -99,7 +99,7 @@ export default function ContactSection() {
               <h3 className="text-2xl font-bold mb-2 font-[family-name:var(--font-poppins)]">
                 Send Us a Message
               </h3>
-              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
+              <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
                 Fill out the form below and we will get back to you within 24
                 hours.
               </p>
@@ -188,7 +188,7 @@ export default function ContactSection() {
                   <info.icon className="h-5 w-5 text-falu-light" />
                 </div>
                 <div>
-                  <span className="text-xs text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
+                  <span className="text-xs text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                     {info.label}
                   </span>
                   <p className="text-gray-900 dark:text-white font-medium font-[family-name:var(--font-inter)]">
@@ -209,7 +209,7 @@ export default function ContactSection() {
                 <MessageCircle className="h-5 w-5 text-green-400" />
               </div>
               <div>
-                <span className="text-xs text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
+                <span className="text-xs text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                   Chat with us on
                 </span>
                 <p className="text-green-400 font-medium font-[family-name:var(--font-inter)]">
@@ -220,7 +220,7 @@ export default function ContactSection() {
 
             {/* Social Links */}
             <div className="glass-card rounded-xl p-5">
-              <span className="text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)] mb-3 block">
+              <span className="text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)] mb-3 block">
                 Follow Us
               </span>
               <div className="flex items-center gap-3">
@@ -229,7 +229,7 @@ export default function ContactSection() {
                     key={i}
                     href={social.href}
                     aria-label={social.label}
-                    className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
+                    className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
                   >
                     <social.icon className="h-5 w-5" />
                   </a>
@@ -242,7 +242,7 @@ export default function ContactSection() {
               <div className="absolute inset-0 bg-gray-200/80 dark:bg-charcoal/80 flex items-center justify-center">
                 <div className="text-center">
                   <MapPin className="h-8 w-8 text-falu-light mx-auto mb-2" />
-                  <p className="text-sm text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)]">
+                  <p className="text-sm text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)]">
                     Ho, Volta Region
                   </p>
                   <p className="text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
