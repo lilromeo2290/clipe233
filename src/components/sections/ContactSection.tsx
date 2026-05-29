@@ -80,7 +80,7 @@ export default function ContactSection() {
               Amazing
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             Ready to transform your business with innovative technology
             solutions? Get in touch with our team and let us discuss how we
             can help you achieve your digital goals.
@@ -99,7 +99,7 @@ export default function ContactSection() {
               <h3 className="text-2xl font-bold mb-2 font-[family-name:var(--font-poppins)]">
                 Send Us a Message
               </h3>
-              <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
+              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
                 Fill out the form below and we will get back to you within 24
                 hours.
               </p>
@@ -109,53 +109,53 @@ export default function ContactSection() {
               >
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
+                    <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
                       Full Name
                     </label>
                     <Input
                       placeholder="John Doe"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
+                    <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
                       Email Address
                     </label>
                     <Input
                       type="email"
                       placeholder="john@example.com"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
+                    <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
                       Phone Number
                     </label>
                     <Input
                       placeholder="+233 24 978 3736"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
+                    <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
                       Service Interest
                     </label>
                     <Input
                       placeholder="e.g., Software Development"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
+                  <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
                     Your Message
                   </label>
                   <Textarea
                     placeholder="Tell us about your project or requirements..."
                     rows={5}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                    className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                   />
                 </div>
                 <Button
@@ -188,7 +188,7 @@ export default function ContactSection() {
                   <info.icon className="h-5 w-5 text-falu-light" />
                 </div>
                 <div>
-                  <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">
+                  <span className="text-xs text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                     {info.label}
                   </span>
                   <p className="text-white font-medium font-[family-name:var(--font-inter)]">
@@ -209,7 +209,7 @@ export default function ContactSection() {
                 <MessageCircle className="h-5 w-5 text-green-400" />
               </div>
               <div>
-                <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">
+                <span className="text-xs text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                   Chat with us on
                 </span>
                 <p className="text-green-400 font-medium font-[family-name:var(--font-inter)]">
@@ -220,7 +220,7 @@ export default function ContactSection() {
 
             {/* Social Links */}
             <div className="glass-card rounded-xl p-5">
-              <span className="text-sm text-silver/50 font-[family-name:var(--font-inter)] mb-3 block">
+              <span className="text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)] mb-3 block">
                 Follow Us
               </span>
               <div className="flex items-center gap-3">
@@ -229,7 +229,7 @@ export default function ContactSection() {
                     key={i}
                     href={social.href}
                     aria-label={social.label}
-                    className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
+                    className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
                   >
                     <social.icon className="h-5 w-5" />
                   </a>
@@ -239,13 +239,13 @@ export default function ContactSection() {
 
             {/* Map placeholder */}
             <div className="glass-card rounded-xl overflow-hidden h-48 relative">
-              <div className="absolute inset-0 bg-charcoal/80 flex items-center justify-center">
+              <div className="absolute inset-0 bg-gray-200/80 dark:bg-charcoal/80 flex items-center justify-center">
                 <div className="text-center">
                   <MapPin className="h-8 w-8 text-falu-light mx-auto mb-2" />
-                  <p className="text-sm text-silver/60 font-[family-name:var(--font-inter)]">
+                  <p className="text-sm text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)]">
                     Ho, Volta Region
                   </p>
-                  <p className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+                  <p className="text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
                     Ghana, West Africa
                   </p>
                 </div>

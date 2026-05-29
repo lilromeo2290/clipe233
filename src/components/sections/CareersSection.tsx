@@ -67,7 +67,7 @@ export default function CareersSection() {
               Engineering Team
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             Be part of a team that is shaping the future of technology in
             Africa. We are always looking for talented, passionate individuals
             who want to make an impact through innovation and excellence.
@@ -90,7 +90,7 @@ export default function CareersSection() {
               <h4 className="text-base font-semibold mb-2 font-[family-name:var(--font-poppins)]">
                 {item.title}
               </h4>
-              <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
+              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
                 {item.description}
               </p>
             </motion.div>
@@ -107,7 +107,7 @@ export default function CareersSection() {
             <h3 className="text-2xl font-bold mb-2 font-[family-name:var(--font-poppins)]">
               Apply Now
             </h3>
-            <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
+            <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
               Send us your details and we will get back to you.
             </p>
             <form
@@ -117,22 +117,22 @@ export default function CareersSection() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <Input
                   placeholder="Full Name"
-                  className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                 />
                 <Input
                   type="email"
                   placeholder="Email Address"
-                  className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
                 />
               </div>
               <Input
                 placeholder="Position You Are Applying For"
-                className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
               />
               <Textarea
                 placeholder="Tell us about yourself and why you would be a great fit..."
                 rows={4}
-                className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
+                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
               />
               <Button
                 type="submit"

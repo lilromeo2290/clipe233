@@ -158,7 +158,7 @@ export default function ServicesSection() {
               Technology Solutions
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             From custom software development to network infrastructure, we
             provide end-to-end IT services designed to accelerate your
             business growth and digital transformation journey.
@@ -190,7 +190,7 @@ export default function ServicesSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-6">
+              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-6">
                 {service.description}
               </p>
 
@@ -199,7 +199,7 @@ export default function ServicesSection() {
                 {service.features.map((feature, j) => (
                   <div
                     key={j}
-                    className="flex items-center gap-2 text-sm text-silver/70 font-[family-name:var(--font-inter)]"
+                    className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)]"
                   >
                     <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0" />
                     {feature}
@@ -231,7 +231,7 @@ export default function ServicesSection() {
             <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
               Need a Custom Solution?
             </h3>
-            <p className="text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
+            <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
               Every business is unique. Let us design a tailored technology
               solution that perfectly fits your requirements and budget.
             </p>

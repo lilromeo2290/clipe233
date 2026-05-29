@@ -121,7 +121,7 @@ export default function PortfolioSection() {
               Define Excellence
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             Explore our portfolio of successfully delivered projects across
             software development, web design, branding, and network
             infrastructure. Each project represents our commitment to quality
@@ -143,7 +143,7 @@ export default function PortfolioSection() {
               className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 font-[family-name:var(--font-inter)] ${
                 activeCategory === cat
                   ? "bg-falu text-white glow-red-sm"
-                  : "glass text-silver/70 hover:text-white hover:bg-white/5"
+                  : "glass text-gray-500 dark:text-silver/70 hover:text-white hover:bg-gray-100 dark:bg-white/5"
               }`}
             >
               {cat}
@@ -175,14 +175,14 @@ export default function PortfolioSection() {
                       {project.category}
                     </span>
                   </div>
-                  <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+                  <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag, j) => (
                       <span
                         key={j}
-                        className="px-2 py-1 rounded text-xs text-silver/50 border border-white/10 font-[family-name:var(--font-inter)]"
+                        className="px-2 py-1 rounded text-xs text-gray-400 dark:text-silver/50 border border-gray-200 dark:border-white/10 font-[family-name:var(--font-inter)]"
                       >
                         {tag}
                       </span>

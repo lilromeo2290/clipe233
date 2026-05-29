@@ -89,7 +89,7 @@ export default function BlogSection() {
               Tech Insights
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             Stay ahead of the curve with our expert insights on technology
             trends, cybersecurity, software development, and digital
             transformation strategies.
@@ -108,17 +108,17 @@ export default function BlogSection() {
               <span className="px-3 py-1 rounded-full text-xs font-medium bg-falu/20 text-falu-light font-[family-name:var(--font-inter)]">
                 Featured
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-silver/60 font-[family-name:var(--font-inter)]">
+              <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)]">
                 {articles[0].category}
               </span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold mb-4 font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
               {articles[0].title}
             </h3>
-            <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mb-6 max-w-4xl">
+            <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mb-6 max-w-4xl">
               {articles[0].excerpt}
             </p>
-            <div className="flex items-center gap-4 text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+            <div className="flex items-center gap-4 text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
                 {articles[0].date}
@@ -150,10 +150,10 @@ export default function BlogSection() {
               <h4 className="text-lg font-bold mt-2 mb-3 font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors leading-snug">
                 {article.title}
               </h4>
-              <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4 line-clamp-3">
+              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4 line-clamp-3">
                 {article.excerpt}
               </p>
-              <div className="flex items-center justify-between text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+              <div className="flex items-center justify-between text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   {article.date}

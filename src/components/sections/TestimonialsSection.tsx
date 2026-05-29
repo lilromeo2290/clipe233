@@ -78,7 +78,7 @@ export default function TestimonialsSection() {
               Say
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             Our clients&apos; success is our greatest achievement. Here are
             stories from businesses and organizations that have transformed
             their operations through our technology solutions.
@@ -132,7 +132,7 @@ export default function TestimonialsSection() {
                 <p className="text-white font-semibold font-[family-name:var(--font-poppins)]">
                   {testimonials[current].name}
                 </p>
-                <p className="text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+                <p className="text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                   {testimonials[current].role}
                 </p>
               </div>
@@ -148,7 +148,7 @@ export default function TestimonialsSection() {
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       i === current
                         ? "w-8 bg-falu-light"
-                        : "bg-white/20 hover:bg-white/40"
+                        : "bg-gray-300 dark:bg-white/20 hover:bg-white/40"
                     }`}
                     aria-label={`Go to testimonial ${i + 1}`}
                   />
@@ -157,14 +157,14 @@ export default function TestimonialsSection() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={prev}
-                  className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all"
+                  className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all"
                   aria-label="Previous testimonial"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
                 <button
                   onClick={next}
-                  className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all"
+                  className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all"
                   aria-label="Next testimonial"
                 >
                   <ChevronRight className="h-5 w-5" />

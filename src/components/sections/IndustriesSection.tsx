@@ -131,7 +131,7 @@ export default function IndustriesSection() {
               Every Sector
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             We understand that different industries face unique technology
             challenges. Our sector-specific solutions are designed to address
             the particular needs and compliance requirements of each industry
@@ -155,14 +155,14 @@ export default function IndustriesSection() {
               <h3 className="text-lg font-bold mb-3 font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
                 {industry.title}
               </h3>
-              <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
                 {industry.description}
               </p>
               <div className="space-y-2">
                 {industry.solutions.map((solution, j) => (
                   <div
                     key={j}
-                    className="flex items-center gap-2 text-sm text-silver/70 font-[family-name:var(--font-inter)]"
+                    className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)]"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-falu-light flex-shrink-0" />
                     {solution}

@@ -91,7 +91,7 @@ export default function TechStackSection() {
               Modern Tech
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             We build solutions using industry-leading technologies and
             frameworks, ensuring performance, scalability, and long-term
             maintainability for every project we deliver.
@@ -123,7 +123,7 @@ export default function TechStackSection() {
               <h4 className="text-sm font-semibold font-[family-name:var(--font-poppins)] mb-1 group-hover:text-falu-light transition-colors">
                 {tech.name}
               </h4>
-              <span className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+              <span className="text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
                 {tech.category}
               </span>
             </motion.div>

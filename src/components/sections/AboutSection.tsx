@@ -96,7 +96,7 @@ export default function AboutSection() {
               Clipe233 Engineers
             </span>
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
             What started in a dorm studio of Kull FM in Ho has grown into a
             trusted IT and engineering firm. Our story is one of passion,
             resilience, and an unwavering commitment to engineering digital
@@ -121,7 +121,7 @@ export default function AboutSection() {
                 <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
                   Our Origin
                 </h3>
-                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
                   Clipe Technologies (Clipetech) was initiated on 20th April,
                   2016 in a dorm studio of Kull FM, in Ho with clear emphasis
                   in software development, website designing, graphic
@@ -144,7 +144,7 @@ export default function AboutSection() {
                 <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
                   Our Evolution
                 </h3>
-                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
                   In 2025, Clipe Technologies (Clipetech) was rebranded and
                   officially registered as Clipe233 Engineers. The company aims
                   to provide quality orientated products and services to each
@@ -165,7 +165,7 @@ export default function AboutSection() {
                 <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
                   Our Philosophy
                 </h3>
-                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
                   The company&apos;s youthful passion is to help businesses,
                   companies and entities understand, build and express their
                   message to support communication and business processes into a
@@ -190,7 +190,7 @@ export default function AboutSection() {
                 <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
                   Our Process
                 </h3>
-                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
                   Our process involves direct interaction between our expert
                   project team and yours. With your feedback and a stimulating
                   back-and-forth dynamics, we refine our work to deliver
@@ -212,7 +212,7 @@ export default function AboutSection() {
                 <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
                   Our Location
                 </h3>
-                <p className="text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
                   Clipe233 Engineers main office is operated virtually from Ho,
                   in the Volta Region of Ghana.
                 </p>
@@ -261,7 +261,7 @@ export default function AboutSection() {
                     <h4 className="text-xl font-semibold mt-1 mb-3 font-[family-name:var(--font-poppins)]">
                       {item.title}
                     </h4>
-                    <p className="text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed">
+                    <p className="text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -296,7 +296,7 @@ export default function AboutSection() {
                 <h4 className="text-lg font-semibold mb-2 font-[family-name:var(--font-poppins)]">
                   {value.title}
                 </h4>
-                <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
                   {value.description}
                 </p>
               </motion.div>
@@ -340,7 +340,7 @@ export default function AboutSection() {
                 </span>
               </div>
 
-              <p className="text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+              <p className="text-gray-500 dark:text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
                 Has more than 7 years experience in ICT with a strong
                 background in Algorithmic Designs, Data Centers, IT
                 Infrastructure, Software Development, Network, Management and
@@ -350,10 +350,10 @@ export default function AboutSection() {
               </p>
 
               <div>
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Expertise:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Knowledge and experience in Networking
@@ -370,10 +370,10 @@ export default function AboutSection() {
               </div>
 
               <div className="mt-4">
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Qualifications:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Certificate in Cyber Intelligence and Malware
@@ -417,17 +417,17 @@ export default function AboutSection() {
                 </span>
               </div>
 
-              <p className="text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+              <p className="text-gray-500 dark:text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
                 Results-driven IT expert with 4+ years of experience in ICT,
                 education, and network architecture. Skilled in designing
                 secure networks, developing software, and leading projects.
               </p>
 
               <div>
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Expertise:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Network Architecture and Security
@@ -448,10 +448,10 @@ export default function AboutSection() {
               </div>
 
               <div className="mt-4">
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Qualifications:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Certificate in Hardware & Networking, Cybersecurity, and Malware Intrusion
@@ -464,10 +464,10 @@ export default function AboutSection() {
               </div>
 
               <div className="mt-4">
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Technical Skills:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Programming: C++, PHP, JavaScript, Java
@@ -507,7 +507,7 @@ export default function AboutSection() {
                 </span>
               </div>
 
-              <p className="text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+              <p className="text-gray-500 dark:text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
                 Ten (10) years experience in Accounting and Administration
                 across both Small and Medium Enterprises and Construction. He
                 has been the key in managing finances of Battis Company Limited
@@ -517,10 +517,10 @@ export default function AboutSection() {
               </p>
 
               <div>
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Expertise:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Monitory and Execution of projects from start to finish
@@ -533,10 +533,10 @@ export default function AboutSection() {
               </div>
 
               <div className="mt-4">
-                <h5 className="text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Qualifications:
                 </h5>
-                <ul className="text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Institute of Chartered Accountant Ghana (Associate Member)

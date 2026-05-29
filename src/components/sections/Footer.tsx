@@ -48,7 +48,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-white/10 bg-black">
+    <footer className="relative border-t border-gray-200 dark:border-white/10 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
@@ -60,7 +60,7 @@ export default function Footer() {
                 className="h-10 w-auto rounded-lg"
               />
             </div>
-            <p className="text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+            <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
               Engineering Digital Possibilities. We deliver innovative
               software, networking, branding, and digital transformation
               solutions for modern businesses.
@@ -71,7 +71,7 @@ export default function Footer() {
                   key={i}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
+                  className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
                 >
                   <social.icon className="h-4 w-4" />
                 </a>
@@ -81,7 +81,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4 font-[family-name:var(--font-poppins)]">
+            <h4 className="text-gray-900 dark:text-white font-semibold mb-4 font-[family-name:var(--font-poppins)]">
               Quick Links
             </h4>
             <ul className="space-y-2">
@@ -93,7 +93,7 @@ export default function Footer() {
                       e.preventDefault();
                       scrollTo(link.href);
                     }}
-                    className="text-sm text-silver/60 hover:text-falu-light transition-colors font-[family-name:var(--font-inter)]"
+                    className="text-sm text-gray-400 dark:text-silver/60 hover:text-falu-light transition-colors font-[family-name:var(--font-inter)]"
                   >
                     {link.label}
                   </a>
@@ -104,7 +104,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold mb-4 font-[family-name:var(--font-poppins)]">
+            <h4 className="text-gray-900 dark:text-white font-semibold mb-4 font-[family-name:var(--font-poppins)]">
               Services
             </h4>
             <ul className="space-y-2">
@@ -116,7 +116,7 @@ export default function Footer() {
                       e.preventDefault();
                       scrollTo("#services");
                     }}
-                    className="text-sm text-silver/60 hover:text-falu-light transition-colors font-[family-name:var(--font-inter)]"
+                    className="text-sm text-gray-400 dark:text-silver/60 hover:text-falu-light transition-colors font-[family-name:var(--font-inter)]"
                   >
                     {service}
                   </a>
@@ -127,10 +127,10 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-white font-semibold mb-4 font-[family-name:var(--font-poppins)]">
+            <h4 className="text-gray-900 dark:text-white font-semibold mb-4 font-[family-name:var(--font-poppins)]">
               Stay Updated
             </h4>
-            <p className="text-sm text-silver/60 font-[family-name:var(--font-inter)] mb-4 leading-relaxed">
+            <p className="text-sm text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)] mb-4 leading-relaxed">
               Subscribe to our newsletter for the latest tech insights,
               company news, and exclusive offers.
             </p>
@@ -141,7 +141,7 @@ export default function Footer() {
               <Input
                 type="email"
                 placeholder="Your email"
-                className="bg-white/5 border-white/10 text-white placeholder:text-silver/40 text-sm font-[family-name:var(--font-inter)]"
+                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 text-sm font-[family-name:var(--font-inter)]"
               />
               <Button
                 type="submit"
@@ -152,15 +152,15 @@ export default function Footer() {
               </Button>
             </form>
             <div className="mt-6 space-y-2">
-              <div className="flex items-center gap-2 text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+              <div className="flex items-center gap-2 text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Mail className="h-4 w-4 text-falu-light" />
                 info@clipe233.com
               </div>
-              <div className="flex items-center gap-2 text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+              <div className="flex items-center gap-2 text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Phone className="h-4 w-4 text-falu-light" />
                 +233 24 978 3736
               </div>
-              <div className="flex items-center gap-2 text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+              <div className="flex items-center gap-2 text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <MapPin className="h-4 w-4 text-falu-light" />
                 Ho, Volta Region, Ghana
               </div>
@@ -170,14 +170,14 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/5">
+      <div className="border-t border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+            <p className="text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
               &copy; {new Date().getFullYear()} Clipe233 Engineers. All rights
               reserved.
             </p>
-            <div className="flex items-center gap-6 text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+            <div className="flex items-center gap-6 text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
               <a href="#" className="hover:text-falu-light transition-colors">
                 Privacy Policy
               </a>

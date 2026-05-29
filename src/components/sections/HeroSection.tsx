@@ -190,7 +190,7 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
             >
               <span className="w-2 h-2 rounded-full bg-falu-light animate-pulse" />
-              <span className="text-sm text-silver/80 font-[family-name:var(--font-inter)]">
+              <span className="text-sm text-gray-700 dark:text-silver/80 font-[family-name:var(--font-inter)]">
                 {slide.badge}
               </span>
             </motion.div>
@@ -204,10 +204,9 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight font-[family-name:var(--font-poppins)] mb-6"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight font-[family-name:var(--font-poppins)] mb-6 text-white"
             >
               {slide.headline.map((word, i) => {
-                // Highlight key words
                 const isHighlight =
                   word === "Innovations," ||
                   word === "Excellence" ||
@@ -243,7 +242,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="max-w-3xl mx-auto text-lg sm:text-xl text-silver/80 mb-10 font-[family-name:var(--font-inter)] leading-relaxed"
+              className="max-w-3xl mx-auto text-lg sm:text-xl text-gray-200 dark:text-silver/80 mb-10 font-[family-name:var(--font-inter)] leading-relaxed"
             >
               {slide.subheadline}
             </motion.p>
@@ -284,7 +283,7 @@ export default function HeroSection() {
             {serviceHighlights.map((service, i) => (
               <span
                 key={i}
-                className="px-3 py-1.5 rounded-full text-xs sm:text-sm text-silver/70 border border-white/15 hover:border-falu/40 hover:text-white transition-all duration-300 font-[family-name:var(--font-inter)] backdrop-blur-sm"
+                className="px-3 py-1.5 rounded-full text-xs sm:text-sm text-gray-200 dark:text-silver/70 border border-white/20 dark:border-white/15 hover:border-falu/40 hover:text-white transition-all duration-300 font-[family-name:var(--font-inter)] backdrop-blur-sm"
               >
                 {service}
               </span>
@@ -309,7 +308,7 @@ export default function HeroSection() {
                     suffix={stat.suffix}
                   />
                 </div>
-                <div className="text-sm text-silver/60 font-[family-name:var(--font-inter)]">
+                <div className="text-sm text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)]">
                   {stat.label}
                 </div>
               </div>
@@ -389,7 +388,7 @@ export default function HeroSection() {
             e.preventDefault();
             scrollTo("#about");
           }}
-          className="flex flex-col items-center gap-2 text-silver/40 hover:text-falu-light transition-colors"
+          className="flex flex-col items-center gap-2 text-gray-400 dark:text-silver/40 hover:text-falu-light transition-colors"
         >
           <span className="text-xs font-[family-name:var(--font-inter)]">
             Scroll to explore
