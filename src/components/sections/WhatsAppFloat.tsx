@@ -33,13 +33,13 @@ export default function WhatsAppFloat() {
                 </div>
               </div>
             </div>
-            <div className="bg-[#0b141a] p-4">
-              <div className="bg-[#1f2c34] rounded-lg p-3 mb-3">
-                <p className="text-sm text-white/90 font-[family-name:var(--font-inter)]">
+            <div className="bg-gray-100 dark:bg-[#0b141a] p-4">
+              <div className="bg-white dark:bg-[#1f2c34] rounded-lg p-3 mb-3">
+                <p className="text-sm text-gray-800 dark:text-white/90 font-[family-name:var(--font-inter)]">
                   Hello! 👋 How can we help you today? Feel free to ask about
                   our services or request a consultation.
                 </p>
-                <span className="text-xs text-white/40 font-[family-name:var(--font-inter)] mt-1 block">
+                <span className="text-xs text-gray-400 dark:text-white/40 font-[family-name:var(--font-inter)] mt-1 block">
                   Just now
                 </span>
               </div>

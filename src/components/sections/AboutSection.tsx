@@ -261,7 +261,7 @@ export default function AboutSection() {
                     <h4 className="text-xl font-semibold mt-1 mb-3 font-[family-name:var(--font-poppins)]">
                       {item.title}
                     </h4>
-                    <p className="text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed">
+                    <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -296,7 +296,7 @@ export default function AboutSection() {
                 <h4 className="text-lg font-semibold mb-2 font-[family-name:var(--font-poppins)]">
                   {value.title}
                 </h4>
-                <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
+                <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
                   {value.description}
                 </p>
               </motion.div>
@@ -353,7 +353,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Expertise:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Knowledge and experience in Networking
@@ -373,7 +373,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Qualifications:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Certificate in Cyber Intelligence and Malware
@@ -427,7 +427,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Expertise:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Network Architecture and Security
@@ -451,7 +451,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Qualifications:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Certificate in Hardware & Networking, Cybersecurity, and Malware Intrusion
@@ -467,7 +467,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Technical Skills:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Programming: C++, PHP, JavaScript, Java
@@ -520,7 +520,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Expertise:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Monitory and Execution of projects from start to finish
@@ -536,7 +536,7 @@ export default function AboutSection() {
                 <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
                   Qualifications:
                 </h5>
-                <ul className="text-gray-400 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
                     Institute of Chartered Accountant Ghana (Associate Member)

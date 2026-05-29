@@ -190,7 +190,7 @@ export default function ServicesSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-6">
+              <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-6">
                 {service.description}
               </p>
 

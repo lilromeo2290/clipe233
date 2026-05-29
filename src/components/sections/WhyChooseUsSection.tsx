@@ -92,7 +92,7 @@ export default function WhyChooseUsSection() {
               <h3 className="text-lg font-bold mb-3 font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
                 {reason.title}
               </h3>
-              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
+              <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
                 {reason.description}
               </p>
             </motion.div>

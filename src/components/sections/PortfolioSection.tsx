@@ -175,14 +175,14 @@ export default function PortfolioSection() {
                       {project.category}
                     </span>
                   </div>
-                  <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+                  <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag, j) => (
                       <span
                         key={j}
-                        className="px-2 py-1 rounded text-xs text-gray-400 dark:text-silver/50 border border-gray-200 dark:border-white/10 font-[family-name:var(--font-inter)]"
+                        className="px-2 py-1 rounded text-xs text-gray-500 dark:text-silver/50 border border-gray-200 dark:border-white/10 font-[family-name:var(--font-inter)]"
                       >
                         {tag}
                       </span>

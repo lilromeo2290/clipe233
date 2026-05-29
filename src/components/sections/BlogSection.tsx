@@ -108,7 +108,7 @@ export default function BlogSection() {
               <span className="px-3 py-1 rounded-full text-xs font-medium bg-falu/20 text-falu-light font-[family-name:var(--font-inter)]">
                 Featured
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-silver/60 font-[family-name:var(--font-inter)]">
+              <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)]">
                 {articles[0].category}
               </span>
             </div>
@@ -150,10 +150,10 @@ export default function BlogSection() {
               <h4 className="text-lg font-bold mt-2 mb-3 font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors leading-snug">
                 {article.title}
               </h4>
-              <p className="text-gray-400 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4 line-clamp-3">
+              <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4 line-clamp-3">
                 {article.excerpt}
               </p>
-              <div className="flex items-center justify-between text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
+              <div className="flex items-center justify-between text-xs text-gray-400 dark:text-silver/40 font-[family-name:var(--font-inter)]">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   {article.date}

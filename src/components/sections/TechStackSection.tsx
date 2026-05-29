@@ -123,7 +123,7 @@ export default function TechStackSection() {
               <h4 className="text-sm font-semibold font-[family-name:var(--font-poppins)] mb-1 group-hover:text-falu-light transition-colors">
                 {tech.name}
               </h4>
-              <span className="text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
+              <span className="text-xs text-gray-400 dark:text-silver/40 font-[family-name:var(--font-inter)]">
                 {tech.category}
               </span>
             </motion.div>
