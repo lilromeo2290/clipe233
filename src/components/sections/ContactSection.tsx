@@ -191,7 +191,7 @@ export default function ContactSection() {
                   <span className="text-xs text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                     {info.label}
                   </span>
-                  <p className="text-white font-medium font-[family-name:var(--font-inter)]">
+                  <p className="text-gray-900 dark:text-white font-medium font-[family-name:var(--font-inter)]">
                     {info.value}
                   </p>
                 </div>
