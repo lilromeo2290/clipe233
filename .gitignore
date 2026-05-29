@@ -52,3 +52,8 @@ prompt
 server.log
 # Skills directory
 /skills/
+# Git credentials (contains token - NEVER push)
+.git-credentials
+.git-sync-daemon.pid
+git-sync.log
+git-sync-daemon.log
