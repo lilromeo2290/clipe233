@@ -154,11 +154,11 @@ export default function AdminDashboard() {
     : [];
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white flex">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-white/10 bg-black/50 backdrop-blur-xl flex flex-col">
+      <aside className="w-64 border-r border-gray-200 dark:border-white/10 bg-white/50 dark:bg-black/50 backdrop-blur-xl flex flex-col">
         {/* Logo */}
-        <div className="p-6 border-b border-white/10">
+        <div className="p-6 border-b border-gray-200 dark:border-white/10">
           <div className="flex items-center gap-3">
             <img src="/logo.jpg" alt="Clipe233" className="w-10 h-10 rounded-lg object-cover" />
             <div>
@@ -191,7 +191,7 @@ export default function AdminDashboard() {
         </nav>
 
         {/* Backend Status */}
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4 border-t border-gray-200 dark:border-white/10">
           <h4 className="text-xs font-semibold text-silver/40 mb-3 font-[family-name:var(--font-inter)] uppercase tracking-wider">
             Backend Status
           </h4>
@@ -224,7 +224,7 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
         {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-black/80 backdrop-blur-xl border-b border-white/10 px-8 py-4">
+        <header className="sticky top-0 z-30 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold font-[family-name:var(--font-poppins)] capitalize">

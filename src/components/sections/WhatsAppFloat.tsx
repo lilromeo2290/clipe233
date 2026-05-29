@@ -16,7 +16,7 @@ export default function WhatsAppFloat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
             transition={{ duration: 0.3 }}
-            className="absolute bottom-16 right-0 w-72 rounded-2xl overflow-hidden shadow-2xl shadow-black/40"
+            className="absolute bottom-16 right-0 w-72 rounded-2xl overflow-hidden shadow-2xl shadow-gray-400/40 dark:shadow-black/40"
           >
             <div className="bg-green-600 p-4">
               <div className="flex items-center gap-3">

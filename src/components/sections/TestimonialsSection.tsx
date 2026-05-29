@@ -115,7 +115,7 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <p className="text-lg sm:text-xl text-silver/80 font-[family-name:var(--font-inter)] leading-relaxed mb-8">
+              <p className="text-lg sm:text-xl text-gray-600 dark:text-silver/80 font-[family-name:var(--font-inter)] leading-relaxed mb-8">
                 &ldquo;{testimonials[current].content}&rdquo;
               </p>
 
@@ -129,7 +129,7 @@ export default function TestimonialsSection() {
 
               {/* Author */}
               <div>
-                <p className="text-white font-semibold font-[family-name:var(--font-poppins)]">
+                <p className="text-gray-900 dark:text-white font-semibold font-[family-name:var(--font-poppins)]">
                   {testimonials[current].name}
                 </p>
                 <p className="text-sm text-gray-400 dark:text-silver/50 font-[family-name:var(--font-inter)]">
