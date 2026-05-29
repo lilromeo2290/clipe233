@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
   { label: "About Us", href: "#about" },
@@ -52,7 +53,7 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "glass shadow-lg shadow-black/30"
+            ? "glass shadow-lg shadow-gray-300/20 dark:shadow-black/30"
             : "bg-transparent"
         }`}
       >
@@ -86,8 +87,8 @@ export default function Navbar() {
                   }}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 font-[family-name:var(--font-inter)] ${
                     activeSection === link.href.replace("#", "")
-                      ? "text-white bg-falu/20 text-glow-red"
-                      : "text-silver/70 hover:text-white hover:bg-white/5"
+                      ? "text-falu-light bg-falu/10 dark:bg-falu/20 text-glow-red"
+                      : "text-gray-500 dark:text-silver/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                   }`}
                 >
                   {link.label}
@@ -95,8 +96,9 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Desktop CTA */}
+            {/* Desktop CTA + Theme Toggle */}
             <div className="hidden lg:flex items-center gap-3">
+              <ThemeToggle />
               <Button
                 onClick={() => scrollTo("#contact")}
                 size="sm"
@@ -107,13 +109,16 @@ export default function Navbar() {
             </div>
 
             {/* Mobile toggle */}
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 text-white hover:text-falu-light transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            <div className="lg:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="p-2 text-gray-700 dark:text-white hover:text-falu-light transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -126,7 +131,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 pt-20 bg-black/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-40 pt-20 bg-gray-50/95 dark:bg-black/95 backdrop-blur-xl lg:hidden"
           >
             <div className="flex flex-col items-center gap-2 p-6">
               {navLinks.map((link, i) => (
@@ -142,8 +147,8 @@ export default function Navbar() {
                   transition={{ delay: i * 0.05 }}
                   className={`w-full text-center py-3 px-6 rounded-lg text-lg font-medium transition-all font-[family-name:var(--font-inter)] ${
                     activeSection === link.href.replace("#", "")
-                      ? "text-white bg-falu/20"
-                      : "text-silver/70 hover:text-white hover:bg-white/5"
+                      ? "text-falu-light bg-falu/10 dark:bg-falu/20"
+                      : "text-gray-500 dark:text-silver/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                   }`}
                 >
                   {link.label}
