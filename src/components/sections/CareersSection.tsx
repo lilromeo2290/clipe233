@@ -117,22 +117,22 @@ export default function CareersSection() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <Input
                   placeholder="Full Name"
-                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                 />
                 <Input
                   type="email"
                   placeholder="Email Address"
-                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                 />
               </div>
               <Input
                 placeholder="Position You Are Applying For"
-                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
               />
               <Textarea
                 placeholder="Tell us about yourself and why you would be a great fit..."
                 rows={4}
-                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
               />
               <Button
                 type="submit"

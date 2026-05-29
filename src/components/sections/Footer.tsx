@@ -48,7 +48,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-gray-200 dark:border-white/10 bg-black">
+    <footer className="relative border-t border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
@@ -141,7 +141,7 @@ export default function Footer() {
               <Input
                 type="email"
                 placeholder="Your email"
-                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 text-sm font-[family-name:var(--font-inter)]"
+                className="bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 text-sm font-[family-name:var(--font-inter)]"
               />
               <Button
                 type="submit"

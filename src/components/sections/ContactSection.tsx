@@ -114,7 +114,7 @@ export default function ContactSection() {
                     </label>
                     <Input
                       placeholder="John Doe"
-                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                   <div>
@@ -124,7 +124,7 @@ export default function ContactSection() {
                     <Input
                       type="email"
                       placeholder="john@example.com"
-                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                 </div>
@@ -135,7 +135,7 @@ export default function ContactSection() {
                     </label>
                     <Input
                       placeholder="+233 24 978 3736"
-                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                   <div>
@@ -144,7 +144,7 @@ export default function ContactSection() {
                     </label>
                     <Input
                       placeholder="e.g., Software Development"
-                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                      className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                 </div>
@@ -155,7 +155,7 @@ export default function ContactSection() {
                   <Textarea
                     placeholder="Tell us about your project or requirements..."
                     rows={5}
-                    className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-white placeholder:text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]"
+                    className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                   />
                 </div>
                 <Button
