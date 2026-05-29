@@ -49,8 +49,44 @@
   --color-silver: #C0C0C0;
 }
 
+/* Light mode variables */
 :root {
   --radius: 0.625rem;
+  --background: #F8F8F8;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #7B1818;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F0F0F0;
+  --secondary-foreground: #1A1A1A;
+  --muted: #E8E8E8;
+  --muted-foreground: #666666;
+  --accent: #F0F0F0;
+  --accent-foreground: #1A1A1A;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(0, 0, 0, 0.1);
+  --input: rgba(0, 0, 0, 0.15);
+  --ring: #7B1818;
+  --chart-1: #7B1818;
+  --chart-2: #9A2020;
+  --chart-3: #666666;
+  --chart-4: #1A1A1A;
+  --chart-5: #5C1212;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #7B1818;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F0F0F0;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border: rgba(0, 0, 0, 0.1);
+  --sidebar-ring: #7B1818;
+}
+
+/* Dark mode variables */
+.dark {
   --background: #000000;
   --foreground: #FFFFFF;
   --card: #0D0D0D;
@@ -101,6 +137,9 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
+  background: #F0F0F0;
+}
+.dark ::-webkit-scrollbar-track {
   background: #000000;
 }
 ::-webkit-scrollbar-thumb {
@@ -113,6 +152,12 @@
 
 /* Glassmorphism utility */
 .glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+.dark .glass {
   background: rgba(26, 26, 26, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -120,6 +165,12 @@
 }
 
 .glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(123, 24, 24, 0.15);
+}
+.dark .glass-card {
   background: rgba(13, 13, 13, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -141,6 +192,12 @@
 
 /* Grid background */
 .grid-bg {
+  background-image:
+    linear-gradient(rgba(123, 24, 24, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 24, 24, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.dark .grid-bg {
   background-image:
     linear-gradient(rgba(123, 24, 24, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(123, 24, 24, 0.05) 1px, transparent 1px);
@@ -215,6 +272,9 @@
 }
 .hover-lift:hover {
   transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(123, 24, 24, 0.1);
+}
+.dark .hover-lift:hover {
   box-shadow: 0 20px 40px rgba(123, 24, 24, 0.15);
 }
 
