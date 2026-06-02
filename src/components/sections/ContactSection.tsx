@@ -237,22 +237,40 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="glass-card rounded-xl overflow-hidden h-48 relative">
-              <div className="absolute inset-0 bg-gray-200/80 dark:bg-charcoal/80 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-8 w-8 text-falu-light mx-auto mb-2" />
-                  <p className="text-sm text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)]">
-                    Ho, Volta Region
-                  </p>
-                  <p className="text-xs text-gray-300 dark:text-silver/40 font-[family-name:var(--font-inter)]">
-                    Ghana, West Africa
-                  </p>
-                </div>
-              </div>
-            </div>
+
           </motion.div>
         </div>
+
+        {/* Google Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-12"
+        >
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="p-4 flex items-center gap-3 border-b border-gray-200 dark:border-white/10">
+              <MapPin className="h-5 w-5 text-falu-light" />
+              <h3 className="text-lg font-bold font-[family-name:var(--font-poppins)]">
+                Find Us in Ho
+              </h3>
+              <span className="text-sm text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] ml-auto">
+                Ho, Volta Region, Ghana
+              </span>
+            </div>
+            <iframe
+              src="https://maps.google.com/maps?q=Ho+Volta+Region+Ghana&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Clipe233 Engineers Location - Ho, Volta Region, Ghana"
+              className="w-full"
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
