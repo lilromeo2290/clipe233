@@ -3,15 +3,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
-  Send,
   Laptop,
   Globe,
   Users,
   Heart,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 const culture = [
   {
@@ -96,54 +92,6 @@ export default function CareersSection() {
             </motion.div>
           ))}
         </div>
-
-        {/* Apply Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <div className="glass-card rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-2 font-[family-name:var(--font-poppins)]">
-              Apply Now
-            </h3>
-            <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] mb-6">
-              Send us your details and we will get back to you.
-            </p>
-            <form
-              className="space-y-4"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className="grid sm:grid-cols-2 gap-4">
-                <Input
-                  placeholder="Full Name"
-                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
-                />
-                <Input
-                  type="email"
-                  placeholder="Email Address"
-                  className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
-                />
-              </div>
-              <Input
-                placeholder="Position You Are Applying For"
-                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
-              />
-              <Textarea
-                placeholder="Tell us about yourself and why you would be a great fit..."
-                rows={4}
-                className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
-              />
-              <Button
-                type="submit"
-                className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 w-full font-[family-name:var(--font-inter)]"
-              >
-                <Send className="mr-2 h-4 w-4" />
-                Submit Application
-              </Button>
-            </form>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
