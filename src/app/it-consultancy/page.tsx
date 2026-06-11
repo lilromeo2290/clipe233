@@ -122,9 +122,9 @@ export default function ITConsultancyPage() {
               What We Do
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
-              IT{" "}
+              IT Consultancy{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Consultancy
+                / Training
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
@@ -162,7 +162,7 @@ export default function ITConsultancyPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Our IT Consultancy{" "}
+              Our IT Consultancy / Training{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
                 Services
               </span>
