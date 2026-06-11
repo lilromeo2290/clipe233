@@ -12,6 +12,8 @@ import {
   TrendingUp,
   Settings,
   Lightbulb,
+  GraduationCap,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -86,14 +88,40 @@ const subServices = [
       "Implementation oversight",
     ],
   },
+  {
+    icon: GraduationCap,
+    title: "Professional IT Training",
+    subtitle: "Empower Your Workforce",
+    description:
+      "We deliver structured training programs that enhance technical knowledge and improve workforce productivity. Our training covers a wide range of IT disciplines — from networking and cybersecurity to cloud computing and software development — tailored to the skill levels and objectives of your team.",
+    features: [
+      "Customised training programs",
+      "Networking & cybersecurity courses",
+      "Cloud & software development training",
+      "Certification preparation",
+    ],
+  },
+  {
+    icon: Users,
+    title: "IT Staffing Solutions",
+    subtitle: "Skilled Professionals on Demand",
+    description:
+      "We support organizations with staffing solutions that connect them with experienced IT professionals for both short-term and long-term needs. Whether you need a specialist for a specific project or ongoing IT support, we match you with the right talent to keep your operations running smoothly.",
+    features: [
+      "Short-term & contract staffing",
+      "Permanent IT recruitment",
+      "Project-based specialists",
+      "Skills assessment & vetting",
+    ],
+  },
 ];
 
 const highlights = [
   { icon: BrainCircuit, label: "Strategic Guidance" },
   { icon: Zap, label: "Actionable Plans" },
   { icon: Shield, label: "Risk Mitigation" },
-  { icon: Target, label: "Goal Aligned" },
-  { icon: TrendingUp, label: "Growth Focused" },
+  { icon: GraduationCap, label: "IT Training" },
+  { icon: Users, label: "Staffing Solutions" },
   { icon: Lightbulb, label: "Vendor Neutral" },
 ];
 
@@ -128,7 +156,10 @@ export default function ITConsultancyPage() {
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Our experienced consultants provide strategic technology guidance that helps organisations make informed decisions, optimise their IT investments, and navigate the complexities of digital transformation with confidence. Whether you need a technology audit, a digital transformation roadmap, or ongoing advisory support, we deliver expertise you can trust to drive real business results.
+              In most cases, company owners find themselves at crossroads with their existing solutions. Clipe233 Engineers offer support to enable small and large businesses to develop and adopt various solutions, systems, networks, software, and security policies. We first ensure that we understand your business and goals. Using our expertise and knowledge, we design IT support services based on the client&apos;s needs. We offer guidance that change based on business growth to ensure that our customers get adequate support.
+            </p>
+            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
+              Professional IT Training — We deliver structured training programs that enhance technical knowledge and improve workforce productivity. In parallel, we support organizations with staffing solutions that connect them with experienced IT professionals for both short-term and long-term needs.
             </p>
           </motion.div>
 
