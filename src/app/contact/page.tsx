@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   MapPin,
   Phone,
@@ -9,6 +9,9 @@ import {
   MessageCircle,
   Send,
   Clock,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,6 +52,61 @@ const contactInfo = [
 export default function ContactPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || undefined,
+          service: formData.service || undefined,
+          message: formData.message || undefined,
+          source: "contact-page",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      setStatus("success");
+      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+
+      // Reset success message after 8 seconds
+      setTimeout(() => setStatus("idle"), 8000);
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Something went wrong. Please try again."
+      );
+    }
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -104,27 +162,73 @@ export default function ContactPage() {
                   Fill out the form below and we will get back to you within 24
                   hours.
                 </p>
-                <form
-                  className="space-y-4"
-                  onSubmit={(e) => e.preventDefault()}
-                >
+
+                {/* Success Message */}
+                {status === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-6 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 flex items-center gap-3"
+                  >
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-green-800 dark:text-green-300 font-medium font-[family-name:var(--font-inter)]">
+                        Message sent successfully!
+                      </p>
+                      <p className="text-green-600 dark:text-green-400 text-sm font-[family-name:var(--font-inter)]">
+                        We&apos;ve received your message and will respond within 24 hours. A confirmation email has been sent to you.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Error Message */}
+                {status === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 flex items-center gap-3"
+                  >
+                    <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-red-800 dark:text-red-300 font-medium font-[family-name:var(--font-inter)]">
+                        Failed to send message
+                      </p>
+                      <p className="text-red-600 dark:text-red-400 text-sm font-[family-name:var(--font-inter)]">
+                        {errorMessage || "Please try again or contact us directly via email or WhatsApp."}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
-                        Full Name
+                        Full Name <span className="text-falu-light">*</span>
                       </label>
                       <Input
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
                         placeholder="John Doe"
+                        disabled={status === "sending"}
                         className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                       />
                     </div>
                     <div>
                       <label className="text-sm text-gray-500 dark:text-silver/70 mb-1.5 block font-[family-name:var(--font-inter)]">
-                        Email Address
+                        Email Address <span className="text-falu-light">*</span>
                       </label>
                       <Input
+                        name="email"
                         type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
                         placeholder="john@example.com"
+                        disabled={status === "sending"}
                         className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                       />
                     </div>
@@ -135,7 +239,11 @@ export default function ContactPage() {
                         Phone Number
                       </label>
                       <Input
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                         placeholder="+233 24 978 3736"
+                        disabled={status === "sending"}
                         className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                       />
                     </div>
@@ -144,7 +252,11 @@ export default function ContactPage() {
                         Service Interest
                       </label>
                       <Input
+                        name="service"
+                        value={formData.service}
+                        onChange={handleChange}
                         placeholder="e.g., Software Development"
+                        disabled={status === "sending"}
                         className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                       />
                     </div>
@@ -154,18 +266,32 @@ export default function ContactPage() {
                       Your Message
                     </label>
                     <Textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="Tell us about your project or requirements..."
                       rows={5}
+                      disabled={status === "sending"}
                       className="bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-silver/40 font-[family-name:var(--font-inter)]"
                     />
                   </div>
                   <Button
                     type="submit"
                     size="lg"
+                    disabled={status === "sending"}
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 w-full sm:w-auto font-[family-name:var(--font-inter)]"
                   >
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
+                    {status === "sending" ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Send Message
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>
