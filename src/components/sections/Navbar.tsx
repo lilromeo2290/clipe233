@@ -22,8 +22,11 @@ const navLinks: NavLink[] = [
     href: "#services",
     submenu: [
       { label: "Website Development", href: "/website-development", isPage: true },
+      { label: "Networking Solutions", href: "/networking-solutions", isPage: true },
+      { label: "E-Commerce", href: "/e-commerce", isPage: true },
+      { label: "IT Consultancy", href: "/it-consultancy", isPage: true },
       { label: "Mobile App Development", href: "/mobile-app-development", isPage: true },
-      { label: "Enterprise Network Solutions", href: "/enterprise-network-solutions", isPage: true },
+      { label: "Software / Application Development", href: "/software-development", isPage: true },
     ],
   },
   { label: "Our Team", href: "#team" },
