@@ -28,6 +28,7 @@ const navLinks: NavLink[] = [
       { label: "Software / Application Development", href: "/software-development", isPage: true },
     ],
   },
+  { label: "Products", href: "/products", isPage: true },
   { label: "Our Team", href: "#team" },
   { label: "Contact Us", href: "#contact" },
 ];
