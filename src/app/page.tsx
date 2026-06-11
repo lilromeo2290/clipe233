@@ -8,7 +8,6 @@ const HeroSection = dynamic(() => import("@/components/sections/HeroSection"), {
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection"), { ssr: false });
 const ServicesSection = dynamic(() => import("@/components/sections/ServicesSection"), { ssr: false });
 const WhyChooseUsSection = dynamic(() => import("@/components/sections/WhyChooseUsSection"), { ssr: false });
-const TechStackSection = dynamic(() => import("@/components/sections/TechStackSection"), { ssr: false });
 const PortfolioSection = dynamic(() => import("@/components/sections/PortfolioSection"), { ssr: false });
 const IndustriesSection = dynamic(() => import("@/components/sections/IndustriesSection"), { ssr: false });
 const TestimonialsSection = dynamic(() => import("@/components/sections/TestimonialsSection"), { ssr: false });
@@ -34,10 +33,6 @@ export default function Home() {
       <div className="h-px bg-gradient-to-r from-transparent via-falu/20 dark:via-falu/30 to-transparent" />
 
       <WhyChooseUsSection />
-
-      <div className="h-px bg-gradient-to-r from-transparent via-falu/20 dark:via-falu/30 to-transparent" />
-
-      <TechStackSection />
 
       <div className="h-px bg-gradient-to-r from-transparent via-falu/20 dark:via-falu/30 to-transparent" />
 
