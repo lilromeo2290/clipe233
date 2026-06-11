@@ -3,16 +3,15 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
-  Package,
+  MessageSquareWarning,
   ArrowRight,
   CheckCircle2,
-  Zap,
+  Inbox,
+  ArrowLeftRight,
+  Users,
+  BarChart3,
+  Bell,
   Shield,
-  GraduationCap,
-  ShoppingCart,
-  HeartPulse,
-  Pill,
-  MessageSquareWarning,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -21,89 +20,97 @@ const Navbar = dynamic(() => import("@/components/sections/Navbar"), { ssr: fals
 const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
 const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
-const products = [
+const features = [
   {
-    icon: GraduationCap,
-    title: "Clipe School",
-    subtitle: "School Management System",
-    href: "/clipe-school",
+    icon: Inbox,
+    title: "Complaint Submission & Tracking",
+    subtitle: "Multi-Channel Intake",
     description:
-      "A comprehensive school management system designed to streamline administrative tasks, student enrollment, grading, attendance tracking, and fee management for educational institutions of all sizes. Built with modern technology and an intuitive interface, it empowers schools to operate efficiently and focus on delivering quality education.",
-    features: [
-      "Student enrollment & records management",
-      "Attendance tracking & reporting",
-      "Grading & transcript generation",
-      "Fee management & payment tracking",
+      "Receive complaints from multiple channels — web forms, email, phone, or walk-in — all funnelled into a single centralised system. Clipe Complaint assigns unique tracking IDs, records full complaint details, and provides real-time status updates to both staff and complainants, ensuring nothing falls through the cracks.",
+    items: [
+      "Multi-channel complaint intake",
+      "Unique tracking ID assignment",
+      "Real-time status updates",
+      "Complainant self-service portal",
     ],
   },
   {
-    icon: ShoppingCart,
-    title: "Clipe POS",
-    subtitle: "Point of Sale Solution",
-    href: "/clipe-pos",
+    icon: ArrowLeftRight,
+    title: "Automated Routing & Escalation",
+    subtitle: "Smart Workflows",
     description:
-      "A robust point-of-sale system built for retail businesses, restaurants, and service providers. Clipe POS handles sales transactions, inventory management, customer tracking, and detailed reporting — all in one easy-to-use platform that works online and offline to keep your business running without interruption.",
-    features: [
-      "Sales processing & receipt generation",
-      "Real-time inventory tracking",
-      "Customer management & loyalty",
-      "Detailed sales analytics & reports",
+      "Route complaints to the right department or team member automatically based on category, priority, and urgency. Clipe Complaint's escalation rules ensure that unresolved issues are automatically escalated to supervisors or management within defined timeframes, preventing delays and ensuring accountability.",
+    items: [
+      "Rule-based auto-routing",
+      "Priority & urgency classification",
+      "Time-based escalation rules",
+      "Supervisor override & reassignment",
     ],
   },
   {
-    icon: HeartPulse,
-    title: "Clipe Medic",
-    subtitle: "Medical Practice Management",
-    href: "/clipe-medic",
+    icon: Users,
+    title: "Resolution Workflow Management",
+    subtitle: "Structured Resolution Process",
     description:
-      "A powerful medical practice management solution designed for clinics, hospitals, and healthcare providers. Clipe Medic streamlines patient records, appointments, billing, and prescriptions — enabling healthcare professionals to focus on patient care while maintaining accurate and secure medical records.",
-    features: [
-      "Patient records & health history",
-      "Appointment scheduling & management",
-      "Billing & insurance processing",
-      "Prescription & pharmacy integration",
+      "Manage the entire resolution process with structured workflows that guide teams from complaint acknowledgement to closure. Assign tasks, set deadlines, collaborate across departments, and document every action taken — ensuring consistent, transparent, and timely resolution of every complaint.",
+    items: [
+      "Step-by-step resolution workflow",
+      "Task assignment & deadline tracking",
+      "Cross-department collaboration",
+      "Resolution documentation & notes",
     ],
   },
   {
-    icon: Pill,
-    title: "Clipe Pharma",
-    subtitle: "Pharmacy Management System",
-    href: "/clipe-pharma",
+    icon: Bell,
+    title: "Notifications & Communication",
+    subtitle: "Keep Everyone Informed",
     description:
-      "An end-to-end pharmacy management system that helps pharmaceutical businesses manage inventory, prescriptions, sales, and regulatory compliance with ease. Clipe Pharma is designed to streamline operations, reduce errors, and ensure that your pharmacy runs efficiently while meeting all industry standards.",
-    features: [
-      "Drug inventory & expiry tracking",
-      "Prescription processing & verification",
-      "Sales & supplier management",
-      "Regulatory compliance & reporting",
+      "Keep all stakeholders informed with automated notifications at every stage of the complaint lifecycle. Complainants receive acknowledgements and resolution updates, while staff get alerts for new assignments, approaching deadlines, and escalations — ensuring clear, timely communication throughout the process.",
+    items: [
+      "Automated acknowledgement emails",
+      "Status change notifications",
+      "Deadline & escalation alerts",
+      "Internal team notifications",
     ],
   },
   {
-    icon: MessageSquareWarning,
-    title: "Clipe Complaint",
-    subtitle: "Complaint Management Platform",
-    href: "/clipe-complaint",
+    icon: BarChart3,
+    title: "Reporting & Analytics Dashboard",
+    subtitle: "Insights for Improvement",
     description:
-      "A centralised complaint management platform that helps organisations track, manage, and resolve customer complaints efficiently. Clipe Complaint provides a structured workflow from complaint submission to resolution, ensuring accountability, transparency, and improved customer satisfaction across your operations.",
-    features: [
-      "Complaint submission & tracking",
-      "Automated routing & escalation",
-      "Resolution workflow management",
-      "Reporting & analytics dashboard",
+      "Turn complaint data into actionable insights with Clipe Complaint's analytics dashboard. Track resolution times, identify recurring issues, measure team performance, and spot trends that reveal systemic problems — empowering management to make improvements that reduce complaints and improve customer satisfaction over time.",
+    items: [
+      "Resolution time analytics",
+      "Recurring issue identification",
+      "Team performance metrics",
+      "Trend analysis & forecasting",
+    ],
+  },
+  {
+    icon: Shield,
+    title: "Security & Audit Trail",
+    subtitle: "Accountability & Transparency",
+    description:
+      "Every action within Clipe Complaint is logged in a comprehensive audit trail, ensuring full accountability and transparency. Role-based access control protects sensitive data, while detailed logs support investigations, compliance requirements, and management reviews of complaint handling processes.",
+    items: [
+      "Complete action audit trail",
+      "Role-based access control",
+      "Data protection & encryption",
+      "Compliance-ready reporting",
     ],
   },
 ];
 
 const highlights = [
-  { icon: GraduationCap, label: "Clipe School" },
-  { icon: ShoppingCart, label: "Clipe POS" },
-  { icon: HeartPulse, label: "Clipe Medic" },
-  { icon: Pill, label: "Clipe Pharma" },
-  { icon: MessageSquareWarning, label: "Clipe Complaint" },
-  { icon: Shield, label: "Secure & Reliable" },
+  { icon: MessageSquareWarning, label: "Complaint Management" },
+  { icon: Inbox, label: "Multi-Channel" },
+  { icon: ArrowLeftRight, label: "Auto-Routing" },
+  { icon: Users, label: "Team Collaboration" },
+  { icon: BarChart3, label: "Analytics" },
+  { icon: Shield, label: "Auditable" },
 ];
 
-export default function ProductsPage() {
+export default function ClipeComplaintPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -125,16 +132,16 @@ export default function ProductsPage() {
             className="text-center"
           >
             <span className="text-falu-light text-sm font-semibold tracking-wider uppercase font-[family-name:var(--font-inter)]">
-              Clipe233 Engineers
+              Clipe233 Products
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
-              Our{" "}
+              Clipe{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Products
+                Complaint
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Beyond services, Clipe233 Engineers builds ready-to-deploy software products designed to solve real business challenges. Our products are reliable, secure, easy-to-use, and scalable — crafted with the same quality and attention to detail that defines everything we do.
+              A centralised complaint management platform that helps organisations track, manage, and resolve customer complaints efficiently. Clipe Complaint provides a structured workflow from complaint submission to resolution, ensuring accountability, transparency, and improved customer satisfaction across your operations.
             </p>
           </motion.div>
 
@@ -158,7 +165,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Products */}
+      {/* Features */}
       <section ref={ref} className="py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -168,15 +175,15 @@ export default function ProductsPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Explore Our{" "}
+              Key{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Products
+                Features
               </span>
             </h2>
           </motion.div>
 
           <div className="space-y-8">
-            {products.map((product, i) => (
+            {features.map((feature, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
@@ -188,41 +195,34 @@ export default function ProductsPage() {
                   <div className="lg:flex-1">
                     <div className="flex items-start gap-5 mb-4">
                       <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 group-hover:bg-falu/30 transition-colors">
-                        <product.icon className="h-7 w-7 text-falu-light" />
+                        <feature.icon className="h-7 w-7 text-falu-light" />
                       </div>
                       <div>
                         <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
-                          {product.title}
+                          {feature.title}
                         </h3>
                         <span className="text-falu-light text-sm font-semibold font-[family-name:var(--font-inter)]">
-                          {product.subtitle}
+                          {feature.subtitle}
                         </span>
                       </div>
                     </div>
                     <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed mt-2">
-                      {product.description}
+                      {feature.description}
                     </p>
-                    <a
-                      href={product.href}
-                      className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-falu-light hover:text-falu transition-colors font-[family-name:var(--font-inter)]"
-                    >
-                      Learn More
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
                   </div>
                   <div className="lg:w-80 flex-shrink-0">
                     <div className="glass-card rounded-xl p-6">
                       <span className="text-sm font-semibold text-falu-light font-[family-name:var(--font-inter)] uppercase tracking-wider">
-                        Key Features
+                        What&apos;s Included
                       </span>
                       <div className="mt-4 space-y-3">
-                        {product.features.map((feature, j) => (
+                        {feature.items.map((item, j) => (
                           <div
                             key={j}
                             className="flex items-center gap-2 text-sm text-gray-600 dark:text-silver/70 font-[family-name:var(--font-inter)]"
                           >
                             <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0" />
-                            {feature}
+                            {item}
                           </div>
                         ))}
                       </div>
@@ -246,10 +246,10 @@ export default function ProductsPage() {
           >
             <div className="glass-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-                Interested in Our Products?
+                Interested in Clipe Complaint?
               </h3>
               <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
-                Get in touch to learn more about our products, request a demo, or discuss how we can customise a solution for your business.
+                Get in touch to request a demo, discuss pricing, or learn how Clipe Complaint can improve your complaint handling processes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/#contact">

@@ -28,7 +28,17 @@ const navLinks: NavLink[] = [
       { label: "Software / Application Development", href: "/software-development", isPage: true },
     ],
   },
-  { label: "Products", href: "/products", isPage: true },
+  {
+    label: "Products",
+    href: "/products",
+    submenu: [
+      { label: "Clipe School", href: "/clipe-school", isPage: true },
+      { label: "Clipe POS", href: "/clipe-pos", isPage: true },
+      { label: "Clipe Medic", href: "/clipe-medic", isPage: true },
+      { label: "Clipe Pharma", href: "/clipe-pharma", isPage: true },
+      { label: "Clipe Complaint", href: "/clipe-complaint", isPage: true },
+    ],
+  },
   { label: "Our Team", href: "#team" },
   { label: "Contact Us", href: "#contact" },
 ];

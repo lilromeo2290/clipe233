@@ -3,16 +3,15 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
-  Package,
+  Pill,
   ArrowRight,
   CheckCircle2,
-  Zap,
-  Shield,
-  GraduationCap,
+  Package,
+  FileText,
   ShoppingCart,
-  HeartPulse,
-  Pill,
-  MessageSquareWarning,
+  BarChart3,
+  Shield,
+  AlertTriangle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -21,89 +20,97 @@ const Navbar = dynamic(() => import("@/components/sections/Navbar"), { ssr: fals
 const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
 const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
-const products = [
+const features = [
   {
-    icon: GraduationCap,
-    title: "Clipe School",
-    subtitle: "School Management System",
-    href: "/clipe-school",
+    icon: Package,
+    title: "Drug Inventory & Expiry Tracking",
+    subtitle: "Never Lose Track of Stock",
     description:
-      "A comprehensive school management system designed to streamline administrative tasks, student enrollment, grading, attendance tracking, and fee management for educational institutions of all sizes. Built with modern technology and an intuitive interface, it empowers schools to operate efficiently and focus on delivering quality education.",
-    features: [
-      "Student enrollment & records management",
-      "Attendance tracking & reporting",
-      "Grading & transcript generation",
-      "Fee management & payment tracking",
+      "Manage your entire drug inventory with precision using Clipe Pharma. Track stock levels in real time, monitor expiry dates with automated alerts, and prevent costly losses from expired products. Batch tracking and lot management ensure full traceability from supplier to patient.",
+    items: [
+      "Real-time stock level monitoring",
+      "Automated expiry date alerts",
+      "Batch & lot tracking",
+      "Multi-location inventory management",
+    ],
+  },
+  {
+    icon: FileText,
+    title: "Prescription Processing & Verification",
+    subtitle: "Accurate Dispensing",
+    description:
+      "Process prescriptions quickly and accurately with Clipe Pharma's verification system. Validate prescriptions against patient records, check for drug interactions and allergies, and maintain a complete audit trail of every dispensing event — reducing errors and ensuring patient safety at all times.",
+    items: [
+      "Digital prescription intake",
+      "Drug interaction & allergy checks",
+      "Dispensing verification workflow",
+      "Complete dispensing audit trail",
     ],
   },
   {
     icon: ShoppingCart,
-    title: "Clipe POS",
-    subtitle: "Point of Sale Solution",
-    href: "/clipe-pos",
+    title: "Sales & Supplier Management",
+    subtitle: "Streamlined Procurement",
     description:
-      "A robust point-of-sale system built for retail businesses, restaurants, and service providers. Clipe POS handles sales transactions, inventory management, customer tracking, and detailed reporting — all in one easy-to-use platform that works online and offline to keep your business running without interruption.",
-    features: [
-      "Sales processing & receipt generation",
-      "Real-time inventory tracking",
-      "Customer management & loyalty",
-      "Detailed sales analytics & reports",
+      "Handle pharmacy sales and supplier relationships from a single platform. Clipe Pharma manages point-of-sale transactions, supplier orders, purchase tracking, and vendor performance — helping you maintain optimal stock levels while minimising costs and delivery delays.",
+    items: [
+      "Point-of-sale transaction processing",
+      "Supplier order & purchase management",
+      "Vendor performance tracking",
+      "Automated reorder point calculations",
     ],
   },
   {
-    icon: HeartPulse,
-    title: "Clipe Medic",
-    subtitle: "Medical Practice Management",
-    href: "/clipe-medic",
+    icon: AlertTriangle,
+    title: "Controlled Substance Management",
+    subtitle: "Regulatory Compliance",
     description:
-      "A powerful medical practice management solution designed for clinics, hospitals, and healthcare providers. Clipe Medic streamlines patient records, appointments, billing, and prescriptions — enabling healthcare professionals to focus on patient care while maintaining accurate and secure medical records.",
-    features: [
-      "Patient records & health history",
-      "Appointment scheduling & management",
-      "Billing & insurance processing",
-      "Prescription & pharmacy integration",
+      "Safely manage controlled and scheduled substances with Clipe Pharma's dedicated compliance module. Track every movement of controlled drugs, maintain required records, generate regulatory reports, and ensure your pharmacy meets all legal obligations for handling sensitive medications.",
+    items: [
+      "Controlled drug register",
+      "Movement tracking & documentation",
+      "Regulatory report generation",
+      "Dual-verification dispensing",
     ],
   },
   {
-    icon: Pill,
-    title: "Clipe Pharma",
-    subtitle: "Pharmacy Management System",
-    href: "/clipe-pharma",
+    icon: BarChart3,
+    title: "Reporting & Business Analytics",
+    subtitle: "Data-Driven Pharmacy Management",
     description:
-      "An end-to-end pharmacy management system that helps pharmaceutical businesses manage inventory, prescriptions, sales, and regulatory compliance with ease. Clipe Pharma is designed to streamline operations, reduce errors, and ensure that your pharmacy runs efficiently while meeting all industry standards.",
-    features: [
-      "Drug inventory & expiry tracking",
-      "Prescription processing & verification",
-      "Sales & supplier management",
-      "Regulatory compliance & reporting",
+      "Gain deep insights into your pharmacy's performance with Clipe Pharma's analytics and reporting tools. Track sales trends, identify profitable product lines, monitor inventory turnover, and generate financial and operational reports that help you make smarter business decisions.",
+    items: [
+      "Sales & revenue analytics",
+      "Inventory turnover reports",
+      "Profitability analysis by product",
+      "Custom report generation",
     ],
   },
   {
-    icon: MessageSquareWarning,
-    title: "Clipe Complaint",
-    subtitle: "Complaint Management Platform",
-    href: "/clipe-complaint",
+    icon: Shield,
+    title: "Security & Regulatory Compliance",
+    subtitle: "Industry Standards Ready",
     description:
-      "A centralised complaint management platform that helps organisations track, manage, and resolve customer complaints efficiently. Clipe Complaint provides a structured workflow from complaint submission to resolution, ensuring accountability, transparency, and improved customer satisfaction across your operations.",
-    features: [
-      "Complaint submission & tracking",
-      "Automated routing & escalation",
-      "Resolution workflow management",
-      "Reporting & analytics dashboard",
+      "Clipe Pharma is designed to meet the strict regulatory requirements of the pharmaceutical industry. Role-based access control, encrypted data storage, audit trails, and compliance reporting tools ensure your pharmacy operates within legal frameworks while protecting sensitive patient and business data.",
+    items: [
+      "Role-based access & permissions",
+      "Data encryption & secure storage",
+      "Full audit trail & logging",
+      "Regulatory compliance reporting",
     ],
   },
 ];
 
 const highlights = [
-  { icon: GraduationCap, label: "Clipe School" },
-  { icon: ShoppingCart, label: "Clipe POS" },
-  { icon: HeartPulse, label: "Clipe Medic" },
-  { icon: Pill, label: "Clipe Pharma" },
-  { icon: MessageSquareWarning, label: "Clipe Complaint" },
-  { icon: Shield, label: "Secure & Reliable" },
+  { icon: Pill, label: "Pharmacy Management" },
+  { icon: Package, label: "Inventory Control" },
+  { icon: FileText, label: "Prescriptions" },
+  { icon: AlertTriangle, label: "Controlled Drugs" },
+  { icon: BarChart3, label: "Analytics" },
+  { icon: Shield, label: "Compliant" },
 ];
 
-export default function ProductsPage() {
+export default function ClipePharmaPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -114,8 +121,8 @@ export default function ProductsPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-falu/5 blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-falu/3 blur-[120px]" />
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-falu/5 blur-[150px]" />
+        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-falu/3 blur-[120px]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -125,16 +132,16 @@ export default function ProductsPage() {
             className="text-center"
           >
             <span className="text-falu-light text-sm font-semibold tracking-wider uppercase font-[family-name:var(--font-inter)]">
-              Clipe233 Engineers
+              Clipe233 Products
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
-              Our{" "}
+              Clipe{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Products
+                Pharma
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Beyond services, Clipe233 Engineers builds ready-to-deploy software products designed to solve real business challenges. Our products are reliable, secure, easy-to-use, and scalable — crafted with the same quality and attention to detail that defines everything we do.
+              An end-to-end pharmacy management system that helps pharmaceutical businesses manage inventory, prescriptions, sales, and regulatory compliance with ease. Clipe Pharma is designed to streamline operations, reduce errors, and ensure that your pharmacy runs efficiently while meeting all industry standards.
             </p>
           </motion.div>
 
@@ -158,7 +165,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Products */}
+      {/* Features */}
       <section ref={ref} className="py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -168,15 +175,15 @@ export default function ProductsPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Explore Our{" "}
+              Key{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Products
+                Features
               </span>
             </h2>
           </motion.div>
 
           <div className="space-y-8">
-            {products.map((product, i) => (
+            {features.map((feature, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
@@ -188,41 +195,34 @@ export default function ProductsPage() {
                   <div className="lg:flex-1">
                     <div className="flex items-start gap-5 mb-4">
                       <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 group-hover:bg-falu/30 transition-colors">
-                        <product.icon className="h-7 w-7 text-falu-light" />
+                        <feature.icon className="h-7 w-7 text-falu-light" />
                       </div>
                       <div>
                         <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
-                          {product.title}
+                          {feature.title}
                         </h3>
                         <span className="text-falu-light text-sm font-semibold font-[family-name:var(--font-inter)]">
-                          {product.subtitle}
+                          {feature.subtitle}
                         </span>
                       </div>
                     </div>
                     <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed mt-2">
-                      {product.description}
+                      {feature.description}
                     </p>
-                    <a
-                      href={product.href}
-                      className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-falu-light hover:text-falu transition-colors font-[family-name:var(--font-inter)]"
-                    >
-                      Learn More
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
                   </div>
                   <div className="lg:w-80 flex-shrink-0">
                     <div className="glass-card rounded-xl p-6">
                       <span className="text-sm font-semibold text-falu-light font-[family-name:var(--font-inter)] uppercase tracking-wider">
-                        Key Features
+                        What&apos;s Included
                       </span>
                       <div className="mt-4 space-y-3">
-                        {product.features.map((feature, j) => (
+                        {feature.items.map((item, j) => (
                           <div
                             key={j}
                             className="flex items-center gap-2 text-sm text-gray-600 dark:text-silver/70 font-[family-name:var(--font-inter)]"
                           >
                             <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0" />
-                            {feature}
+                            {item}
                           </div>
                         ))}
                       </div>
@@ -246,10 +246,10 @@ export default function ProductsPage() {
           >
             <div className="glass-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-                Interested in Our Products?
+                Interested in Clipe Pharma?
               </h3>
               <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
-                Get in touch to learn more about our products, request a demo, or discuss how we can customise a solution for your business.
+                Get in touch to request a demo, discuss pricing, or learn how Clipe Pharma can optimise your pharmacy operations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/#contact">

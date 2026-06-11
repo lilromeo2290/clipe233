@@ -3,16 +3,15 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
-  Package,
+  HeartPulse,
   ArrowRight,
   CheckCircle2,
-  Zap,
+  Users,
+  Calendar,
+  CreditCard,
+  FileText,
   Shield,
-  GraduationCap,
-  ShoppingCart,
-  HeartPulse,
   Pill,
-  MessageSquareWarning,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -21,89 +20,97 @@ const Navbar = dynamic(() => import("@/components/sections/Navbar"), { ssr: fals
 const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
 const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
-const products = [
+const features = [
   {
-    icon: GraduationCap,
-    title: "Clipe School",
-    subtitle: "School Management System",
-    href: "/clipe-school",
+    icon: Users,
+    title: "Patient Records & Health History",
+    subtitle: "Comprehensive Patient Data",
     description:
-      "A comprehensive school management system designed to streamline administrative tasks, student enrollment, grading, attendance tracking, and fee management for educational institutions of all sizes. Built with modern technology and an intuitive interface, it empowers schools to operate efficiently and focus on delivering quality education.",
-    features: [
-      "Student enrollment & records management",
-      "Attendance tracking & reporting",
-      "Grading & transcript generation",
-      "Fee management & payment tracking",
+      "Maintain complete and accurate patient records with Clipe Medic. From personal details and medical history to diagnoses, treatments, and follow-ups, every piece of patient information is securely stored and instantly accessible — enabling healthcare providers to deliver informed, continuous care.",
+    items: [
+      "Digital patient profiles",
+      "Complete medical history",
+      "Diagnosis & treatment records",
+      "Lab results & imaging attachments",
     ],
   },
   {
-    icon: ShoppingCart,
-    title: "Clipe POS",
-    subtitle: "Point of Sale Solution",
-    href: "/clipe-pos",
+    icon: Calendar,
+    title: "Appointment Scheduling & Management",
+    subtitle: "Efficient Calendar System",
     description:
-      "A robust point-of-sale system built for retail businesses, restaurants, and service providers. Clipe POS handles sales transactions, inventory management, customer tracking, and detailed reporting — all in one easy-to-use platform that works online and offline to keep your business running without interruption.",
-    features: [
-      "Sales processing & receipt generation",
-      "Real-time inventory tracking",
-      "Customer management & loyalty",
-      "Detailed sales analytics & reports",
+      "Manage patient appointments effortlessly with Clipe Medic's intelligent scheduling system. Reduce no-shows with automated reminders, optimise doctor schedules, and handle walk-ins and follow-ups seamlessly — ensuring your clinic runs on time and patients receive timely care.",
+    items: [
+      "Online & walk-in scheduling",
+      "Automated SMS & email reminders",
+      "Doctor availability management",
+      "Recurring appointment support",
     ],
   },
   {
-    icon: HeartPulse,
-    title: "Clipe Medic",
-    subtitle: "Medical Practice Management",
-    href: "/clipe-medic",
+    icon: CreditCard,
+    title: "Billing & Insurance Processing",
+    subtitle: "Streamlined Financial Workflows",
     description:
-      "A powerful medical practice management solution designed for clinics, hospitals, and healthcare providers. Clipe Medic streamlines patient records, appointments, billing, and prescriptions — enabling healthcare professionals to focus on patient care while maintaining accurate and secure medical records.",
-    features: [
-      "Patient records & health history",
-      "Appointment scheduling & management",
-      "Billing & insurance processing",
-      "Prescription & pharmacy integration",
+      "Simplify billing and insurance claims with Clipe Medic's integrated financial module. Generate invoices, process insurance claims, track outstanding balances, and manage payments — all from a single platform that reduces administrative burden and accelerates revenue collection.",
+    items: [
+      "Automated invoice generation",
+      "Insurance claim processing",
+      "Payment tracking & receipts",
+      "Outstanding balance management",
     ],
   },
   {
     icon: Pill,
-    title: "Clipe Pharma",
-    subtitle: "Pharmacy Management System",
-    href: "/clipe-pharma",
+    title: "Prescription & Pharmacy Integration",
+    subtitle: "Connected Care Delivery",
     description:
-      "An end-to-end pharmacy management system that helps pharmaceutical businesses manage inventory, prescriptions, sales, and regulatory compliance with ease. Clipe Pharma is designed to streamline operations, reduce errors, and ensure that your pharmacy runs efficiently while meeting all industry standards.",
-    features: [
-      "Drug inventory & expiry tracking",
-      "Prescription processing & verification",
-      "Sales & supplier management",
-      "Regulatory compliance & reporting",
+      "Write and manage prescriptions digitally with Clipe Medic. prescriptions are securely transmitted to integrated pharmacies, reducing errors and wait times. Track prescription history, manage refills, and ensure patients receive the right medications promptly and safely.",
+    items: [
+      "Digital prescription writing",
+      "Pharmacy integration & transmission",
+      "Prescription history tracking",
+      "Drug interaction alerts",
     ],
   },
   {
-    icon: MessageSquareWarning,
-    title: "Clipe Complaint",
-    subtitle: "Complaint Management Platform",
-    href: "/clipe-complaint",
+    icon: FileText,
+    title: "Reporting & Compliance",
+    subtitle: "Regulatory Ready",
     description:
-      "A centralised complaint management platform that helps organisations track, manage, and resolve customer complaints efficiently. Clipe Complaint provides a structured workflow from complaint submission to resolution, ensuring accountability, transparency, and improved customer satisfaction across your operations.",
-    features: [
-      "Complaint submission & tracking",
-      "Automated routing & escalation",
-      "Resolution workflow management",
-      "Reporting & analytics dashboard",
+      "Stay compliant with healthcare regulations using Clipe Medic's built-in reporting tools. Generate clinical, operational, and financial reports that meet regulatory requirements, support audits, and provide the transparency needed to maintain trust and accountability in your healthcare operations.",
+    items: [
+      "Clinical & operational reports",
+      "Regulatory compliance templates",
+      "Audit trail & data logging",
+      "Custom report generation",
+    ],
+  },
+  {
+    icon: Shield,
+    title: "Security & Data Protection",
+    subtitle: "Patient Privacy First",
+    description:
+      "Clipe Medic prioritises patient data security with industry-leading protection measures. End-to-end encryption, role-based access, audit trails, and compliance with healthcare data protection standards ensure that sensitive medical information remains confidential and secure at all times.",
+    items: [
+      "End-to-end data encryption",
+      "Role-based access control",
+      "Audit trail & activity logging",
+      "Healthcare compliance standards",
     ],
   },
 ];
 
 const highlights = [
-  { icon: GraduationCap, label: "Clipe School" },
-  { icon: ShoppingCart, label: "Clipe POS" },
-  { icon: HeartPulse, label: "Clipe Medic" },
-  { icon: Pill, label: "Clipe Pharma" },
-  { icon: MessageSquareWarning, label: "Clipe Complaint" },
-  { icon: Shield, label: "Secure & Reliable" },
+  { icon: HeartPulse, label: "Medical Practice" },
+  { icon: Users, label: "Patient Records" },
+  { icon: Calendar, label: "Appointments" },
+  { icon: CreditCard, label: "Billing" },
+  { icon: Pill, label: "Prescriptions" },
+  { icon: Shield, label: "Secure" },
 ];
 
-export default function ProductsPage() {
+export default function ClipeMedicPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -125,16 +132,16 @@ export default function ProductsPage() {
             className="text-center"
           >
             <span className="text-falu-light text-sm font-semibold tracking-wider uppercase font-[family-name:var(--font-inter)]">
-              Clipe233 Engineers
+              Clipe233 Products
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
-              Our{" "}
+              Clipe{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Products
+                Medic
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Beyond services, Clipe233 Engineers builds ready-to-deploy software products designed to solve real business challenges. Our products are reliable, secure, easy-to-use, and scalable — crafted with the same quality and attention to detail that defines everything we do.
+              A powerful medical practice management solution designed for clinics, hospitals, and healthcare providers. Clipe Medic streamlines patient records, appointments, billing, and prescriptions — enabling healthcare professionals to focus on patient care while maintaining accurate and secure medical records.
             </p>
           </motion.div>
 
@@ -158,7 +165,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Products */}
+      {/* Features */}
       <section ref={ref} className="py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -168,15 +175,15 @@ export default function ProductsPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Explore Our{" "}
+              Key{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Products
+                Features
               </span>
             </h2>
           </motion.div>
 
           <div className="space-y-8">
-            {products.map((product, i) => (
+            {features.map((feature, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
@@ -188,41 +195,34 @@ export default function ProductsPage() {
                   <div className="lg:flex-1">
                     <div className="flex items-start gap-5 mb-4">
                       <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 group-hover:bg-falu/30 transition-colors">
-                        <product.icon className="h-7 w-7 text-falu-light" />
+                        <feature.icon className="h-7 w-7 text-falu-light" />
                       </div>
                       <div>
                         <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
-                          {product.title}
+                          {feature.title}
                         </h3>
                         <span className="text-falu-light text-sm font-semibold font-[family-name:var(--font-inter)]">
-                          {product.subtitle}
+                          {feature.subtitle}
                         </span>
                       </div>
                     </div>
                     <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed mt-2">
-                      {product.description}
+                      {feature.description}
                     </p>
-                    <a
-                      href={product.href}
-                      className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-falu-light hover:text-falu transition-colors font-[family-name:var(--font-inter)]"
-                    >
-                      Learn More
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
                   </div>
                   <div className="lg:w-80 flex-shrink-0">
                     <div className="glass-card rounded-xl p-6">
                       <span className="text-sm font-semibold text-falu-light font-[family-name:var(--font-inter)] uppercase tracking-wider">
-                        Key Features
+                        What&apos;s Included
                       </span>
                       <div className="mt-4 space-y-3">
-                        {product.features.map((feature, j) => (
+                        {feature.items.map((item, j) => (
                           <div
                             key={j}
                             className="flex items-center gap-2 text-sm text-gray-600 dark:text-silver/70 font-[family-name:var(--font-inter)]"
                           >
                             <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0" />
-                            {feature}
+                            {item}
                           </div>
                         ))}
                       </div>
@@ -246,10 +246,10 @@ export default function ProductsPage() {
           >
             <div className="glass-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-                Interested in Our Products?
+                Interested in Clipe Medic?
               </h3>
               <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
-                Get in touch to learn more about our products, request a demo, or discuss how we can customise a solution for your business.
+                Get in touch to request a demo, discuss pricing, or learn how Clipe Medic can transform your medical practice.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/#contact">
