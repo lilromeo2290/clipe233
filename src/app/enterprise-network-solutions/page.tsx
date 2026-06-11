@@ -12,6 +12,9 @@ import {
   Wifi,
   Cable,
   Lock,
+  Eye,
+  Repeat,
+  Cloud,
   Activity,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,81 +27,53 @@ const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"
 const subServices = [
   {
     icon: Network,
-    title: "LAN/WAN Design & Implementation",
+    title: "Enterprise LAN/WAN Design & Implementation",
     subtitle: "Core Routing & Switching Solutions",
-    description:
-      "We design, install, and configure Local Area Networks (LAN) and Wide Area Networks (WAN) that provide reliable, high-speed connectivity across your organisation. Our certified engineers deliver enterprise-grade networking solutions tailored to your operational requirements, ensuring seamless communication and data flow between all points of your business.",
-    features: [
-      "Network topology design & planning",
-      "Structured cabling & rack installation",
-      "Switch & router configuration",
-      "VLAN setup & traffic management",
-    ],
   },
   {
     icon: Wifi,
     title: "Secure Wireless & Mobility Networks",
     subtitle: "Enterprise-Grade Wireless Solutions",
-    description:
-      "Deploy high-performance wireless networks that provide seamless coverage across your entire facility. From office buildings to large campuses, our wireless solutions deliver fast, reliable connectivity for all your devices, enabling mobility and flexibility without compromising on speed or security.",
-    features: [
-      "Wi-Fi site surveys & planning",
-      "Enterprise access point deployment",
-      "Mesh network configuration",
-      "Guest network segregation",
-    ],
   },
   {
     icon: Cable,
-    title: "Fiber Optic & Structured Cabling",
+    title: "Fiber Optic Backbone & Structured Cabling",
     subtitle: "High-Bandwidth Infrastructure",
-    description:
-      "We deploy fiber optic backbone networks and structured cabling systems that form the physical foundation of your network infrastructure. Our certified cabling technicians ensure every cable run meets industry standards for performance, reliability, and future scalability.",
-    features: [
-      "Fiber optic installation & splicing",
-      "Cat6/Cat6a structured cabling",
-      "Cable management & labeling",
-      "Certiﬁed testing & documentation",
-    ],
+  },
+  {
+    icon: Network,
+    title: "Campus, Metro & Wide Area Network (WAN) Deployments",
+    subtitle: "Multi-Site Connectivity",
   },
   {
     icon: Shield,
-    title: "Network Security & Segmentation",
+    title: "Network Security & Segmentation Solutions",
     subtitle: "Defense-in-Depth Architecture",
-    description:
-      "Protect your business from cyber threats with our comprehensive network security solutions. We implement multi-layered security architectures including firewalls, intrusion detection systems, VPNs, and access control policies that safeguard your critical data and infrastructure.",
-    features: [
-      "Firewall deployment & management",
-      "Intrusion detection & prevention",
-      "VPN & secure remote access",
-      "Network segmentation & zero trust",
-    ],
   },
   {
     icon: Server,
-    title: "Server Room & Data Centre Setup",
-    subtitle: "Mission-Critical Environments",
-    description:
-      "We design and build server rooms and data centre environments that house your critical IT infrastructure with maximum reliability and efficiency. From climate control and power management to rack systems and cable management, we create environments that keep your servers running optimally around the clock.",
-    features: [
-      "Server rack & cabinet installation",
-      "Power management & UPS systems",
-      "Climate control & cooling solutions",
-      "Cable management & labeling",
-    ],
+    title: "Data Centre & Storage Area Networks (SAN)",
+    subtitle: "Mission-Critical Storage Infrastructure",
+  },
+  {
+    icon: Repeat,
+    title: "High Availability & Redundancy Architectures",
+    subtitle: "Zero-Downtime Design",
+  },
+  {
+    icon: Cloud,
+    title: "Business Continuity & Disaster Recovery Solutions",
+    subtitle: "Resilient Operations",
+  },
+  {
+    icon: Lock,
+    title: "VPN, Remote Access & Multi-Branch Connectivity",
+    subtitle: "Secure Anywhere Access",
   },
   {
     icon: Activity,
-    title: "Network Monitoring & Managed Services",
+    title: "Network Monitoring, Optimization & Managed Services",
     subtitle: "Proactive Performance Management",
-    description:
-      "Keep your network infrastructure running at peak performance with our proactive monitoring and managed services. We provide 24/7 monitoring, regular health checks, firmware updates, performance optimization, and rapid response troubleshooting to minimise downtime.",
-    features: [
-      "24/7 monitoring & alerting",
-      "Regular health checks & updates",
-      "Rapid response troubleshooting",
-      "Performance optimization & reporting",
-    ],
   },
 ];
 
@@ -106,12 +81,12 @@ const highlights = [
   { icon: Network, label: "Enterprise Grade" },
   { icon: Zap, label: "High Performance" },
   { icon: Shield, label: "Security First" },
-  { icon: Server, label: "Data Centres" },
+  { icon: Server, label: "Data Centers" },
   { icon: Wifi, label: "Wireless Solutions" },
   { icon: Cable, label: "Fiber Optic" },
 ];
 
-export default function NetworkingSolutionsPage() {
+export default function EnterpriseNetworkSolutionsPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -136,16 +111,16 @@ export default function NetworkingSolutionsPage() {
               What We Do
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
-              Networking{" "}
+              Enterprise Network{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
                 Solutions
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Planning, Designing, and Implementing a network or an upgrade is an intimidating task even for established companies with an IT department. Clipe233 creates customized networking solutions designed around your unique business needs. We provide reliable networking services, including network design, installation, configuration, and maintenance, ensuring secure and seamless communication within organizations.
+              We deliver enterprise-grade network infrastructure solutions that power secure, scalable, and high-performance business operations. With decades of combined industry experience, our certified network engineers design, deploy, and manage advanced voice, data, wireless, and security networking solutions for organizations across multiple industries.
             </p>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
-              We offer flexible networking services that are mandatory for the success of any firm. Our stable solutions are coupled with delivering better performance. Further, our scalable network solutions can be tailor-made based on the changing business needs.
+              We specialize in end-to-end Enterprise Networking Solutions including LAN/WAN infrastructure, campus and metropolitan fiber optic networks, wireless and mobility solutions, software-defined networking, and secure multi-site connectivity. Our expertise spans traditional routing and switching technologies as well as next-generation network security, high-availability systems, and intelligent network optimization.
             </p>
           </motion.div>
 
@@ -179,63 +154,70 @@ export default function NetworkingSolutionsPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Our Networking{" "}
+              Our Enterprise Network{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Services
+                Solutions
               </span>
             </h2>
           </motion.div>
 
-          <div className="space-y-8">
+          <div className="grid sm:grid-cols-2 gap-6">
             {subServices.map((service, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 * i }}
-                className="glass-card rounded-2xl p-8 md:p-10 hover-lift group"
+                transition={{ duration: 0.5, delay: 0.08 * i }}
+                className="glass-card rounded-2xl p-6 md:p-8 hover-lift group"
               >
-                <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="lg:flex-1">
-                    <div className="flex items-start gap-5 mb-4">
-                      <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 group-hover:bg-falu/30 transition-colors">
-                        <service.icon className="h-7 w-7 text-falu-light" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
-                          {service.title}
-                        </h3>
-                        <span className="text-falu-light text-sm font-semibold font-[family-name:var(--font-inter)]">
-                          {service.subtitle}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed mt-2">
-                      {service.description}
-                    </p>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 group-hover:bg-falu/30 transition-colors">
+                    <service.icon className="h-6 w-6 text-falu-light" />
                   </div>
-                  <div className="lg:w-80 flex-shrink-0">
-                    <div className="glass-card rounded-xl p-6">
-                      <span className="text-sm font-semibold text-falu-light font-[family-name:var(--font-inter)] uppercase tracking-wider">
-                        What&apos;s Included
-                      </span>
-                      <div className="mt-4 space-y-3">
-                        {service.features.map((feature, j) => (
-                          <div
-                            key={j}
-                            className="flex items-center gap-2 text-sm text-gray-600 dark:text-silver/70 font-[family-name:var(--font-inter)]"
-                          >
-                            <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0" />
-                            {feature}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  <div>
+                    <h3 className="text-lg font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
+                      {service.title}
+                    </h3>
+                    <span className="text-falu-light text-xs font-semibold font-[family-name:var(--font-inter)] uppercase tracking-wider">
+                      {service.subtitle}
+                    </span>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* Vendor partnership & closing statement */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 1.0 }}
+            className="mt-16 max-w-4xl mx-auto"
+          >
+            <div className="glass-card rounded-2xl p-8 md:p-10">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="h-6 w-6 text-falu-light" />
+                </div>
+                <div>
+                  <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                    We partner with leading global technology vendors to deliver reliable, secure, and future-ready network infrastructures that support digital transformation, cloud adoption, unified communications, and mission-critical business applications.
+                  </p>
+                </div>
+              </div>
+              <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0">
+                  <Eye className="h-6 w-6 text-falu-light" />
+                </div>
+                <div>
+                  <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                    Whether you are building a new enterprise network, upgrading legacy infrastructure, or expanding across multiple locations, Techland provides the expertise and technology required to keep your organization connected, secure, and operational at all times.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -256,7 +238,7 @@ export default function NetworkingSolutionsPage() {
                 Let us design and deploy a reliable network infrastructure tailored to your organisation. Get in touch today for a free site assessment and consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact">
+                <a href="/#contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

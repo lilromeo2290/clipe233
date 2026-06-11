@@ -3,15 +3,15 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
-  Code2,
+  ShoppingCart,
   ArrowRight,
   CheckCircle2,
   Zap,
   Shield,
-  Database,
-  Cpu,
-  Layers,
-  GitBranch,
+  CreditCard,
+  Package,
+  BarChart3,
+  Store,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -22,95 +22,82 @@ const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"
 
 const subServices = [
   {
-    icon: Code2,
-    title: "Custom Software Development",
-    subtitle: "Built for Your Business",
+    icon: Store,
+    title: "Custom E-Commerce Website Development",
+    subtitle: "Tailored Online Stores",
     description:
-      "We design and build robust, scalable custom software solutions that streamline operations and drive business growth. From concept to deployment, our engineering team delivers tailor-made applications that align with your strategic objectives, using modern architectures and industry best practices to ensure long-term reliability and performance.",
+      "We build fully customised e-commerce websites designed to showcase your products and convert visitors into paying customers. Every store is built with modern technologies, responsive design, and SEO best practices to maximise your online sales potential and deliver a seamless shopping experience across all devices.",
     features: [
-      "Requirements analysis & design",
-      "Agile development methodology",
-      "Modern tech stack & architecture",
-      "Quality assurance & testing",
+      "Custom store design & development",
+      "Responsive & mobile-first layouts",
+      "SEO-optimised product pages",
+      "Fast loading & performance tuned",
     ],
   },
   {
-    icon: Layers,
-    title: "Web Application Development",
-    subtitle: "Powerful Online Platforms",
+    icon: CreditCard,
+    title: "Payment Gateway Integration",
+    subtitle: "Secure Transactions",
     description:
-      "We build dynamic, feature-rich web applications that deliver exceptional user experiences across all devices. Whether you need a customer portal, a management dashboard, or a complex web platform, we develop scalable solutions using modern frameworks and cloud-native architectures that perform under pressure.",
+      "We integrate reliable and secure payment gateways that enable your customers to pay conveniently using their preferred methods. From mobile money and local payment solutions to international card processors, we ensure every transaction is encrypted, compliant, and frictionless.",
     features: [
-      "Single-page & progressive web apps",
-      "Real-time & collaborative features",
-      "API-first architecture",
-      "Cloud-native deployment",
+      "Mobile money integration (MTN, Vodafone, etc.)",
+      "Card payment processing (Visa, Mastercard)",
+      "PayPal & international gateways",
+      "Secure SSL & PCI compliance",
     ],
   },
   {
-    icon: Database,
-    title: "Database Design & Management",
-    subtitle: "Data-Driven Solutions",
+    icon: Package,
+    title: "Inventory & Order Management",
+    subtitle: "Streamlined Operations",
     description:
-      "We design and manage efficient, secure database systems that form the backbone of your software applications. From relational databases to NoSQL solutions, we architect data layers that ensure fast access, data integrity, and scalability as your business grows and your data requirements evolve.",
+      "Manage your products, stock levels, and orders efficiently with our integrated inventory and order management systems. We set up tools that give you real-time visibility into your inventory, automate order processing, and help you fulfil customer orders accurately and on time.",
     features: [
-      "Database architecture & modelling",
-      "SQL & NoSQL solutions",
-      "Data migration & integration",
-      "Performance optimization & indexing",
+      "Real-time stock tracking",
+      "Automated order processing",
+      "Shipping & fulfilment integration",
+      "Low-stock alerts & reporting",
     ],
   },
   {
-    icon: GitBranch,
-    title: "API Development & Integration",
-    subtitle: "Connect Your Systems",
+    icon: BarChart3,
+    title: "Analytics & Business Intelligence",
+    subtitle: "Data-Driven Growth",
     description:
-      "We develop and integrate APIs that enable seamless communication between your software systems, third-party services, and external partners. Our API solutions are designed for security, performance, and reliability, ensuring your applications work together efficiently and your data flows freely across your organisation.",
+      "Gain valuable insights into your customers, sales trends, and business performance with our analytics and reporting solutions. We implement tracking, dashboards, and reporting tools that help you make informed decisions, optimise your marketing spend, and grow your revenue.",
     features: [
-      "RESTful & GraphQL API design",
-      "Third-party service integration",
-      "API gateway & management",
-      "Authentication & security",
-    ],
-  },
-  {
-    icon: Cpu,
-    title: "Enterprise Software Solutions",
-    subtitle: "Scale with Confidence",
-    description:
-      "We develop enterprise-grade software solutions that handle complex business processes, high user volumes, and demanding performance requirements. Our enterprise applications are built with scalability, security, and maintainability at their core, ensuring they grow with your organisation and deliver value for years to come.",
-    features: [
-      "ERP & CRM systems",
-      "Workflow & process automation",
-      "Multi-tenant architecture",
-      "Enterprise security & compliance",
+      "Sales analytics & reporting",
+      "Customer behaviour tracking",
+      "Conversion rate optimization",
+      "Marketing ROI dashboards",
     ],
   },
   {
     icon: Shield,
-    title: "Software Maintenance & Support",
-    subtitle: "Continuous Improvement",
+    title: "E-Commerce Security & Compliance",
+    subtitle: "Protect Your Business",
     description:
-      "Keep your software running smoothly and evolving with your business through our comprehensive maintenance and support services. We provide ongoing bug fixes, performance optimization, feature enhancements, and security updates that ensure your applications remain reliable, secure, and aligned with your changing business needs.",
+      "We implement robust security measures to protect your online store, customer data, and financial transactions from cyber threats. Our security solutions include SSL certificates, fraud detection, data encryption, and compliance with industry standards to give you and your customers peace of mind.",
     features: [
-      "Bug fixes & troubleshooting",
-      "Performance optimization",
-      "Feature enhancements & updates",
-      "Security patches & monitoring",
+      "SSL certificates & encryption",
+      "Fraud detection & prevention",
+      "Data protection & GDPR compliance",
+      "Regular security audits",
     ],
   },
 ];
 
 const highlights = [
-  { icon: Code2, label: "Custom Development" },
-  { icon: Zap, label: "Agile Process" },
-  { icon: Shield, label: "Secure & Reliable" },
-  { icon: Database, label: "Data Driven" },
-  { icon: Layers, label: "Scalable Apps" },
-  { icon: Cpu, label: "Enterprise Ready" },
+  { icon: ShoppingCart, label: "Online Stores" },
+  { icon: Zap, label: "Fast & Reliable" },
+  { icon: Shield, label: "Secure Payments" },
+  { icon: CreditCard, label: "Multiple Gateways" },
+  { icon: Package, label: "Inventory Mgmt" },
+  { icon: BarChart3, label: "Analytics" },
 ];
 
-export default function SoftwareDevelopmentPage() {
+export default function ECommercePage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -121,7 +108,7 @@ export default function SoftwareDevelopmentPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-falu/5 blur-[150px]" />
+        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-falu/5 blur-[150px]" />
         <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-falu/3 blur-[120px]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -135,16 +122,13 @@ export default function SoftwareDevelopmentPage() {
               What We Do
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
-              Software / Application{" "}
+              E-Commerce{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Development
+                Solutions
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Clipe233 Engineers designs and creates quality software applications which are reliable, secure, easy-to-use, affordable, easy-to-deploy, and scalable. Our development team enables our customers to meet technology challenges by assisting them throughout the software development process.
-            </p>
-            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
-              Whether you are a start-up or a mid-sized company, Clipe233 is always happy to assist at all stages of software development. Our clients have selected us because of our impeccable track record and extensive knowledge and expertise in supporting SMEs and startups translate their concepts into great software applications.
+              Take your business online and reach customers beyond borders with our comprehensive e-commerce solutions. We design, develop, and deploy fully functional online stores that are secure, scalable, and optimised for conversions. Whether you are launching your first online store or upgrading an existing platform, we deliver e-commerce experiences that drive sales and build customer loyalty.
             </p>
           </motion.div>
 
@@ -178,7 +162,7 @@ export default function SoftwareDevelopmentPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Our Software Development{" "}
+              Our E-Commerce{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
                 Services
               </span>
@@ -249,13 +233,13 @@ export default function SoftwareDevelopmentPage() {
           >
             <div className="glass-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-                Have a Software Project?
+                Ready to Sell Online?
               </h3>
               <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
-                Let us bring your software vision to life with clean code, modern architecture, and a focus on delivering real business value. Get in touch today.
+                Let us build you a powerful online store that drives sales and grows your business. Get in touch today for a free consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact">
+                <a href="/#contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
