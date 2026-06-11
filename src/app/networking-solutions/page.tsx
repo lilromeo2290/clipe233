@@ -142,7 +142,10 @@ export default function NetworkingSolutionsPage() {
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              A reliable network is the backbone of every modern organisation. Our Networking Solutions service provides end-to-end design, installation, and maintenance of network infrastructure that keeps your business connected, secure, and operating at peak efficiency. From structured cabling and server room setups to wireless deployments and network security, we deliver comprehensive networking solutions tailored to organisations of all sizes.
+              Planning, Designing, and Implementing a network or an upgrade is an intimidating task even for established companies with an IT department. Clipe233 creates customized networking solutions designed around your unique business needs. We provide reliable networking services, including network design, installation, configuration, and maintenance, ensuring secure and seamless communication within organizations.
+            </p>
+            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
+              We offer flexible networking services that are mandatory for the success of any firm. Our stable solutions are coupled with delivering better performance. Further, our scalable network solutions can be tailor-made based on the changing business needs.
             </p>
           </motion.div>
 
