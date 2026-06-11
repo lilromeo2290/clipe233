@@ -12,6 +12,16 @@ import {
   BarChart3,
   Wifi,
   Shield,
+  Monitor,
+  Store,
+  Tag,
+  FileBarChart,
+  ScanBarcode,
+  Printer,
+  PauseCircle,
+  LayoutTemplate,
+  Zap,
+  Smartphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -22,92 +32,170 @@ const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"
 
 const features = [
   {
-    icon: Receipt,
-    title: "Sales Processing & Receipts",
-    subtitle: "Fast & Accurate Transactions",
+    icon: Users,
+    title: "Handling Multiple Customers",
+    subtitle: "Serve Everyone Seamlessly",
     description:
-      "Process sales quickly and accurately with Clipe POS. Support for barcode scanning, quick-search product lookup, split payments, and instant receipt generation ensures smooth checkout experiences for both staff and customers, keeping queues short and satisfaction high.",
+      "Clipe POS allows you to manage and serve multiple customers simultaneously without confusion or delays. Whether you run a busy retail store, a restaurant, or a multi-counter business, the system keeps each transaction isolated and organised so your staff can deliver fast, accurate service to every customer at the same time.",
     items: [
-      "Barcode scanning & quick search",
-      "Split & multiple payment methods",
-      "Instant receipt printing & digital receipts",
-      "Refund & exchange processing",
+      "Simultaneous customer transactions",
+      "Individual customer tracking per sale",
+      "Customer-specific discount support",
+      "Purchase history per customer",
+    ],
+  },
+  {
+    icon: Store,
+    title: "Handling Multiple Stores",
+    subtitle: "One System, Many Locations",
+    description:
+      "Manage all your store locations from a single Clipe POS installation. Stock levels, sales data, and reports are synced across every branch in real time, giving you a unified view of your entire operation. Whether you have two stores or twenty, Clipe POS scales effortlessly with your business.",
+    items: [
+      "Centralised multi-store management",
+      "Real-time stock sync across locations",
+      "Per-store sales & performance reports",
+      "Unified product & pricing catalogues",
     ],
   },
   {
     icon: Package,
-    title: "Real-Time Inventory Tracking",
-    subtitle: "Always Know Your Stock",
+    title: "Simple Stock Management",
+    subtitle: "Keep Inventory Under Control",
     description:
-      "Keep your inventory accurate in real time with Clipe POS. Every sale automatically updates stock levels, low-stock alerts notify you before items run out, and detailed inventory reports help you make smarter purchasing decisions and reduce waste across all your product lines.",
+      "Clipe POS makes inventory management straightforward and hassle-free. Track product quantities in real time, receive low-stock alerts, and update stock levels automatically with every sale or restock. The intuitive interface means anyone on your team can manage inventory without extensive training.",
     items: [
-      "Real-time stock level updates",
-      "Low-stock & reorder alerts",
-      "Multi-location inventory tracking",
-      "Supplier & purchase order management",
+      "Real-time quantity tracking",
+      "Low-stock alerts & notifications",
+      "Automatic stock adjustment on sales",
+      "Easy restock & adjustment entries",
     ],
   },
   {
-    icon: Users,
-    title: "Customer Management & Loyalty",
-    subtitle: "Build Lasting Relationships",
+    icon: Receipt,
+    title: "Register Report",
+    subtitle: "Know Your Numbers",
     description:
-      "Build stronger customer relationships with Clipe POS's built-in CRM. Track purchase history, manage customer profiles, and run loyalty programmes that reward repeat business — turning occasional shoppers into loyal customers who keep coming back.",
+      "Generate detailed register reports at the end of every shift or trading day. Clipe POS records every transaction, payment method, refund, and discount so you can reconcile your register with confidence. Clear, accurate reports eliminate guesswork and help you spot discrepancies before they become problems.",
     items: [
-      "Customer profile & purchase history",
-      "Loyalty points & reward programmes",
-      "Targeted promotions & discounts",
-      "Customer communication tools",
+      "End-of-day register summaries",
+      "Payment method breakdowns",
+      "Refund & void tracking",
+      "Cash drawer reconciliation",
     ],
   },
   {
-    icon: BarChart3,
-    title: "Sales Analytics & Reports",
-    subtitle: "Insights That Drive Growth",
+    icon: Tag,
+    title: "Products with Taxes & Discounts",
+    subtitle: "Flexible Pricing Made Easy",
     description:
-      "Make data-driven decisions with Clipe POS's comprehensive analytics. Track sales trends, identify top-performing products, monitor staff performance, and generate detailed reports that give you full visibility into your business performance — anytime, anywhere.",
+      "Apply taxes and discounts with total flexibility in Clipe POS. You can assign a specific discount to every individual customer, or apply a discount to each sale as needed. Tax rules can be configured per product or product category, ensuring compliance while keeping pricing simple for your staff to manage at the checkout.",
     items: [
-      "Daily, weekly & monthly sales reports",
-      "Product performance analytics",
-      "Staff performance tracking",
-      "Profit margin analysis",
+      "Per-product tax configuration",
+      "Customer-specific discounts",
+      "Per-sale discount application",
+      "Automatic tax calculation & rounding",
     ],
   },
   {
-    icon: Wifi,
-    title: "Offline Capability",
-    subtitle: "Never Stop Selling",
+    icon: FileBarChart,
+    title: "Comprehensive Reports",
+    subtitle: "Insights That Drive Decisions",
     description:
-      "Clipe POS works seamlessly even without an internet connection. Process sales, manage inventory, and serve customers offline — all data automatically syncs when your connection is restored, ensuring your business never misses a beat regardless of network conditions.",
+      "Clipe POS generates detailed reports on customers, product numbers, and monthly statistics for the current year or any previous year. You can also generate client or product reports within a specific date range, giving you the precise data you need to identify trends, plan inventory, and make informed business decisions.",
     items: [
-      "Full offline sales processing",
-      "Automatic data sync when online",
-      "Local data caching & storage",
-      "Seamless online/offline transition",
+      "Customer & product number reports",
+      "Monthly stats — current & prior years",
+      "Custom date-range reports",
+      "Exportable report formats",
     ],
   },
   {
-    icon: Shield,
-    title: "Security & Compliance",
-    subtitle: "Protect Your Business",
+    icon: ScanBarcode,
+    title: "Barcode Scanner Compatible",
+    subtitle: "Scan & Go",
     description:
-      "Clipe POS is built with enterprise-grade security to protect your business and customer data. Role-based access control, encrypted transactions, audit trails, and compliance with payment security standards ensure your operations remain safe, trusted, and legally compliant.",
+      "Clipe POS is fully compatible with barcode scanners for both products and sales receipts. Simply scan a product barcode to instantly add it to the cart, or scan a receipt barcode to quickly pull up a past transaction for returns or reference. This speeds up checkout and reduces manual entry errors significantly.",
     items: [
-      "Role-based user access control",
-      "Encrypted payment processing",
-      "Transaction audit trails",
-      "PCI-DSS compliance ready",
+      "Product barcode scanning",
+      "Receipt barcode lookup",
+      "Supports USB & Bluetooth scanners",
+      "Instant product lookup & add-to-cart",
+    ],
+  },
+  {
+    icon: Printer,
+    title: "Print & Save Receipts",
+    subtitle: "Professional Transaction Records",
+    description:
+      "Every sale generates a professional receipt that you can print immediately for the customer or save digitally for your records. Clipe POS supports thermal receipt printers and standard printers, and digital receipts can be stored for future reference, returns processing, or compliance requirements.",
+    items: [
+      "Thermal & standard printer support",
+      "Digital receipt storage",
+      "Custom receipt formatting",
+      "Receipt reprint capability",
+    ],
+  },
+  {
+    icon: PauseCircle,
+    title: "Hold Sales Option",
+    subtitle: "Pause & Resume Anytime",
+    description:
+      "Need to pause a transaction mid-sale? Clipe POS lets you place a sale on hold and resume it later without losing any data. This is perfect for situations where a customer needs to grab an additional item, a payment issue needs resolving, or another customer requires urgent attention at the counter.",
+    items: [
+      "Park & retrieve sales instantly",
+      "Unlimited held transactions",
+      "No data loss on hold/resume",
+      "Priority handling for urgent sales",
+    ],
+  },
+  {
+    icon: LayoutTemplate,
+    title: "Custom Receipt Header & Footer",
+    subtitle: "Brand Every Receipt",
+    description:
+      "Personalise your receipts with a custom header and footer. Add your business name, logo, contact details, promotional messages, return policies, or thank-you notes. Every receipt that leaves your store becomes a branded touchpoint that reinforces your business identity and keeps customers informed.",
+    items: [
+      "Custom business name & logo",
+      "Contact information & address",
+      "Promotional messages & offers",
+      "Return policy & legal disclaimers",
+    ],
+  },
+  {
+    icon: Zap,
+    title: "Optimised for Best Performance",
+    subtitle: "Speed You Can Rely On",
+    description:
+      "Clipe POS is engineered for speed and efficiency. Every action — from scanning a product to generating a report — is optimised to respond instantly, even during peak trading hours with high transaction volumes. No lag, no waiting, just a smooth experience that keeps your checkout lines moving and your customers happy.",
+    items: [
+      "Instant product lookup & checkout",
+      "Fast report generation",
+      "Handles high transaction volumes",
+      "Low system resource requirements",
+    ],
+  },
+  {
+    icon: Smartphone,
+    title: "Responsive & Multi-Device",
+    subtitle: "Works Everywhere You Do",
+    description:
+      "Clipe POS is fully responsive and runs on iPads, Android tablets, laptops, and desktop computers. Whether you prefer a touchscreen at the counter or a full keyboard at the back office, the interface adapts beautifully to any screen size. Use it online or deploy it locally — Clipe POS is a truly dynamic product that transforms your business on any device.",
+    items: [
+      "iPad & Android tablet support",
+      "Laptop & desktop compatible",
+      "Online or local deployment",
+      "Touch-optimised interface",
     ],
   },
 ];
 
 const highlights = [
   { icon: ShoppingCart, label: "Point of Sale" },
-  { icon: Receipt, label: "Fast Checkout" },
-  { icon: Package, label: "Inventory" },
-  { icon: Users, label: "Customer CRM" },
-  { icon: BarChart3, label: "Analytics" },
-  { icon: Wifi, label: "Offline Ready" },
+  { icon: Store, label: "Multi-Store" },
+  { icon: ScanBarcode, label: "Barcode Scanner" },
+  { icon: Smartphone, label: "Multi-Device" },
+  { icon: FileBarChart, label: "Reports" },
+  { icon: Wifi, label: "Online / Local" },
 ];
 
 export default function ClipePOSPage() {
@@ -140,9 +228,14 @@ export default function ClipePOSPage() {
                 POS
               </span>
             </h1>
-            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              A robust point-of-sale system built for retail businesses, restaurants, and service providers. Clipe POS handles sales transactions, inventory management, customer tracking, and detailed reporting — all in one easy-to-use platform that works online and offline to keep your business running without interruption.
-            </p>
+            <div className="max-w-3xl mx-auto space-y-5">
+              <p className="text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                Clipe POS Point of Sale app has a user-friendly interface that everyone can use without difficulty. The POS can be used online, on iPads, Android tablets, or laptops — say goodbye to ugly, expensive, outdated POS systems and enjoy the Clipe POS web interface designed for the modern retailer.
+              </p>
+              <p className="text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                Clipe POS can be hosted or deployed locally, making it a dynamic product to transform your business. Whether you operate a single store or manage multiple locations, Clipe POS adapts to your needs with powerful features wrapped in an intuitive interface that your staff will love from day one.
+              </p>
+            </div>
           </motion.div>
 
           {/* Highlight badges */}
@@ -188,7 +281,7 @@ export default function ClipePOSPage() {
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 * i }}
+                transition={{ duration: 0.5, delay: Math.min(0.15 * i, 0.9) }}
                 className="glass-card rounded-2xl p-8 md:p-10 hover-lift group"
               >
                 <div className="flex flex-col lg:flex-row gap-8">
@@ -232,6 +325,18 @@ export default function ClipePOSPage() {
               </motion.div>
             ))}
           </div>
+
+          {/* Coming soon note */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 1.2 }}
+            className="text-center mt-12"
+          >
+            <p className="text-gray-400 dark:text-silver/40 font-[family-name:var(--font-inter)] text-sm italic">
+              And many more features coming in future updates…
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -246,10 +351,10 @@ export default function ClipePOSPage() {
           >
             <div className="glass-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-                Interested in Clipe POS?
+                Ready to Transform Your Business?
               </h3>
               <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
-                Get in touch to request a demo, discuss pricing, or learn how Clipe POS can streamline your business operations.
+                Say goodbye to ugly, expensive, outdated POS systems. Get in touch to request a demo, discuss pricing, or learn how Clipe POS can streamline your business operations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/#contact">

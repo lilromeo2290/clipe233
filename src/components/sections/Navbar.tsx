@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -50,8 +50,32 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<string | null>(null);
   const pathname = usePathname();
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Stable close handler with short debounce to prevent flicker when moving between button and dropdown
+  const handleDropdownClose = useCallback(() => {
+    closeTimerRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 80);
+  }, []);
 
+  const handleDropdownOpen = useCallback((label: string) => {
+    // Cancel any pending close
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setOpenDropdown(label);
+  }, []);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,10 +178,10 @@ export default function Navbar() {
               {navLinks.map((link) =>
                 link.submenu ? (
                   <div
-                    key={link.href}
+                    key={link.label}
                     className="relative"
-                    onMouseEnter={() => setOpenDropdown(link.href)}
-                    onMouseLeave={() => setOpenDropdown(null)}
+                    onMouseEnter={() => handleDropdownOpen(link.label)}
+                    onMouseLeave={handleDropdownClose}
                   >
                     <button
                       onClick={() => handleLinkClick(link.href)}
@@ -170,45 +194,42 @@ export default function Navbar() {
                       {link.label}
                       <ChevronDown
                         className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                          openDropdown === link.href ? "rotate-180" : ""
+                          openDropdown === link.label ? "rotate-180" : ""
                         }`}
                       />
                     </button>
 
-                    {/* Dropdown */}
-                    <AnimatePresence>
-                      {openDropdown === link.href && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute top-full left-0 mt-1 min-w-[260px] glass rounded-xl shadow-xl shadow-gray-300/20 dark:shadow-black/40 border border-gray-200/60 dark:border-white/10 overflow-hidden"
-                        >
-                          <div className="py-2">
-                            {link.submenu.map((sub) => (
-                              <a
-                                key={sub.href + sub.label}
-                                href={sub.href}
-                                onClick={(e) => {
-                                  if (!sub.isPage) {
-                                    e.preventDefault();
-                                  }
-                                  handleLinkClick(sub.href, sub.isPage);
-                                }}
-                                className="flex items-center px-4 py-2.5 text-sm text-gray-600 dark:text-silver/70 hover:text-falu-light hover:bg-falu/5 dark:hover:bg-falu/10 transition-all duration-200 font-[family-name:var(--font-inter)]"
-                              >
-                                {sub.label}
-                              </a>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {/* Dropdown — no AnimatePresence to prevent overlap of two dropdowns */}
+                    {openDropdown === link.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.15, ease: "easeOut" }}
+                        className="absolute top-full left-0 mt-1 min-w-[260px] glass rounded-xl shadow-xl shadow-gray-300/20 dark:shadow-black/40 border border-gray-200/60 dark:border-white/10 overflow-hidden"
+                      >
+                        <div className="py-2">
+                          {link.submenu.map((sub) => (
+                            <a
+                              key={sub.href + sub.label}
+                              href={sub.href}
+                              onClick={(e) => {
+                                if (!sub.isPage) {
+                                  e.preventDefault();
+                                }
+                                handleLinkClick(sub.href, sub.isPage);
+                              }}
+                              className="flex items-center px-4 py-2.5 text-sm text-gray-600 dark:text-silver/70 hover:text-falu-light hover:bg-falu/5 dark:hover:bg-falu/10 transition-all duration-200 font-[family-name:var(--font-inter)]"
+                            >
+                              {sub.label}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
                   </div>
                 ) : (
                   <a
-                    key={link.href}
+                    key={link.label}
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();
@@ -271,7 +292,7 @@ export default function Navbar() {
             <div className="flex flex-col items-center gap-2 p-6 overflow-y-auto max-h-[calc(100vh-5rem)]">
               {navLinks.map((link, i) =>
                 link.submenu ? (
-                  <div key={link.href} className="w-full">
+                  <div key={link.label} className="w-full">
                     <div className="flex items-center w-full">
                       <button
                         onClick={() => handleLinkClick(link.href)}
@@ -286,11 +307,11 @@ export default function Navbar() {
                       <button
                         onClick={() =>
                           setMobileSubmenuOpen(
-                            mobileSubmenuOpen === link.href ? null : link.href
+                            mobileSubmenuOpen === link.label ? null : link.label
                           )
                         }
                         className={`p-3 rounded-lg transition-all ${
-                          mobileSubmenuOpen === link.href
+                          mobileSubmenuOpen === link.label
                             ? "text-falu-light bg-falu/10 dark:bg-falu/20"
                             : "text-gray-500 dark:text-silver/70 hover:text-gray-900 dark:hover:text-white"
                         }`}
@@ -298,14 +319,14 @@ export default function Navbar() {
                       >
                         <ChevronDown
                           className={`h-5 w-5 transition-transform duration-300 ${
-                            mobileSubmenuOpen === link.href ? "rotate-180" : ""
+                            mobileSubmenuOpen === link.label ? "rotate-180" : ""
                           }`}
                         />
                       </button>
                     </div>
                     {/* Mobile Submenu */}
                     <AnimatePresence>
-                      {mobileSubmenuOpen === link.href && (
+                      {mobileSubmenuOpen === link.label && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
@@ -336,7 +357,7 @@ export default function Navbar() {
                   </div>
                 ) : (
                   <motion.a
-                    key={link.href}
+                    key={link.label}
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();

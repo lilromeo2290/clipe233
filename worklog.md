@@ -259,3 +259,28 @@ Work Log:
 Stage Summary:
 - Successfully synced local changes to GitHub repository
 - Repository: https://github.com/lilromeo2290/clipe233.git
+---
+Task ID: 1
+Agent: Main
+Task: Update Clipe POS page with user-provided content and fix Navbar hover bug
+
+Work Log:
+- Rewrote `/home/z/my-project/src/app/clipe-pos/page.tsx` with user's provided hero content about the POS interface, multi-device support (iPads, Android tablets, laptops), and hosted/local deployment options
+- Replaced the 6 generic features with all 12 user-specified key features: Handling Multiple Customers, Handling Multiple Stores, Simple Stock Management, Register Report, Products with Taxes & Discounts, Comprehensive Reports, Barcode Scanner Compatible, Print & Save Receipts, Hold Sales Option, Custom Receipt Header & Footer, Optimised for Best Performance, Responsive & Multi-Device
+- Added new lucide-react icons for the new features (Store, Tag, FileBarChart, ScanBarcode, Printer, PauseCircle, LayoutTemplate, Zap, Smartphone)
+- Updated highlight badges to reflect new feature categories
+- Added "And many more features coming in future updates…" note at bottom of features section
+- Updated CTA section text to match the user's "say goodbye to ugly, expensive, outdated POS systems" messaging
+
+- Fixed Navbar hover bug in `/home/z/my-project/src/components/sections/Navbar.tsx`:
+  - Changed `openDropdown` state key from `link.href` to `link.label` for clearer, guaranteed-unique identification
+  - Removed `AnimatePresence` wrapper from desktop dropdowns to prevent exit animation overlap (the root cause of both submenus appearing simultaneously)
+  - Kept enter animation on dropdown (`initial` + `animate` on motion.div) for smooth appearance
+  - Added 80ms debounce on dropdown close using `useRef` timer to prevent flickering when moving between button and dropdown panel
+  - Changed all React keys from `link.href` to `link.label` for consistency
+  - Fixed `useRef` usage (was incorrectly using `useState` for timer ref)
+
+Stage Summary:
+- Clipe POS page now has all 12 user-specified features with detailed descriptions
+- Navbar hover bug fixed: only the hovered menu's submenu appears, no more simultaneous display
+- Build passes successfully
