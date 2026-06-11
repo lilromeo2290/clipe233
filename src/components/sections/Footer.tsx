@@ -147,7 +147,7 @@ export default function Footer() {
             <div className="mt-6 space-y-2">
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Mail className="h-4 w-4 text-falu-light" />
-                info@clipe233.com
+                clipe233eng@gmail.com
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Phone className="h-4 w-4 text-falu-light" />
