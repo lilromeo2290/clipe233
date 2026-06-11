@@ -438,7 +438,7 @@ export default function ClipeComplaintPage() {
                 Clipe CMS is a well-designed Complaint Management System that serves as a vital tool for organisations seeking to strengthen customer relationships, improve service delivery, and maintain high standards of accountability and transparency. Get in touch to request a demo.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

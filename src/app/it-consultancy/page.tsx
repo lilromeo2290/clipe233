@@ -270,7 +270,7 @@ export default function ITConsultancyPage() {
                 Let our consultants help you make the right technology decisions for your business. Get in touch today for a free initial consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

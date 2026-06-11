@@ -263,14 +263,15 @@ export default function HeroSection() {
               Get Started
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button
-              onClick={() => scrollTo("#contact")}
-              variant="outline"
-              size="lg"
-              className="border-falu/40 text-white hover:bg-falu/10 hover:border-falu px-8 py-6 text-lg font-[family-name:var(--font-inter)]"
-            >
-              Request Consultation
-            </Button>
+            <a href="/contact">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-falu/40 text-white hover:bg-falu/10 hover:border-falu px-8 py-6 text-lg font-[family-name:var(--font-inter)]"
+              >
+                Request Consultation
+              </Button>
+            </a>
           </motion.div>
 
           {/* Service highlights */}

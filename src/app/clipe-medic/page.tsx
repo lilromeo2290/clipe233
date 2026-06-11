@@ -381,7 +381,7 @@ export default function ClipeMedicPage() {
                 Get in touch to request a demo, discuss pricing, or learn how Clipe Medic can automate and streamline your hospital or medical centre operations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

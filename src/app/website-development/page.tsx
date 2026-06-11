@@ -221,7 +221,7 @@ export default function WebsiteDevelopmentPage() {
                 Let us create a professional online presence that enhances your brand and drives business growth. Get in touch today for a free consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

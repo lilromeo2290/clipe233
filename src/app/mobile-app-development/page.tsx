@@ -249,7 +249,7 @@ export default function MobileAppDevelopmentPage() {
                 Let us create a powerful mobile application that extends your digital presence and connects you with your users in real time. Get in touch today for a free consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

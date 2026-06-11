@@ -255,7 +255,7 @@ export default function SoftwareDevelopmentPage() {
                 Let us bring your software vision to life with clean code, modern architecture, and a focus on delivering real business value. Get in touch today.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

@@ -14,7 +14,6 @@ const IndustriesSection = dynamic(() => import("@/components/sections/Industries
 const TestimonialsSection = dynamic(() => import("@/components/sections/TestimonialsSection"), { ssr: false });
 const BlogSection = dynamic(() => import("@/components/sections/BlogSection"), { ssr: false });
 const CareersSection = dynamic(() => import("@/components/sections/CareersSection"), { ssr: false });
-const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), { ssr: false });
 const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
 const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
@@ -62,8 +61,6 @@ export default function Home() {
       <CareersSection />
 
       <div className="h-px bg-gradient-to-r from-transparent via-falu/20 dark:via-falu/30 to-transparent" />
-
-      <ContactSection />
 
       <Footer />
       <WhatsAppFloat />

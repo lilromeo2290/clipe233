@@ -20,7 +20,7 @@ const quickLinks = [
   { label: "What We Do", href: "#services" },
   { label: "Products", href: "/products" },
   { label: "Our Team", href: "#team" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const services = [

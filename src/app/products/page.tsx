@@ -252,7 +252,7 @@ export default function ProductsPage() {
                 Get in touch to learn more about our products, request a demo, or discuss how we can customise a solution for your business.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"

@@ -208,14 +208,15 @@ export default function ServicesSection() {
               </div>
 
               {/* CTA */}
-              <Button
-                variant="ghost"
-                className="text-falu-light hover:text-white hover:bg-falu/20 p-0 h-auto font-[family-name:var(--font-inter)] group/btn"
-                onClick={() => scrollTo("#contact")}
-              >
-                Learn More
-                <ArrowRight className="ml-1 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-              </Button>
+              <a href="/contact">
+                <Button
+                  variant="ghost"
+                  className="text-falu-light hover:text-white hover:bg-falu/20 p-0 h-auto font-[family-name:var(--font-inter)] group/btn"
+                >
+                  Learn More
+                  <ArrowRight className="ml-1 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
+              </a>
             </motion.div>
           ))}
         </div>
@@ -236,19 +237,21 @@ export default function ServicesSection() {
               solution that perfectly fits your requirements and budget.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                onClick={() => scrollTo("#contact")}
-                className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
-              >
-                Request a Quote
-              </Button>
-              <Button
-                onClick={() => scrollTo("#contact")}
-                variant="outline"
-                className="border-falu/40 text-falu-light hover:bg-falu/10 font-[family-name:var(--font-inter)]"
-              >
-                Schedule Consultation
-              </Button>
+              <a href="/contact">
+                <Button
+                  className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
+                >
+                  Request a Quote
+                </Button>
+              </a>
+              <a href="/contact">
+                <Button
+                  variant="outline"
+                  className="border-falu/40 text-falu-light hover:bg-falu/10 font-[family-name:var(--font-inter)]"
+                >
+                  Schedule Consultation
+                </Button>
+              </a>
             </div>
           </div>
         </motion.div>

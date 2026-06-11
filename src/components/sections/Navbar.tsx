@@ -40,7 +40,7 @@ const navLinks: NavLink[] = [
     ],
   },
   { label: "Our Team", href: "#team" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Contact Us", href: "/contact", isPage: true },
 ];
 
 export default function Navbar() {
@@ -250,12 +250,8 @@ export default function Navbar() {
             {/* Desktop CTA + Theme Toggle */}
             <div className="hidden lg:flex items-center gap-3">
               <ThemeToggle />
-              <a href="/#contact">
+              <a href="/contact">
                 <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLinkClick("#contact");
-                  }}
                   size="sm"
                   className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
                 >
@@ -377,12 +373,13 @@ export default function Navbar() {
                 )
               )}
               <div className="flex flex-col gap-3 w-full mt-4">
-                <Button
-                  onClick={() => handleLinkClick("#contact")}
-                  className="bg-falu hover:bg-falu-light text-white w-full font-[family-name:var(--font-inter)]"
-                >
-                  Request Consultation
-                </Button>
+                <a href="/contact" className="w-full">
+                  <Button
+                    className="bg-falu hover:bg-falu-light text-white w-full font-[family-name:var(--font-inter)]"
+                  >
+                    Request Consultation
+                  </Button>
+                </a>
               </div>
             </div>
           </motion.div>

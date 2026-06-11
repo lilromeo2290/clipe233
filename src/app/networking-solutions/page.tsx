@@ -256,7 +256,7 @@ export default function NetworkingSolutionsPage() {
                 Let us design and deploy a reliable network infrastructure tailored to your organisation. Get in touch today for a free site assessment and consultation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/#contact">
+                <a href="/contact">
                   <Button
                     size="lg"
                     className="bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
