@@ -232,8 +232,9 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={(e) => {
+                      if (link.isPage) return; // let browser navigate naturally
                       e.preventDefault();
-                      handleLinkClick(link.href, undefined, link.isHome);
+                      handleLinkClick(link.href, link.isPage, link.isHome);
                     }}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 font-[family-name:var(--font-inter)] ${
                       activeSection === link.href.replace("#", "")
@@ -356,8 +357,9 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={(e) => {
+                      if (link.isPage) return; // let browser navigate naturally
                       e.preventDefault();
-                      handleLinkClick(link.href, undefined, link.isHome);
+                      handleLinkClick(link.href, link.isPage, link.isHome);
                     }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

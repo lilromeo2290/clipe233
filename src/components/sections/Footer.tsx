@@ -87,6 +87,7 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => {
+                      if (link.href.startsWith("/")) return; // let page links navigate naturally
                       e.preventDefault();
                       scrollTo(link.href);
                     }}
