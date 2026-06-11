@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -47,21 +47,11 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<string | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,7 +89,7 @@ export default function Navbar() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
-    setDropdownOpen(false);
+    setOpenDropdown(null);
     const el = document.querySelector(href);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -109,13 +99,13 @@ export default function Navbar() {
   const handleLinkClick = (href: string, isPage?: boolean, isHome?: boolean) => {
     if (isPage) {
       setMobileOpen(false);
-      setDropdownOpen(false);
+      setOpenDropdown(null);
       return;
     }
     if (isHome && pathname !== "/") {
       window.location.href = "/#home";
       setMobileOpen(false);
-      setDropdownOpen(false);
+      setOpenDropdown(null);
       return;
     }
     if (pathname !== "/") {
@@ -165,10 +155,9 @@ export default function Navbar() {
                 link.submenu ? (
                   <div
                     key={link.href}
-                    ref={dropdownRef}
                     className="relative"
-                    onMouseEnter={() => setDropdownOpen(true)}
-                    onMouseLeave={() => setDropdownOpen(false)}
+                    onMouseEnter={() => setOpenDropdown(link.href)}
+                    onMouseLeave={() => setOpenDropdown(null)}
                   >
                     <button
                       onClick={() => handleLinkClick(link.href)}
@@ -181,14 +170,14 @@ export default function Navbar() {
                       {link.label}
                       <ChevronDown
                         className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                          dropdownOpen ? "rotate-180" : ""
+                          openDropdown === link.href ? "rotate-180" : ""
                         }`}
                       />
                     </button>
 
                     {/* Dropdown */}
                     <AnimatePresence>
-                      {dropdownOpen && (
+                      {openDropdown === link.href && (
                         <motion.div
                           initial={{ opacity: 0, y: 8, scale: 0.96 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
