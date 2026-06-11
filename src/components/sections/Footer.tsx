@@ -17,21 +17,18 @@ import { Input } from "@/components/ui/input";
 const quickLinks = [
   { label: "Home", href: "#home" },
   { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Industries", href: "#industries" },
-  { label: "Blog", href: "#blog" },
-  { label: "Careers", href: "#careers" },
+  { label: "What We Do", href: "#services" },
+  { label: "Products", href: "/products" },
+  { label: "Our Team", href: "#team" },
   { label: "Contact", href: "#contact" },
 ];
 
 const services = [
-  "Software Development",
-  "Website Design & Development",
-  "Graphic Design",
-  "Networking Installation",
-  "IT Consultancy",
-  "Software & Hardware Supply",
+  { label: "Website Development", href: "/website-development" },
+  { label: "Networking Solutions", href: "/networking-solutions" },
+  { label: "IT Consultancy / Training", href: "/it-consultancy" },
+  { label: "Mobile App Development", href: "/mobile-app-development" },
+  { label: "Software / Application Development", href: "/software-development" },
 ];
 
 const socialLinks = [
@@ -111,14 +108,10 @@ export default function Footer() {
               {services.map((service, i) => (
                 <li key={i}>
                   <a
-                    href="#services"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollTo("#services");
-                    }}
+                    href={service.href}
                     className="text-sm text-gray-500 dark:text-silver/60 hover:text-falu-light transition-colors font-[family-name:var(--font-inter)]"
                   >
-                    {service}
+                    {service.label}
                   </a>
                 </li>
               ))}
