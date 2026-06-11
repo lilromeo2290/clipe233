@@ -7,11 +7,20 @@ import {
   ArrowRight,
   CheckCircle2,
   Users,
-  Calendar,
-  CreditCard,
-  FileText,
-  Shield,
+  BedDouble,
+  Scissors,
   Pill,
+  FlaskConical,
+  FileBarChart,
+  Settings,
+  UserCog,
+  Database,
+  Stethoscope,
+  BarChart3,
+  ShieldCheck,
+  Globe,
+  ClipboardCheck,
+  Cpu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -20,99 +29,167 @@ const Navbar = dynamic(() => import("@/components/sections/Navbar"), { ssr: fals
 const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
 const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
-const features = [
+const modules = [
   {
-    icon: Users,
-    title: "Patient Records & Health History",
-    subtitle: "Comprehensive Patient Data",
+    icon: BedDouble,
+    title: "Patient Admission Module",
+    subtitle: "Streamlined Admissions & Discharges",
     description:
-      "Maintain complete and accurate patient records with Clipe Medic. From personal details and medical history to diagnoses, treatments, and follow-ups, every piece of patient information is securely stored and instantly accessible — enabling healthcare providers to deliver informed, continuous care.",
+      "Manage the entire patient admission and discharge workflow from a single module. Record patient demographics, assign wards and beds, track admission status, and process discharges with full billing integration. The module ensures that no bed stays unassigned and every patient transition is logged for accurate record-keeping and smooth handovers between departments.",
     items: [
-      "Digital patient profiles",
-      "Complete medical history",
-      "Diagnosis & treatment records",
-      "Lab results & imaging attachments",
+      "Patient demographics & registration",
+      "Ward & bed assignment management",
+      "Admission status tracking",
+      "Discharge processing & billing",
     ],
   },
   {
-    icon: Calendar,
-    title: "Appointment Scheduling & Management",
-    subtitle: "Efficient Calendar System",
+    icon: Scissors,
+    title: "Operation Theatre Management Module",
+    subtitle: "Surgical Scheduling & Tracking",
     description:
-      "Manage patient appointments effortlessly with Clipe Medic's intelligent scheduling system. Reduce no-shows with automated reminders, optimise doctor schedules, and handle walk-ins and follow-ups seamlessly — ensuring your clinic runs on time and patients receive timely care.",
+      "Plan, schedule, and manage all surgical procedures with the Operation Theatre Management Module. Track theatre availability, assign surgical teams, manage pre-operative checklists, and record post-operative notes — ensuring that every operation runs efficiently and that theatre time is utilised optimally without scheduling conflicts or resource shortfalls.",
     items: [
-      "Online & walk-in scheduling",
-      "Automated SMS & email reminders",
-      "Doctor availability management",
-      "Recurring appointment support",
-    ],
-  },
-  {
-    icon: CreditCard,
-    title: "Billing & Insurance Processing",
-    subtitle: "Streamlined Financial Workflows",
-    description:
-      "Simplify billing and insurance claims with Clipe Medic's integrated financial module. Generate invoices, process insurance claims, track outstanding balances, and manage payments — all from a single platform that reduces administrative burden and accelerates revenue collection.",
-    items: [
-      "Automated invoice generation",
-      "Insurance claim processing",
-      "Payment tracking & receipts",
-      "Outstanding balance management",
+      "Surgical scheduling & calendar",
+      "Theatre availability tracking",
+      "Surgical team assignment",
+      "Pre- & post-operative records",
     ],
   },
   {
     icon: Pill,
-    title: "Prescription & Pharmacy Integration",
-    subtitle: "Connected Care Delivery",
+    title: "Pharmacy Module",
+    subtitle: "Sales & Stock Management",
     description:
-      "Write and manage prescriptions digitally with Clipe Medic. prescriptions are securely transmitted to integrated pharmacies, reducing errors and wait times. Track prescription history, manage refills, and ensure patients receive the right medications promptly and safely.",
+      "Handle pharmacy sales and stock management directly within Clipe Medic. Dispense medications against prescriptions, track stock levels in real time, manage expiry dates, and generate pharmacy income reports. The module ensures that drug usage is properly monitored and that pharmaceutical supplies are always available when needed, reducing waste and preventing stockouts.",
     items: [
-      "Digital prescription writing",
-      "Pharmacy integration & transmission",
-      "Prescription history tracking",
-      "Drug interaction alerts",
+      "Prescription-based dispensing",
+      "Real-time stock level tracking",
+      "Expiry date management & alerts",
+      "Pharmacy sales & income reports",
     ],
   },
   {
-    icon: FileText,
-    title: "Reporting & Compliance",
-    subtitle: "Regulatory Ready",
+    icon: FlaskConical,
+    title: "Laboratory Module",
+    subtitle: "Testing & Results Management",
     description:
-      "Stay compliant with healthcare regulations using Clipe Medic's built-in reporting tools. Generate clinical, operational, and financial reports that meet regulatory requirements, support audits, and provide the transparency needed to maintain trust and accountability in your healthcare operations.",
+      "Manage all laboratory and testing operations with the Laboratory Module. Log test requests, track sample processing, record results, and deliver reports to doctors and patients. The module integrates with the patient admission and pharmacy modules, ensuring that test results feed directly into treatment decisions and billing, creating a seamless diagnostic workflow.",
     items: [
-      "Clinical & operational reports",
-      "Regulatory compliance templates",
-      "Audit trail & data logging",
+      "Test request logging & tracking",
+      "Sample processing management",
+      "Results recording & reporting",
+      "Laboratory income reporting",
+    ],
+  },
+  {
+    icon: FileBarChart,
+    title: "Reports Module",
+    subtitle: "Comprehensive Revenue & Operational Reports",
+    description:
+      "Generate virtually every report needed for efficient hospital management. The Reports Module produces categorised income reports covering admissions, operations and procedures, pharmacy sales, and laboratory income. High-level executive revenue reports are available on a daily, monthly, and yearly basis, giving hospital authorities the data they need to develop comprehensive health care policies and make informed strategic decisions.",
+    items: [
+      "Admission & operations income reports",
+      "Pharmacy & laboratory income reports",
+      "Daily, monthly & yearly executive reports",
       "Custom report generation",
     ],
   },
   {
-    icon: Shield,
-    title: "Security & Data Protection",
-    subtitle: "Patient Privacy First",
+    icon: Settings,
+    title: "Settings & Configuration Module",
+    subtitle: "Tailor the System to Your Facility",
     description:
-      "Clipe Medic prioritises patient data security with industry-leading protection measures. End-to-end encryption, role-based access, audit trails, and compliance with healthcare data protection standards ensure that sensitive medical information remains confidential and secure at all times.",
+      "Configure Clipe Medic to match your facility's specific workflows, pricing structures, department setups, and operational rules. The Settings & Configuration Module lets administrators define wards, services, fee schedules, and operational parameters so the system works exactly the way your hospital or clinic operates — without forcing you to adapt to rigid, one-size-fits-all software.",
     items: [
-      "End-to-end data encryption",
-      "Role-based access control",
-      "Audit trail & activity logging",
-      "Healthcare compliance standards",
+      "Ward & department configuration",
+      "Fee schedule & pricing setup",
+      "Service & procedure definitions",
+      "Workflow rule customisation",
+    ],
+  },
+  {
+    icon: UserCog,
+    title: "Users Management Module",
+    subtitle: "Role-Based Access & Responsibilities",
+    description:
+      "Control who can access what within Clipe Medic through the Users Management Module. Create different user groups with their own responsibilities and permission levels, ensuring that doctors, nurses, pharmacists, lab technicians, and administrators each see only the tools and data relevant to their role. This protects patient confidentiality, reduces errors, and keeps your system organised and secure.",
+    items: [
+      "User account creation & management",
+      "Group-based responsibility assignment",
+      "Role-based permission levels",
+      "Activity logging per user",
+    ],
+  },
+  {
+    icon: Database,
+    title: "Database Backup & Restore Module",
+    subtitle: "Protect Your Data",
+    description:
+      "Safeguard your hospital's critical data with the Database Backup & Restore Module. Schedule automatic backups, perform manual backups before major changes, and restore data quickly in the event of hardware failure, accidental deletion, or system migration. All modules are well-documented and come with a development guide, making it easy for your IT team to manage and maintain the system.",
+    items: [
+      "Scheduled automatic backups",
+      "Manual backup on demand",
+      "Quick data restore capability",
+      "Development guide & documentation",
     ],
   },
 ];
 
+const benefits = [
+  {
+    icon: Stethoscope,
+    title: "Easy Access to Doctors' Data",
+    description:
+      "Generate varied records based on demographics, gender, age, and more. This is especially beneficial at ambulatory (outpatient) points, enhancing continuity of care. Internet-based access also improves the ability to remotely access such data, enabling doctors to review patient information from anywhere at any time.",
+  },
+  {
+    icon: BarChart3,
+    title: "Decision Support for Hospital Authorities",
+    description:
+      "Clipe Medic serves as a decision support system for hospital authorities, providing the data and insights needed for developing comprehensive health care policies. With detailed revenue and operational reports always at hand, leadership can make evidence-based decisions that improve patient outcomes and financial sustainability.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Efficient & Accurate Administration",
+    description:
+      "Achieve efficient and accurate administration of finance, patient diet, engineering, and distribution of medical aid. Clipe Medic helps hospital administrators view a broad picture of hospital growth, identify areas for improvement, and ensure that resources are allocated where they are needed most.",
+  },
+  {
+    icon: Pill,
+    title: "Improved Drug Usage Monitoring",
+    description:
+      "Monitor drug usage and study effectiveness across your facility. This leads to the reduction of adverse drug interactions while promoting more appropriate pharmaceutical utilisation. Clipe Medic's pharmacy module tracks every dispensed medication, making it easy to identify patterns, flag concerns, and optimise formulary decisions.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Enhanced Information Integrity",
+    description:
+      "Reduce transcription errors and eliminate duplication of information entries. Clipe Medic ensures that data is entered once and flows accurately throughout the system, preventing the inconsistencies and mistakes that arise from manual, paper-based record-keeping across multiple departments.",
+  },
+  {
+    icon: Cpu,
+    title: "Easy to Use & Error-Free",
+    description:
+      "Hospital software is easy to use and eliminates errors caused by handwriting. New technology computer systems give perfect performance to pull up information from a server or cloud servers. Clipe Medic's intuitive interface means staff can be trained quickly, and the system's reliability ensures that critical patient data is always available when needed.",
+  },
+];
+
 const highlights = [
-  { icon: HeartPulse, label: "Medical Practice" },
-  { icon: Users, label: "Patient Records" },
-  { icon: Calendar, label: "Appointments" },
-  { icon: CreditCard, label: "Billing" },
-  { icon: Pill, label: "Prescriptions" },
-  { icon: Shield, label: "Secure" },
+  { icon: HeartPulse, label: "Hospital Management" },
+  { icon: BedDouble, label: "Admissions" },
+  { icon: Scissors, label: "Operation Theatre" },
+  { icon: Pill, label: "Pharmacy" },
+  { icon: FlaskConical, label: "Laboratory" },
+  { icon: FileBarChart, label: "Reports" },
+  { icon: Database, label: "Backup & Restore" },
 ];
 
 export default function ClipeMedicPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const benefitsRef = useRef(null);
+  const benefitsInView = useInView(benefitsRef, { once: true, margin: "-100px" });
 
   return (
     <main className="min-h-screen bg-background">
@@ -140,9 +217,14 @@ export default function ClipeMedicPage() {
                 Medic
               </span>
             </h1>
-            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              A powerful medical practice management solution designed for clinics, hospitals, and healthcare providers. Clipe Medic streamlines patient records, appointments, billing, and prescriptions — enabling healthcare professionals to focus on patient care while maintaining accurate and secure medical records.
-            </p>
+            <div className="max-w-3xl mx-auto space-y-5">
+              <p className="text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                Advanced management software for hospitals, clinics, and doctors&apos; offices. Clipe Medic (Hospital Management Information System) is a complete hospital/medical centre automation solution covering all the processes that medical facilities have.
+              </p>
+              <p className="text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+                From Patient Admissions &amp; Discharges, Operation Theatre Management, Pharmacy Sales &amp; Stock Management, Laboratory &amp; Testing Management, Doctors/Staff Management, Patient Accounts Management, and Comprehensive Reporting — Clipe Medic generates categorised income reports such as admissions, operations/procedures, pharmacy sales, laboratory income reports, and high-level executive revenue reports on a daily, monthly, and yearly basis.
+              </p>
+            </div>
           </motion.div>
 
           {/* Highlight badges */}
@@ -165,7 +247,7 @@ export default function ClipeMedicPage() {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Modules */}
       <section ref={ref} className="py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -175,20 +257,23 @@ export default function ClipeMedicPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Key{" "}
+              System{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Features
+                Modules
               </span>
             </h2>
+            <p className="max-w-2xl mx-auto mt-4 text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)]">
+              All modules are well-documented and come with the development guide, making implementation and customisation straightforward.
+            </p>
           </motion.div>
 
           <div className="space-y-8">
-            {features.map((feature, i) => (
+            {modules.map((feature, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 * i }}
+                transition={{ duration: 0.5, delay: Math.min(0.15 * i, 0.9) }}
                 className="glass-card rounded-2xl p-8 md:p-10 hover-lift group"
               >
                 <div className="flex flex-col lg:flex-row gap-8">
@@ -235,6 +320,50 @@ export default function ClipeMedicPage() {
         </div>
       </section>
 
+      {/* Benefits */}
+      <section ref={benefitsRef} className="py-20 lg:py-28 bg-gray-50/50 dark:bg-black/20 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
+              Benefits of Clipe{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
+                Medic
+              </span>
+            </h2>
+            <p className="max-w-2xl mx-auto mt-4 text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)]">
+              A Hospital Management System designed to transform every aspect of your medical facility&apos;s operations.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {benefits.map((benefit, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: Math.min(0.1 * i, 0.6) }}
+                className="glass-card rounded-2xl p-8 hover-lift group"
+              >
+                <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center mb-5 group-hover:bg-falu/30 transition-colors">
+                  <benefit.icon className="h-7 w-7 text-falu-light" />
+                </div>
+                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed">
+                  {benefit.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -246,10 +375,10 @@ export default function ClipeMedicPage() {
           >
             <div className="glass-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 font-[family-name:var(--font-poppins)]">
-                Interested in Clipe Medic?
+                Ready to Modernise Your Hospital?
               </h3>
               <p className="text-gray-500 dark:text-silver/70 mb-6 font-[family-name:var(--font-inter)]">
-                Get in touch to request a demo, discuss pricing, or learn how Clipe Medic can transform your medical practice.
+                Get in touch to request a demo, discuss pricing, or learn how Clipe Medic can automate and streamline your hospital or medical centre operations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/#contact">
