@@ -6,12 +6,13 @@ import {
   GraduationCap,
   ArrowRight,
   CheckCircle2,
-  Users,
-  BookOpen,
-  CreditCard,
-  Calendar,
-  BarChart3,
   Shield,
+  Settings,
+  BookOpen,
+  Users,
+  UserCheck,
+  Cloud,
+  Monitor,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -20,94 +21,78 @@ const Navbar = dynamic(() => import("@/components/sections/Navbar"), { ssr: fals
 const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
 const WhatsAppFloat = dynamic(() => import("@/components/sections/WhatsAppFloat"), { ssr: false });
 
-const features = [
+const modules = [
   {
-    icon: Users,
-    title: "Student Enrollment & Records",
-    subtitle: "Centralised Student Data",
+    icon: Settings,
+    title: "Admin Panel",
+    subtitle: "Full Institutional Control",
     description:
-      "Manage the entire student lifecycle from admission to graduation. Clipe School provides a centralised platform for enrolling students, maintaining academic and personal records, and tracking progress throughout their educational journey. All data is securely stored and easily accessible for authorised staff.",
+      "The Admin Panel gives school administrators complete control over every aspect of the institution. From managing user accounts and class routines to overseeing finances, events, and system settings — everything is accessible from a single, intuitive dashboard designed for efficiency and ease of use.",
     items: [
-      "Online & offline enrollment",
-      "Student profile management",
-      "Academic history tracking",
-      "Document & certificate storage",
-    ],
-  },
-  {
-    icon: Calendar,
-    title: "Attendance Tracking & Reporting",
-    subtitle: "Real-Time Attendance Data",
-    description:
-      "Track student and staff attendance with ease using Clipe School's automated attendance system. Generate detailed reports, identify attendance patterns, and receive alerts for chronic absenteeism — all in real time, helping institutions maintain accountability and improve student outcomes.",
-    items: [
-      "Daily & period-based attendance",
-      "Automated absence notifications",
-      "Attendance trend analytics",
-      "Parent portal integration",
+      "Managing user accounts (teacher, student, and parent)",
+      "Managing classes and subjects",
+      "Managing class routines",
+      "Managing exams and grades",
+      "Managing exam marks",
+      "Sending exam marks via SMS",
+      "Managing students' attendance",
+      "Managing accounting, income, and expenses",
+      "Managing school events",
+      "Managing library, dormitory, and transport",
+      "Messaging between other users",
+      "Managing system settings (general, SMS, and language)",
     ],
   },
   {
     icon: BookOpen,
-    title: "Grading & Transcript Generation",
-    subtitle: "Accurate Academic Records",
+    title: "Teacher Panel",
+    subtitle: "Empower Educators",
     description:
-      "Simplify the grading process with Clipe School's flexible grading system. Support for multiple grading schemes, automated GPA calculations, and one-click transcript generation ensure that academic records are accurate, consistent, and ready whenever they are needed.",
+      "The Teacher Panel equips educators with the tools they need to manage their students effectively. From recording exam marks and attendance to sharing study materials, teachers can handle their day-to-day academic responsibilities efficiently — freeing up more time for actual teaching and student engagement.",
     items: [
-      "Customisable grading scales",
-      "Automated GPA calculation",
-      "Report card generation",
-      "Official transcript export",
+      "Managing students",
+      "Managing exam marks",
+      "Provide study materials/files to students",
+      "Managing attendance",
     ],
   },
   {
-    icon: CreditCard,
-    title: "Fee Management & Payment Tracking",
-    subtitle: "Financial Administration",
+    icon: Users,
+    title: "Student Panel",
+    subtitle: "Student Self-Service",
     description:
-      "Streamline fee collection and financial management with Clipe School's integrated fee module. Set up fee structures, track payments, send reminders for outstanding balances, and generate comprehensive financial reports that keep your institution's finances organised and transparent.",
+      "The Student Panel gives learners direct access to their academic information anytime, anywhere. Students can view their class routines, check exam marks, track attendance, download study materials, pay invoices online, and communicate with their teachers — all from a simple, mobile-friendly interface.",
     items: [
-      "Flexible fee structure setup",
-      "Online & offline payment tracking",
-      "Automated balance reminders",
-      "Financial reporting & receipts",
+      "Get class routines",
+      "Get exam marks",
+      "Get attendance status",
+      "Get study materials/files from teacher",
+      "Get payment invoices and pay online",
+      "Communicate with teacher",
     ],
   },
   {
-    icon: BarChart3,
-    title: "Analytics & Reporting Dashboard",
-    subtitle: "Data-Driven Decisions",
+    icon: UserCheck,
+    title: "Parent Panel",
+    subtitle: "Stay Connected",
     description:
-      "Gain valuable insights into your institution's performance with Clipe School's analytics dashboard. Visualise enrollment trends, academic performance, financial data, and attendance metrics — empowering administrators to make informed, data-driven decisions that improve outcomes across the board.",
+      "The Parent Panel keeps parents actively involved in their children's education. With real-time access to grades, payment invoices, class routines, and direct messaging with teachers, parents stay informed and engaged — fostering a stronger partnership between home and school that supports student success.",
     items: [
-      "Enrollment & demographic analytics",
-      "Academic performance trends",
-      "Financial overview & forecasting",
-      "Custom report builder",
-    ],
-  },
-  {
-    icon: Shield,
-    title: "Security & Access Control",
-    subtitle: "Protect Sensitive Data",
-    description:
-      "Clipe School is built with security at its core. Role-based access control, data encryption, audit logs, and secure authentication ensure that sensitive student and institutional data is protected at all times, meeting regulatory compliance requirements and giving administrators peace of mind.",
-    items: [
-      "Role-based access control",
-      "Data encryption at rest & in transit",
-      "Audit trail & activity logging",
-      "Two-factor authentication",
+      "Get children's marks",
+      "Get children's payment invoices",
+      "Get children's class routines",
+      "Messaging with teachers",
     ],
   },
 ];
 
 const highlights = [
-  { icon: GraduationCap, label: "School Management" },
-  { icon: Users, label: "Student Records" },
-  { icon: Calendar, label: "Attendance" },
-  { icon: BookOpen, label: "Grading" },
-  { icon: CreditCard, label: "Fee Tracking" },
-  { icon: Shield, label: "Secure" },
+  { icon: Settings, label: "Admin Panel" },
+  { icon: BookOpen, label: "Teacher Panel" },
+  { icon: Users, label: "Student Panel" },
+  { icon: UserCheck, label: "Parent Panel" },
+  { icon: Cloud, label: "Cloud or On-Premises" },
+  { icon: Shield, label: "24x7 Access" },
 ];
 
 export default function ClipeSchoolPage() {
@@ -141,7 +126,16 @@ export default function ClipeSchoolPage() {
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              A comprehensive school management system designed to streamline administrative tasks, student enrollment, grading, attendance tracking, and fee management for educational institutions of all sizes. Built with modern technology and an intuitive interface, it empowers schools to operate efficiently and focus on delivering quality education.
+              Managing a school in this modern day requires a robust application that allows you to manage admissions, students, fees, teachers, payroll, facilities, and many other functions from one single system running on one database, so you won&apos;t have to repeatedly duplicate efforts, waste time, and lose money.
+            </p>
+            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
+              Our school management system is a complete suite of applications that permits you to automate all aspects of your school or college management, from your administrators to teachers, and students and parents. Parents can view or be alerted to absences, grades, assignments, and school events. Students can view their grades, timetable, and assignments, and receive assistance outside of the classroom. Manage all student affairs, human resources, library, transport, hostel, finance, etc. from one efficient system.
+            </p>
+            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
+              Clipe School deployment is affordable, feature-rich, and user-friendly. It can be deployed in the computer network on your premises (Enterprise Version) or in our cloud infrastructure (web-based) with a monthly subscription. Deploying it in the cloud makes it accessible to all users anywhere in the world; parents will particularly love this feature.
+            </p>
+            <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
+              24x7 access to your administrators, teachers, students, parents, and accountant. The application provides access to all your stakeholders who get to monitor comprehensively. We have also simplified the complexity of user privileges so that you don&apos;t need to worry about them.
             </p>
           </motion.div>
 
@@ -165,7 +159,42 @@ export default function ClipeSchoolPage() {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Deployment Options */}
+      <section className="py-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+          >
+            <div className="glass-card rounded-2xl p-8 text-center hover-lift group">
+              <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-falu/30 transition-colors">
+                <Monitor className="h-7 w-7 text-falu-light" />
+              </div>
+              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
+                Enterprise Version
+              </h3>
+              <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] mt-2 leading-relaxed">
+                Deployed on your premises within your computer network. Full control over your infrastructure with one-time licensing and local data storage for maximum privacy and customisation.
+              </p>
+            </div>
+            <div className="glass-card rounded-2xl p-8 text-center hover-lift group">
+              <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-falu/30 transition-colors">
+                <Cloud className="h-7 w-7 text-falu-light" />
+              </div>
+              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
+                Cloud Version
+              </h3>
+              <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] mt-2 leading-relaxed">
+                Hosted on our cloud infrastructure with a monthly subscription. Accessible to all users anywhere in the world — parents will particularly love this feature. No server setup required.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Modules */}
       <section ref={ref} className="py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -175,15 +204,15 @@ export default function ClipeSchoolPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]">
-              Key{" "}
+              Clipe School{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-                Features
+                Modules
               </span>
             </h2>
           </motion.div>
 
           <div className="space-y-8">
-            {features.map((feature, i) => (
+            {modules.map((mod, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
@@ -195,33 +224,33 @@ export default function ClipeSchoolPage() {
                   <div className="lg:flex-1">
                     <div className="flex items-start gap-5 mb-4">
                       <div className="w-14 h-14 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 group-hover:bg-falu/30 transition-colors">
-                        <feature.icon className="h-7 w-7 text-falu-light" />
+                        <mod.icon className="h-7 w-7 text-falu-light" />
                       </div>
                       <div>
                         <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] group-hover:text-falu-light transition-colors">
-                          {feature.title}
+                          {mod.title}
                         </h3>
                         <span className="text-falu-light text-sm font-semibold font-[family-name:var(--font-inter)]">
-                          {feature.subtitle}
+                          {mod.subtitle}
                         </span>
                       </div>
                     </div>
                     <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed mt-2">
-                      {feature.description}
+                      {mod.description}
                     </p>
                   </div>
                   <div className="lg:w-80 flex-shrink-0">
                     <div className="glass-card rounded-xl p-6">
                       <span className="text-sm font-semibold text-falu-light font-[family-name:var(--font-inter)] uppercase tracking-wider">
-                        What&apos;s Included
+                        Capabilities
                       </span>
                       <div className="mt-4 space-y-3">
-                        {feature.items.map((item, j) => (
+                        {mod.items.map((item, j) => (
                           <div
                             key={j}
-                            className="flex items-center gap-2 text-sm text-gray-600 dark:text-silver/70 font-[family-name:var(--font-inter)]"
+                            className="flex items-start gap-2 text-sm text-gray-600 dark:text-silver/70 font-[family-name:var(--font-inter)]"
                           >
-                            <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0" />
+                            <CheckCircle2 className="h-4 w-4 text-falu-light flex-shrink-0 mt-0.5" />
                             {item}
                           </div>
                         ))}
