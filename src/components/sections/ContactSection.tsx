@@ -218,24 +218,6 @@ export default function ContactSection() {
               </div>
             </a>
 
-            {/* Social Links */}
-            <div className="glass-card rounded-xl p-5">
-              <span className="text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)] mb-3 block">
-                Follow Us
-              </span>
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social, i) => (
-                  <a
-                    key={i}
-                    href={social.href}
-                    aria-label={social.label}
-                    className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-silver/60 hover:bg-falu/20 hover:text-falu-light transition-all duration-300"
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </a>
-                ))}
-              </div>
-            </div>
 
 
           </motion.div>
