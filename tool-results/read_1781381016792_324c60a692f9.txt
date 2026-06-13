@@ -1,0 +1,561 @@
+     1→"use client";
+     2→
+     3→import { motion, useInView } from "framer-motion";
+     4→import { useRef } from "react";
+     5→import {
+     6→  Target,
+     7→  Eye,
+     8→  Heart,
+     9→  Lightbulb,
+    10→  Shield,
+    11→  Zap,
+    12→  Users,
+    13→  Award,
+    14→  MapPin,
+    15→  Radio,
+    16→} from "lucide-react";
+    17→
+    18→const timelineItems = [
+    19→  {
+    20→    year: "2016",
+    21→    title: "Founded as Clipe Technologies",
+    22→    description:
+    23→      "Clipe Technologies (Clipetech) was initiated on 20th April, 2016 in a dorm studio of Kull FM, in Ho. From these humble beginnings, the company set out with a clear emphasis on software development, website designing, graphic designing, network installation, software/hardware supply and consultations in different fields utilizing Information Technology.",
+    24→  },
+    25→  {
+    26→    year: "2025",
+    27→    title: "Rebranded as Clipe233 Engineers",
+    28→    description:
+    29→      "In 2025, Clipe Technologies (Clipetech) was rebranded and officially registered as Clipe233 Engineers. The rebrand marked a new era of growth, reflecting evolved capabilities and a renewed commitment to providing quality orientated products and services to each and every client that it services.",
+    30→  },
+    31→];
+    32→
+    33→const values = [
+    34→  {
+    35→    icon: Lightbulb,
+    36→    title: "Innovation",
+    37→    description:
+    38→      "We embrace cutting-edge technologies and creative approaches to solve complex business challenges, constantly pushing the boundaries of what is possible.",
+    39→  },
+    40→  {
+    41→    icon: Shield,
+    42→    title: "Quality Orientation",
+    43→    description:
+    44→      "We aim to provide quality orientated products and services to each and every client that we service, ensuring every deliverable meets the highest standards of excellence.",
+    45→  },
+    46→  {
+    47→    icon: Zap,
+    48→    title: "Excellence",
+    49→    description:
+    50→      "We are committed to delivering exceptional quality in every solution we build, ensuring reliability, performance, and user satisfaction.",
+    51→  },
+    52→  {
+    53→    icon: Users,
+    54→    title: "Collaboration",
+    55→    description:
+    56→      "Our process involves direct interaction between our expert project team and yours. With your feedback and a stimulating back-and-forth dynamics, we refine our work to deliver high-value, measurable results.",
+    57→  },
+    58→  {
+    59→    icon: Heart,
+    60→    title: "Youthful Passion",
+    61→    description:
+    62→      "Our youthful passion drives us to help businesses, companies and entities understand, build and express their message to support communication and business processes into a single marketing strategy.",
+    63→  },
+    64→  {
+    65→    icon: Award,
+    66→    title: "African Excellence",
+    67→    description:
+    68→      "We take pride in our roots, showcasing African tech talent on the global stage and building solutions that address local and continental challenges.",
+    69→  },
+    70→];
+    71→
+    72→export default function AboutSection() {
+    73→  const ref = useRef(null);
+    74→  const isInView = useInView(ref, { once: true, margin: "-100px" });
+    75→
+    76→  return (
+    77→    <section id="about" className="relative py-24 lg:py-32 overflow-hidden">
+    78→      {/* Background elements */}
+    79→      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-falu/3 blur-[120px]" />
+    80→      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-falu/2 blur-[100px]" />
+    81→
+    82→      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    83→        {/* Section header */}
+    84→        <motion.div
+    85→          initial={{ opacity: 0, y: 30 }}
+    86→          animate={isInView ? { opacity: 1, y: 0 } : {}}
+    87→          transition={{ duration: 0.6 }}
+    88→          className="text-center mb-20"
+    89→        >
+    90→          <span className="text-falu-light text-sm font-semibold tracking-wider uppercase font-[family-name:var(--font-inter)]">
+    91→            About Us
+    92→          </span>
+    93→          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
+    94→            From Clipetech to{" "}
+    95→            <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
+    96→              Clipe233 Engineers
+    97→            </span>
+    98→          </h2>
+    99→          <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+   100→            What started in a dorm studio of Kull FM in Ho has grown into a
+   101→            trusted IT and engineering firm. Our story is one of passion,
+   102→            resilience, and an unwavering commitment to engineering digital
+   103→            possibilities for businesses across Ghana.
+   104→          </p>
+   105→        </motion.div>
+   106→
+   107→        {/* Company Story */}
+   108→        <motion.div
+   109→          initial={{ opacity: 0, y: 30 }}
+   110→          animate={isInView ? { opacity: 1, y: 0 } : {}}
+   111→          transition={{ duration: 0.6, delay: 0.1 }}
+   112→          className="max-w-4xl mx-auto mb-20"
+   113→        >
+   114→          <div className="glass-card rounded-2xl p-8 md:p-12">
+   115→            {/* Origin */}
+   116→            <div className="flex items-start gap-4 mb-8">
+   117→              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+   118→                <Radio className="h-6 w-6 text-falu-light" />
+   119→              </div>
+   120→              <div>
+   121→                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+   122→                  Our Origin
+   123→                </h3>
+   124→                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+   125→                  Clipe Technologies (Clipetech) was initiated on 20th April,
+   126→                  2016 in a dorm studio of Kull FM, in Ho with clear emphasis
+   127→                  in software development, website designing, graphic
+   128→                  designing, network installation, software/hardware supply and
+   129→                  consultations in different fields utilizing Information
+   130→                  Technology.
+   131→                </p>
+   132→              </div>
+   133→            </div>
+   134→
+   135→            {/* Separator */}
+   136→            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+   137→
+   138→            {/* Rebrand */}
+   139→            <div className="flex items-start gap-4 mb-8">
+   140→              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+   141→                <Award className="h-6 w-6 text-falu-light" />
+   142→              </div>
+   143→              <div>
+   144→                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+   145→                  Our Evolution
+   146→                </h3>
+   147→                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+   148→                  In 2025, Clipe Technologies (Clipetech) was rebranded and
+   149→                  officially registered as Clipe233 Engineers. The company aims
+   150→                  to provide quality orientated products and services to each
+   151→                  and every client that it services.
+   152→                </p>
+   153→              </div>
+   154→            </div>
+   155→
+   156→            {/* Separator */}
+   157→            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+   158→
+   159→            {/* Philosophy */}
+   160→            <div className="flex items-start gap-4 mb-8">
+   161→              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+   162→                <Target className="h-6 w-6 text-falu-light" />
+   163→              </div>
+   164→              <div>
+   165→                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+   166→                  Our Philosophy
+   167→                </h3>
+   168→                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+   169→                  The company&apos;s youthful passion is to help businesses,
+   170→                  companies and entities understand, build and express their
+   171→                  message to support communication and business processes into a
+   172→                  single marketing strategy. As technology and applications
+   173→                  develop, questions arise about the implementation of the
+   174→                  latest and greatest. Our select team of strategists, networking
+   175→                  engineers, website developers and programmers combine
+   176→                  extensive experience and skills to answer those questions.
+   177→                </p>
+   178→              </div>
+   179→            </div>
+   180→
+   181→            {/* Separator */}
+   182→            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+   183→
+   184→            {/* Process */}
+   185→            <div className="flex items-start gap-4 mb-8">
+   186→              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+   187→                <Users className="h-6 w-6 text-falu-light" />
+   188→              </div>
+   189→              <div>
+   190→                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+   191→                  Our Process
+   192→                </h3>
+   193→                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+   194→                  Our process involves direct interaction between our expert
+   195→                  project team and yours. With your feedback and a stimulating
+   196→                  back-and-forth dynamics, we refine our work to deliver
+   197→                  high-value, measurable results always ensuring more efficient
+   198→                  relations.
+   199→                </p>
+   200→              </div>
+   201→            </div>
+   202→
+   203→            {/* Separator */}
+   204→            <div className="h-px bg-gradient-to-r from-transparent via-falu/20 to-transparent my-6" />
+   205→
+   206→            {/* Location */}
+   207→            <div className="flex items-start gap-4">
+   208→              <div className="w-12 h-12 rounded-xl bg-falu/20 flex items-center justify-center flex-shrink-0 mt-1">
+   209→                <MapPin className="h-6 w-6 text-falu-light" />
+   210→              </div>
+   211→              <div>
+   212→                <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">
+   213→                  Our Location
+   214→                </h3>
+   215→                <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
+   216→                  Clipe233 Engineers main office is operated virtually from Ho,
+   217→                  in the Volta Region of Ghana.
+   218→                </p>
+   219→              </div>
+   220→            </div>
+   221→          </div>
+   222→        </motion.div>
+   223→
+   224→        {/* Timeline */}
+   225→        <motion.div
+   226→          initial={{ opacity: 0, y: 30 }}
+   227→          animate={isInView ? { opacity: 1, y: 0 } : {}}
+   228→          transition={{ duration: 0.6, delay: 0.3 }}
+   229→          className="mb-20"
+   230→        >
+   231→          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
+   232→            Our Journey
+   233→          </h3>
+   234→          <div className="relative">
+   235→            {/* Vertical line */}
+   236→            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-falu/50 via-falu/20 to-transparent" />
+   237→
+   238→            <div className="space-y-12">
+   239→              {timelineItems.map((item, i) => (
+   240→                <motion.div
+   241→                  key={i}
+   242→                  initial={{ opacity: 0, y: 30 }}
+   243→                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+   244→                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+   245→                  className={`relative flex flex-col md:flex-row items-start gap-6 ${
+   246→                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+   247→                  }`}
+   248→                >
+   249→                  {/* Dot */}
+   250→                  <div className="absolute left-4 md:left-1/2 w-3 h-3 -translate-x-1/2 rounded-full bg-falu-light glow-red-sm mt-2 z-10" />
+   251→
+   252→                  {/* Content */}
+   253→                  <div
+   254→                    className={`ml-12 md:ml-0 md:w-1/2 ${
+   255→                      i % 2 === 0 ? "md:pr-16 md:text-right" : "md:pl-16"
+   256→                    }`}
+   257→                  >
+   258→                    <span className="text-falu-light font-bold text-lg font-[family-name:var(--font-space-grotesk)]">
+   259→                      {item.year}
+   260→                    </span>
+   261→                    <h4 className="text-xl font-semibold mt-1 mb-3 font-[family-name:var(--font-poppins)]">
+   262→                      {item.title}
+   263→                    </h4>
+   264→                    <p className="text-gray-500 dark:text-silver/60 font-[family-name:var(--font-inter)] leading-relaxed">
+   265→                      {item.description}
+   266→                    </p>
+   267→                  </div>
+   268→                </motion.div>
+   269→              ))}
+   270→            </div>
+   271→          </div>
+   272→        </motion.div>
+   273→
+   274→        {/* Core Values */}
+   275→        <motion.div
+   276→          initial={{ opacity: 0, y: 30 }}
+   277→          animate={isInView ? { opacity: 1, y: 0 } : {}}
+   278→          transition={{ duration: 0.6, delay: 0.5 }}
+   279→          className="mb-20"
+   280→        >
+   281→          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
+   282→            Core Values
+   283→          </h3>
+   284→          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+   285→            {values.map((value, i) => (
+   286→              <motion.div
+   287→                key={i}
+   288→                initial={{ opacity: 0, y: 20 }}
+   289→                animate={isInView ? { opacity: 1, y: 0 } : {}}
+   290→                transition={{ duration: 0.5, delay: 0.6 + i * 0.08 }}
+   291→                className="glass-card rounded-xl p-6 hover-lift group"
+   292→              >
+   293→                <div className="w-12 h-12 rounded-lg bg-falu/20 flex items-center justify-center mb-4 group-hover:bg-falu/30 transition-colors">
+   294→                  <value.icon className="h-6 w-6 text-falu-light" />
+   295→                </div>
+   296→                <h4 className="text-lg font-semibold mb-2 font-[family-name:var(--font-poppins)]">
+   297→                  {value.title}
+   298→                </h4>
+   299→                <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed">
+   300→                  {value.description}
+   301→                </p>
+   302→              </motion.div>
+   303→            ))}
+   304→          </div>
+   305→        </motion.div>
+   306→
+   307→        {/* Our Team */}
+   308→        <motion.div
+   309→          initial={{ opacity: 0, y: 30 }}
+   310→          animate={isInView ? { opacity: 1, y: 0 } : {}}
+   311→          transition={{ duration: 0.6, delay: 0.7 }}
+   312→          id="team"
+   313→          className="scroll-mt-24"
+   314→        >
+   315→          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-12 font-[family-name:var(--font-poppins)]">
+   316→            Our Team
+   317→          </h3>
+   318→
+   319→          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+   320→            {/* Raymond Romeo Dravie */}
+   321→            <motion.div
+   322→              initial={{ opacity: 0, y: 20 }}
+   323→              animate={isInView ? { opacity: 1, y: 0 } : {}}
+   324→              transition={{ duration: 0.5, delay: 0.8 }}
+   325→              className="glass-card rounded-2xl p-8 hover-lift"
+   326→            >
+   327→              <div className="flex flex-col items-center text-center mb-6">
+   328→                <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
+   329→                  <img
+   330→                    src="/team-raymond.jpg"
+   331→                    alt="Eng. Raymond Romeo Dravie"
+   332→                    className="w-full h-full object-cover"
+   333→                  />
+   334→                </div>
+   335→                <h4 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+   336→                  Raymond Romeo Dravie
+   337→                </h4>
+   338→                <span className="text-falu-light font-semibold text-xs font-[family-name:var(--font-inter)] mt-1">
+   339→                  CEO, Founder & Snr. Engineer
+   340→                </span>
+   341→              </div>
+   342→
+   343→              <p className="text-gray-500 dark:text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+   344→                Has more than 7 years experience in ICT with a strong
+   345→                background in Algorithmic Designs, Data Centers, IT
+   346→                Infrastructure, Software Development, Network, Management and
+   347→                Leadership. He has been the key personnel in many project
+   348→                executions in Clipe233 Engineers and took part in the
+   349→                development of most of our products.
+   350→              </p>
+   351→
+   352→              <div>
+   353→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   354→                  Expertise:
+   355→                </h5>
+   356→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   357→                  <li className="flex items-start gap-2">
+   358→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   359→                    Knowledge and experience in Networking
+   360→                  </li>
+   361→                  <li className="flex items-start gap-2">
+   362→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   363→                    Programming & Databases: C++, PHP, CSS, JavaScript, VB.NET, Java, MySQL
+   364→                  </li>
+   365→                  <li className="flex items-start gap-2">
+   366→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   367→                    Website Development: WordPress, Joomla, Drupal
+   368→                  </li>
+   369→                </ul>
+   370→              </div>
+   371→
+   372→              <div className="mt-4">
+   373→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   374→                  Qualifications:
+   375→                </h5>
+   376→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   377→                  <li className="flex items-start gap-2">
+   378→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   379→                    Certificate in Cyber Intelligence and Malware
+   380→                  </li>
+   381→                  <li className="flex items-start gap-2">
+   382→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   383→                    Diploma in Hardware and Networking
+   384→                  </li>
+   385→                  <li className="flex items-start gap-2">
+   386→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   387→                    BSc ICT — Presbyterian University College, Ghana
+   388→                  </li>
+   389→                  <li className="flex items-start gap-2">
+   390→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   391→                    BSc IT — Ghana Communication Technology University
+   392→                  </li>
+   393→                </ul>
+   394→              </div>
+   395→            </motion.div>
+   396→
+   397→            {/* Frank Hope Tachie */}
+   398→            <motion.div
+   399→              initial={{ opacity: 0, y: 20 }}
+   400→              animate={isInView ? { opacity: 1, y: 0 } : {}}
+   401→              transition={{ duration: 0.5, delay: 0.9 }}
+   402→              className="glass-card rounded-2xl p-8 hover-lift"
+   403→            >
+   404→              <div className="flex flex-col items-center text-center mb-6">
+   405→                <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
+   406→                  <img
+   407→                    src="/team-frank.jpg"
+   408→                    alt="Eng. Frank Hope Tachie"
+   409→                    className="w-full h-full object-cover"
+   410→                  />
+   411→                </div>
+   412→                <h4 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+   413→                  Frank Hope Tachie
+   414→                </h4>
+   415→                <span className="text-falu-light font-semibold text-xs font-[family-name:var(--font-inter)] mt-1">
+   416→                  Co-Founder & Snr. Engineer
+   417→                </span>
+   418→              </div>
+   419→
+   420→              <p className="text-gray-500 dark:text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+   421→                Results-driven IT expert with 4+ years of experience in ICT,
+   422→                education, and network architecture. Skilled in designing
+   423→                secure networks, developing software, and leading projects.
+   424→              </p>
+   425→
+   426→              <div>
+   427→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   428→                  Expertise:
+   429→                </h5>
+   430→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   431→                  <li className="flex items-start gap-2">
+   432→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   433→                    Network Architecture and Security
+   434→                  </li>
+   435→                  <li className="flex items-start gap-2">
+   436→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   437→                    Software Development & IT Infrastructure
+   438→                  </li>
+   439→                  <li className="flex items-start gap-2">
+   440→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   441→                    Data Centers & Integrated Digital Systems (IDS)
+   442→                  </li>
+   443→                  <li className="flex items-start gap-2">
+   444→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   445→                    Leadership and Project Management
+   446→                  </li>
+   447→                </ul>
+   448→              </div>
+   449→
+   450→              <div className="mt-4">
+   451→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   452→                  Qualifications:
+   453→                </h5>
+   454→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   455→                  <li className="flex items-start gap-2">
+   456→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   457→                    Certificate in Hardware & Networking, Cybersecurity, and Malware Intrusion
+   458→                  </li>
+   459→                  <li className="flex items-start gap-2">
+   460→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   461→                    BSc Information Technology (ICT) — GCTU
+   462→                  </li>
+   463→                </ul>
+   464→              </div>
+   465→
+   466→              <div className="mt-4">
+   467→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   468→                  Technical Skills:
+   469→                </h5>
+   470→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   471→                  <li className="flex items-start gap-2">
+   472→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   473→                    Programming: C++, PHP, JavaScript, Java
+   474→                  </li>
+   475→                  <li className="flex items-start gap-2">
+   476→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   477→                    Database: MySQL
+   478→                  </li>
+   479→                  <li className="flex items-start gap-2">
+   480→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   481→                    Web Development: WordPress, Joomla, Drupal
+   482→                  </li>
+   483→                </ul>
+   484→              </div>
+   485→            </motion.div>
+   486→
+   487→            {/* Senyo Kofi Dzakah */}
+   488→            <motion.div
+   489→              initial={{ opacity: 0, y: 20 }}
+   490→              animate={isInView ? { opacity: 1, y: 0 } : {}}
+   491→              transition={{ duration: 0.5, delay: 1.0 }}
+   492→              className="glass-card rounded-2xl p-8 hover-lift"
+   493→            >
+   494→              <div className="flex flex-col items-center text-center mb-6">
+   495→                <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-falu/30 glow-red-sm mb-4">
+   496→                  <img
+   497→                    src="/team-senyo.jpg"
+   498→                    alt="Senyo Kofi Dzakah"
+   499→                    className="w-full h-full object-cover"
+   500→                  />
+   501→                </div>
+   502→                <h4 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+   503→                  Senyo Kofi Dzakah
+   504→                </h4>
+   505→                <span className="text-falu-light font-semibold text-xs font-[family-name:var(--font-inter)] mt-1">
+   506→                  Admin and Finance
+   507→                </span>
+   508→              </div>
+   509→
+   510→              <p className="text-gray-500 dark:text-silver/70 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
+   511→                Ten (10) years experience in Accounting and Administration
+   512→                across both Small and Medium Enterprises and Construction. He
+   513→                has been the key in managing finances of Battis Company Limited
+   514→                on various projects. Currently the Director of Finance and
+   515→                Administration of Miai Ltd Company, which majors in the
+   516→                construction of roads and Agriculture products and Services.
+   517→              </p>
+   518→
+   519→              <div>
+   520→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   521→                  Expertise:
+   522→                </h5>
+   523→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   524→                  <li className="flex items-start gap-2">
+   525→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   526→                    Monitory and Execution of projects from start to finish
+   527→                  </li>
+   528→                  <li className="flex items-start gap-2">
+   529→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   530→                    Knowledge in accounting software like Tally and QuickBooks
+   531→                  </li>
+   532→                </ul>
+   533→              </div>
+   534→
+   535→              <div className="mt-4">
+   536→                <h5 className="text-gray-900 dark:text-white font-semibold text-xs mb-1.5 font-[family-name:var(--font-inter)]">
+   537→                  Qualifications:
+   538→                </h5>
+   539→                <ul className="text-gray-500 dark:text-silver/60 text-xs font-[family-name:var(--font-inter)] space-y-1">
+   540→                  <li className="flex items-start gap-2">
+   541→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   542→                    Institute of Chartered Accountant Ghana (Associate Member)
+   543→                  </li>
+   544→                  <li className="flex items-start gap-2">
+   545→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   546→                    Bachelor of Commerce, University of Cape Coast
+   547→                  </li>
+   548→                  <li className="flex items-start gap-2">
+   549→                    <span className="w-1 h-1 rounded-full bg-falu-light mt-1.5 flex-shrink-0" />
+   550→                    Higher National Diploma (HND), Accounting — Ho Polytechnic
+   551→                  </li>
+   552→                </ul>
+   553→              </div>
+   554→            </motion.div>
+   555→          </div>
+   556→        </motion.div>
+   557→      </div>
+   558→    </section>
+   559→  );
+   560→}
+   561→
