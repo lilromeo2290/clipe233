@@ -355,3 +355,26 @@ Work Log:
 Stage Summary:
 - Clipe Complaint page now has full CMS content with 10 modules, 5 key objectives, and 6 benefits
 - Build passes successfully
+
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix React Rules of Hooks violation causing admin dashboard crash after login
+
+Work Log:
+- Investigated console error reported on admin dashboard
+- Used agent-browser to identify the exact error: "Rendered more hooks than during the previous render"
+- Root cause: hooks (useState, useCallback, useEffect) were called AFTER a conditional early return (if !isAuthenticated return <LoginScreen/>)
+- Before login: React registered 6 hooks then hit early return. After login: early return was skipped, causing React to see a different number of hooks
+- Fix: Split the monolithic AdminDashboard into 3 separate components:
+  1. AdminLogin - standalone login component with its own hooks
+  2. AdminDashboard (wrapper) - auth state only, conditionally renders login or dashboard
+  3. AdminDashboardInner - all dashboard hooks, always called in same order
+- Updated handleLogout reference to onLogout prop in AdminDashboardInner
+- Verified build succeeds with no errors or warnings
+- Verified component structure: no hooks after conditional returns in any component
+
+Stage Summary:
+- Fixed critical React Rules of Hooks violation in /src/app/admin/page.tsx
+- Dashboard no longer crashes after login
+- Build compiles cleanly with no errors

@@ -1,0 +1,2002 @@
+     1→"use client";
+     2→
+     3→import { useState, useEffect, useCallback } from "react";
+     4→import {
+     5→  LayoutDashboard,
+     6→  Users,
+     7→  FileText,
+     8→  Briefcase,
+     9→  Mail,
+    10→  Settings,
+    11→  BarChart3,
+    12→  Eye,
+    13→  CheckCircle,
+    14→  Clock,
+    15→  AlertCircle,
+    16→  ArrowRight,
+    17→  Plus,
+    18→  Search,
+    19→  Bell,
+    20→  ChevronDown,
+    21→  Pencil,
+    22→  Trash2,
+    23→  X,
+    24→  Loader2,
+    25→  Database,
+    26→  Server,
+    27→  Globe,
+    28→  Star,
+    29→  ExternalLink,
+    30→  MapPin,
+    31→  CalendarDays,
+    32→  Megaphone,
+    33→  MessageSquare,
+    34→  Download,
+    35→  Upload,
+    36→  Activity,
+    37→  TrendingUp,
+    38→  Filter,
+    39→  CheckSquare,
+    40→  Square,
+    41→  Reply,
+    42→  Lock,
+    43→  LogOut,
+    44→  ShieldCheck,
+    45→} from "lucide-react";
+    46→import { Button } from "@/components/ui/button";
+    47→import { Input } from "@/components/ui/input";
+    48→import { Textarea } from "@/components/ui/textarea";
+    49→import { Label } from "@/components/ui/label";
+    50→import { Switch } from "@/components/ui/switch";
+    51→import { Badge } from "@/components/ui/badge";
+    52→import { Separator } from "@/components/ui/separator";
+    53→import {
+    54→  Dialog,
+    55→  DialogContent,
+    56→  DialogHeader,
+    57→  DialogTitle,
+    58→  DialogDescription,
+    59→  DialogFooter,
+    60→} from "@/components/ui/dialog";
+    61→import {
+    62→  AlertDialog,
+    63→  AlertDialogContent,
+    64→  AlertDialogHeader,
+    65→  AlertDialogTitle,
+    66→  AlertDialogDescription,
+    67→  AlertDialogFooter,
+    68→  AlertDialogAction,
+    69→  AlertDialogCancel,
+    70→} from "@/components/ui/alert-dialog";
+    71→import {
+    72→  Select,
+    73→  SelectContent,
+    74→  SelectItem,
+    75→  SelectTrigger,
+    76→  SelectValue,
+    77→} from "@/components/ui/select";
+    78→import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+    79→
+    80→// ─── Types ──────────────────────────────────────────────────────────────────────
+    81→
+    82→interface ContactItem {
+    83→  id: string;
+    84→  name: string;
+    85→  email: string;
+    86→  phone?: string;
+    87→  company?: string;
+    88→  subject?: string;
+    89→  message?: string;
+    90→  service?: string;
+    91→  budget?: string;
+    92→  status: string;
+    93→  source?: string;
+    94→  createdAt: string;
+    95→}
+    96→
+    97→interface BlogPost {
+    98→  id: string;
+    99→  title: string;
+   100→  slug: string;
+   101→  excerpt?: string;
+   102→  content?: string;
+   103→  coverImage?: string;
+   104→  category?: string;
+   105→  tags?: string;
+   106→  published: boolean;
+   107→  featured: boolean;
+   108→  authorId: string;
+   109→  createdAt: string;
+   110→  updatedAt: string;
+   111→  publishedAt?: string;
+   112→  author?: { id: string; name: string; avatar?: string };
+   113→}
+   114→
+   115→interface Project {
+   116→  id: string;
+   117→  title: string;
+   118→  slug: string;
+   119→  description?: string;
+   120→  content?: string;
+   121→  coverImage?: string;
+   122→  images?: string;
+   123→  category?: string;
+   124→  client?: string;
+   125→  technologies?: string;
+   126→  liveUrl?: string;
+   127→  githubUrl?: string;
+   128→  featured: boolean;
+   129→  published: boolean;
+   130→  startDate?: string;
+   131→  endDate?: string;
+   132→  createdAt: string;
+   133→  updatedAt: string;
+   134→}
+   135→
+   136→interface TeamMember {
+   137→  id: string;
+   138→  name: string;
+   139→  title: string;
+   140→  bio?: string;
+   141→  image?: string;
+   142→  expertise?: string;
+   143→  qualifications?: string;
+   144→  technicalSkills?: string;
+   145→  order: number;
+   146→  published: boolean;
+   147→  createdAt: string;
+   148→  updatedAt: string;
+   149→}
+   150→
+   151→interface ServiceItem {
+   152→  id: string;
+   153→  title: string;
+   154→  slug: string;
+   155→  description?: string;
+   156→  icon?: string;
+   157→  features?: string;
+   158→  benefits?: string;
+   159→  order: number;
+   160→  published: boolean;
+   161→  createdAt: string;
+   162→  updatedAt: string;
+   163→}
+   164→
+   165→interface Testimonial {
+   166→  id: string;
+   167→  name: string;
+   168→  title?: string;
+   169→  company?: string;
+   170→  avatar?: string;
+   171→  content: string;
+   172→  rating?: number;
+   173→  featured: boolean;
+   174→  published: boolean;
+   175→  createdAt: string;
+   176→  updatedAt: string;
+   177→}
+   178→
+   179→interface JobOpening {
+   180→  id: string;
+   181→  title: string;
+   182→  slug: string;
+   183→  department?: string;
+   184→  location?: string;
+   185→  type?: string;
+   186→  description?: string;
+   187→  requirements?: string;
+   188→  salary?: string;
+   189→  published: boolean;
+   190→  deadline?: string;
+   191→  createdAt: string;
+   192→  updatedAt: string;
+   193→  _count?: { applications: number };
+   194→}
+   195→
+   196→interface NewsletterSubscriber {
+   197→  id: string;
+   198→  email: string;
+   199→  source?: string;
+   200→  active: boolean;
+   201→  createdAt: string;
+   202→}
+   203→
+   204→interface SiteSetting {
+   205→  id: string;
+   206→  key: string;
+   207→  value: string;
+   208→}
+   209→
+   210→// ─── Sidebar Navigation ────────────────────────────────────────────────────────
+   211→
+   212→const sidebarItems = [
+   213→  { icon: LayoutDashboard, label: "Dashboard", id: "dashboard" },
+   214→  { icon: Mail, label: "Contacts", id: "contacts" },
+   215→  { icon: FileText, label: "Blog Posts", id: "blog" },
+   216→  { icon: Briefcase, label: "Projects", id: "projects" },
+   217→  { icon: Users, label: "Team", id: "team" },
+   218→  { icon: Megaphone, label: "Services", id: "services" },
+   219→  { icon: Star, label: "Testimonials", id: "testimonials" },
+   220→  { icon: BarChart3, label: "Newsletter & Careers", id: "newsletter-careers" },
+   221→  { icon: Activity, label: "Analytics", id: "analytics" },
+   222→  { icon: Globe, label: "Pages", id: "pages" },
+   223→  { icon: Settings, label: "Settings", id: "settings" },
+   224→];
+   225→
+   226→// ─── Utility Functions ──────────────────────────────────────────────────────────
+   227→
+   228→function generateSlug(text: string): string {
+   229→  return text
+   230→    .toLowerCase()
+   231→    .trim()
+   232→    .replace(/[^\w\s-]/g, "")
+   233→    .replace(/[\s_]+/g, "-")
+   234→    .replace(/-+/g, "-")
+   235→    .replace(/^-+|-+$/g, "");
+   236→}
+   237→
+   238→function formatDate(dateStr: string): string {
+   239→  if (!dateStr) return "—";
+   240→  try {
+   241→    return new Date(dateStr).toLocaleDateString("en-US", {
+   242→      year: "numeric",
+   243→      month: "short",
+   244→      day: "numeric",
+   245→    });
+   246→  } catch {
+   247→    return "—";
+   248→  }
+   249→}
+   250→
+   251→// ─── Toast System ───────────────────────────────────────────────────────────────
+   252→
+   253→interface ToastMessage {
+   254→  id: number;
+   255→  message: string;
+   256→  type: "success" | "error";
+   257→}
+   258→
+   259→let toastIdCounter = 0;
+   260→
+   261→function useToast() {
+   262→  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+   263→
+   264→  const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+   265→    const id = ++toastIdCounter;
+   266→    setToasts((prev) => [...prev, { id, message, type }]);
+   267→    setTimeout(() => {
+   268→      setToasts((prev) => prev.filter((t) => t.id !== id));
+   269→    }, 3500);
+   270→  }, []);
+   271→
+   272→  const ToastContainer = (
+   273→    <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2">
+   274→      {toasts.map((toast) => (
+   275→        <div
+   276→          key={toast.id}
+   277→          className={`px-4 py-3 rounded-xl shadow-lg text-sm font-[family-name:var(--font-inter)] flex items-center gap-2 animate-in slide-in-from-right duration-300 ${
+   278→            toast.type === "success"
+   279→              ? "bg-green-500/90 text-white backdrop-blur-sm"
+   280→              : "bg-red-500/90 text-white backdrop-blur-sm"
+   281→          }`}
+   282→        >
+   283→          {toast.type === "success" ? (
+   284→            <CheckCircle className="h-4 w-4 shrink-0" />
+   285→          ) : (
+   286→            <AlertCircle className="h-4 w-4 shrink-0" />
+   287→          )}
+   288→          {toast.message}
+   289→        </div>
+   290→      ))}
+   291→    </div>
+   292→  );
+   293→
+   294→  return { showToast, ToastContainer };
+   295→}
+   296→
+   297→// ─── Status Badge ───────────────────────────────────────────────────────────────
+   298→
+   299→function StatusBadge({ status }: { status: string }) {
+   300→  const config: Record<string, { icon: typeof CheckCircle; color: string; label: string }> = {
+   301→    new: { icon: AlertCircle, color: "text-blue-400", label: "New" },
+   302→    contacted: { icon: Clock, color: "text-yellow-400", label: "Contacted" },
+   303→    qualified: { icon: Eye, color: "text-green-400", label: "Qualified" },
+   304→    closed: { icon: CheckCircle, color: "text-silver/40", label: "Closed" },
+   305→  };
+   306→  const { icon: Icon, color, label } = config[status] || config.new;
+   307→  return (
+   308→    <span
+   309→      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold font-[family-name:var(--font-inter)] ${color} bg-white/5`}
+   310→    >
+   311→      <Icon className="h-3 w-3" />
+   312→      {label}
+   313→    </span>
+   314→  );
+   315→}
+   316→
+   317→// ─── Shared Form Dialog ─────────────────────────────────────────────────────────
+   318→
+   319→function FormDialog({
+   320→  open,
+   321→  onOpenChange,
+   322→  title,
+   323→  children,
+   324→  onSubmit,
+   325→  submitLabel = "Save",
+   326→  loading = false,
+   327→  maxWidth = "sm:max-w-lg",
+   328→}: {
+   329→  open: boolean;
+   330→  onOpenChange: (open: boolean) => void;
+   331→  title: string;
+   332→  children: React.ReactNode;
+   333→  onSubmit: () => void;
+   334→  submitLabel?: string;
+   335→  loading?: boolean;
+   336→  maxWidth?: string;
+   337→}) {
+   338→  return (
+   339→    <Dialog open={open} onOpenChange={onOpenChange}>
+   340→      <DialogContent className={`${maxWidth} max-h-[90vh] overflow-y-auto bg-background border-white/10`}>
+   341→        <DialogHeader>
+   342→          <DialogTitle className="font-[family-name:var(--font-poppins)]">{title}</DialogTitle>
+   343→          <DialogDescription className="font-[family-name:var(--font-inter)] text-silver/50">
+   344→            Fill in the fields below. All required fields must be completed.
+   345→          </DialogDescription>
+   346→        </DialogHeader>
+   347→        <div className="space-y-4 py-2">{children}</div>
+   348→        <DialogFooter>
+   349→          <Button
+   350→            variant="outline"
+   351→            onClick={() => onOpenChange(false)}
+   352→            className="font-[family-name:var(--font-inter)] border-white/10"
+   353→          >
+   354→            Cancel
+   355→          </Button>
+   356→          <Button
+   357→            onClick={onSubmit}
+   358→            disabled={loading}
+   359→            className="bg-falu hover:bg-falu-light text-white font-[family-name:var(--font-inter)]"
+   360→          >
+   361→            {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+   362→            {submitLabel}
+   363→          </Button>
+   364→        </DialogFooter>
+   365→      </DialogContent>
+   366→    </Dialog>
+   367→  );
+   368→}
+   369→
+   370→// ─── Delete Confirm Dialog ──────────────────────────────────────────────────────
+   371→
+   372→function DeleteConfirmDialog({
+   373→  open,
+   374→  onOpenChange,
+   375→  onConfirm,
+   376→  itemName,
+   377→  loading = false,
+   378→}: {
+   379→  open: boolean;
+   380→  onOpenChange: (open: boolean) => void;
+   381→  onConfirm: () => void;
+   382→  itemName: string;
+   383→  loading?: boolean;
+   384→}) {
+   385→  return (
+   386→    <AlertDialog open={open} onOpenChange={onOpenChange}>
+   387→      <AlertDialogContent className="bg-background border-white/10">
+   388→        <AlertDialogHeader>
+   389→          <AlertDialogTitle className="font-[family-name:var(--font-poppins)]">
+   390→            Confirm Deletion
+   391→          </AlertDialogTitle>
+   392→          <AlertDialogDescription className="font-[family-name:var(--font-inter)] text-silver/50">
+   393→            Are you sure you want to delete <strong className="text-white">{itemName}</strong>? This
+   394→            action cannot be undone.
+   395→          </AlertDialogDescription>
+   396→        </AlertDialogHeader>
+   397→        <AlertDialogFooter>
+   398→          <AlertDialogCancel className="font-[family-name:var(--font-inter)] border-white/10">
+   399→            Cancel
+   400→          </AlertDialogCancel>
+   401→          <AlertDialogAction
+   402→            onClick={onConfirm}
+   403→            disabled={loading}
+   404→            className="bg-red-600 hover:bg-red-700 text-white font-[family-name:var(--font-inter)]"
+   405→          >
+   406→            {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+   407→            Delete
+   408→          </AlertDialogAction>
+   409→        </AlertDialogFooter>
+   410→      </AlertDialogContent>
+   411→    </AlertDialog>
+   412→  );
+   413→}
+   414→
+   415→// ─── Form Field Helpers ─────────────────────────────────────────────────────────
+   416→
+   417→function FormField({
+   418→  label,
+   419→  children,
+   420→  required = false,
+   421→}: {
+   422→  label: string;
+   423→  children: React.ReactNode;
+   424→  required?: boolean;
+   425→}) {
+   426→  return (
+   427→    <div className="space-y-2">
+   428→      <Label className="text-sm font-[family-name:var(--font-inter)] text-silver/70">
+   429→        {label}
+   430→        {required && <span className="text-falu-light ml-1">*</span>}
+   431→      </Label>
+   432→      {children}
+   433→    </div>
+   434→  );
+   435→}
+   436→
+   437→function FormInput({
+   438→  value,
+   439→  onChange,
+   440→  placeholder,
+   441→  type = "text",
+   442→  required = false,
+   443→}: {
+   444→  value: string;
+   445→  onChange: (v: string) => void;
+   446→  placeholder?: string;
+   447→  type?: string;
+   448→  required?: boolean;
+   449→}) {
+   450→  return (
+   451→    <Input
+   452→      type={type}
+   453→      value={value}
+   454→      onChange={(e) => onChange(e.target.value)}
+   455→      placeholder={placeholder}
+   456→      required={required}
+   457→      className="bg-white/5 border-white/10 text-white font-[family-name:var(--font-inter)] placeholder:text-silver/30 focus:border-falu/40"
+   458→    />
+   459→  );
+   460→}
+   461→
+   462→function FormTextarea({
+   463→  value,
+   464→  onChange,
+   465→  placeholder,
+   466→  rows = 4,
+   467→}: {
+   468→  value: string;
+   469→  onChange: (v: string) => void;
+   470→  placeholder?: string;
+   471→  rows?: number;
+   472→}) {
+   473→  return (
+   474→    <Textarea
+   475→      value={value}
+   476→      onChange={(e) => onChange(e.target.value)}
+   477→      placeholder={placeholder}
+   478→      rows={rows}
+   479→      className="bg-white/5 border-white/10 text-white font-[family-name:var(--font-inter)] placeholder:text-silver/30 focus:border-falu/40 resize-none"
+   480→    />
+   481→  );
+   482→}
+   483→
+   484→function FormSwitch({
+   485→  checked,
+   486→  onChange,
+   487→  label,
+   488→}: {
+   489→  checked: boolean;
+   490→  onChange: (v: boolean) => void;
+   491→  label: string;
+   492→}) {
+   493→  return (
+   494→    <div className="flex items-center justify-between">
+   495→      <Label className="text-sm font-[family-name:var(--font-inter)] text-silver/70">{label}</Label>
+   496→      <Switch checked={checked} onCheckedChange={onChange} />
+   497→    </div>
+   498→  );
+   499→}
+   500→
+   501→// ─── Loading Spinner ────────────────────────────────────────────────────────────
+   502→
+   503→function LoadingSpinner() {
+   504→  return (
+   505→    <div className="flex items-center justify-center py-20">
+   506→      <div className="w-8 h-8 border-2 border-falu-light border-t-transparent rounded-full animate-spin" />
+   507→    </div>
+   508→  );
+   509→}
+   510→
+   511→// ─── Empty State ────────────────────────────────────────────────────────────────
+   512→
+   513→function EmptyState({ icon: Icon, title, description }: { icon: typeof Mail; title: string; description: string }) {
+   514→  return (
+   515→    <div className="text-center py-12 text-silver/40 font-[family-name:var(--font-inter)]">
+   516→      <Icon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+   517→      <p className="font-semibold text-silver/60">{title}</p>
+   518→      <p className="text-xs mt-1">{description}</p>
+   519→    </div>
+   520→  );
+   521→}
+   522→
+   523→// ─── Login Component ────────────────────────────────────────────────────────────
+   524→
+   525→function AdminLogin({ onLogin }: { onLogin: (user: { username: string; role: string }) => void }) {
+   526→  const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+   527→  const [loginError, setLoginError] = useState("");
+   528→  const [loginLoading, setLoginLoading] = useState(false);
+   529→
+   530→  const handleLogin = async (e: React.FormEvent) => {
+   531→    e.preventDefault();
+   532→    setLoginError("");
+   533→    setLoginLoading(true);
+   534→    try {
+   535→      const res = await fetch("/api/auth", {
+   536→        method: "POST",
+   537→        headers: { "Content-Type": "application/json" },
+   538→        body: JSON.stringify(loginForm),
+   539→      });
+   540→      const data = await res.json();
+   541→      if (!res.ok) {
+   542→        setLoginError(data.error || "Invalid credentials");
+   543→        return;
+   544→      }
+   545→      sessionStorage.setItem("clipe233_admin", JSON.stringify(data));
+   546→      onLogin(data.user);
+   547→    } catch {
+   548→      setLoginError("Connection error. Please try again.");
+   549→    } finally {
+   550→      setLoginLoading(false);
+   551→    }
+   552→  };
+   553→
+   554→  return (
+   555→    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+   556→      <div className="w-full max-w-md">
+   557→        {/* Logo */}
+   558→        <div className="text-center mb-8">
+   559→          <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-4">
+   560→            <ShieldCheck className="h-8 w-8 text-falu-light" />
+   561→          </div>
+   562→          <h1 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-white">Clipe233 Admin</h1>
+   563→          <p className="text-silver/50 font-[family-name:var(--font-inter)] text-sm mt-1">Sign in to manage your website</p>
+   564→        </div>
+   565→
+   566→        {/* Login Form */}
+   567→        <div className="glass-card rounded-2xl p-8">
+   568→          <form onSubmit={handleLogin} className="space-y-5">
+   569→            {loginError && (
+   570→              <div className="p-3 rounded-lg bg-red-900/30 border border-red-800/50 flex items-center gap-2">
+   571→                <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+   572→                <span className="text-red-300 text-sm font-[family-name:var(--font-inter)]">{loginError}</span>
+   573→              </div>
+   574→            )}
+   575→            <div>
+   576→              <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Username</Label>
+   577→              <div className="relative">
+   578→                <Input
+   579→                  value={loginForm.username}
+   580→                  onChange={(e) => setLoginForm((p) => ({ ...p, username: e.target.value }))}
+   581→                  placeholder="Enter username"
+   582→                  className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
+   583→                  required
+   584→                />
+   585→                <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
+   586→              </div>
+   587→            </div>
+   588→            <div>
+   589→              <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Password</Label>
+   590→              <div className="relative">
+   591→                <Input
+   592→                  type="password"
+   593→                  value={loginForm.password}
+   594→                  onChange={(e) => setLoginForm((p) => ({ ...p, password: e.target.value }))}
+   595→                  placeholder="Enter password"
+   596→                  className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
+   597→                  required
+   598→                />
+   599→                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
+   600→              </div>
+   601→            </div>
+   602→            <Button
+   603→              type="submit"
+   604→              disabled={loginLoading}
+   605→              className="w-full bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
+   606→            >
+   607→              {loginLoading ? (
+   608→                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...</>
+   609→              ) : (
+   610→                <><Lock className="mr-2 h-4 w-4" /> Sign In</>
+   611→              )}
+   612→            </Button>
+   613→          </form>
+   614→        </div>
+   615→
+   616→        <p className="text-center text-silver/30 text-xs font-[family-name:var(--font-inter)] mt-6">
+   617→          Clipe233 Engineers &copy; {new Date().getFullYear()} — Admin CMS
+   618→        </p>
+   619→      </div>
+   620→    </div>
+   621→  );
+   622→}
+   623→
+   624→// ─── Main Component (Auth Wrapper) ─────────────────────────────────────────────
+   625→
+   626→export default function AdminDashboard() {
+   627→  // Auth state only — no dashboard hooks here
+   628→  const [isAuthenticated, setIsAuthenticated] = useState(false);
+   629→  const [authUser, setAuthUser] = useState<{ username: string; role: string } | null>(null);
+   630→
+   631→  // Check for existing session on mount
+   632→  useEffect(() => {
+   633→    const session = sessionStorage.getItem("clipe233_admin");
+   634→    if (session) {
+   635→      try {
+   636→        const data = JSON.parse(session);
+   637→        setIsAuthenticated(true);
+   638→        setAuthUser(data.user);
+   639→      } catch {
+   640→        sessionStorage.removeItem("clipe233_admin");
+   641→      }
+   642→    }
+   643→  }, []);
+   644→
+   645→  const handleLogin = (user: { username: string; role: string }) => {
+   646→    setIsAuthenticated(true);
+   647→    setAuthUser(user);
+   648→  };
+   649→
+   650→  const handleLogout = () => {
+   651→    sessionStorage.removeItem("clipe233_admin");
+   652→    setIsAuthenticated(false);
+   653→    setAuthUser(null);
+   654→  };
+   655→
+   656→  // Conditionally render login or dashboard — hooks are never called conditionally
+   657→  if (!isAuthenticated) {
+   658→    return <AdminLogin onLogin={handleLogin} />;
+   659→  }
+   660→
+   661→  return <AdminDashboardInner authUser={authUser} onLogout={handleLogout} />;
+   662→}
+   663→
+   664→// ─── Dashboard Inner Component ──────────────────────────────────────────────────
+   665→// All dashboard hooks live here so they are ALWAYS called in the same order.
+   666→
+   667→function AdminDashboardInner({ authUser, onLogout }: { authUser: { username: string; role: string } | null; onLogout: () => void }) {
+   668→  const [activeSection, setActiveSection] = useState("dashboard");
+   669→  const [sidebarOpen, setSidebarOpen] = useState(false);
+   670→  const [apiHealth, setApiHealth] = useState<Record<string, string> | null>(null);
+   671→  const { showToast, ToastContainer } = useToast();
+   672→
+   673→  // Data states
+   674→  const [contacts, setContacts] = useState<ContactItem[]>([]);
+   675→  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+   676→  const [projects, setProjects] = useState<Project[]>([]);
+   677→  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+   678→  const [services, setServices] = useState<ServiceItem[]>([]);
+   679→  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+   680→  const [jobs, setJobs] = useState<JobOpening[]>([]);
+   681→  const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([]);
+   682→  const [settings, setSettings] = useState<SiteSetting[]>([]);
+   683→  const [loading, setLoading] = useState<Record<string, boolean>>({ dashboard: true });
+   684→
+   685→  // Fetch helpers
+   686→  const fetchData = useCallback(
+   687→    async (endpoint: string, setter: (data: any[]) => void, key: string) => {
+   688→      setLoading((prev) => ({ ...prev, [key]: true }));
+   689→      try {
+   690→        const res = await fetch(endpoint);
+   691→        const json = await res.json();
+   692→        setter(json.data || []);
+   693→      } catch (err) {
+   694→        console.error(`Error fetching ${key}:`, err);
+   695→        showToast(`Failed to load ${key}`, "error");
+   696→      } finally {
+   697→        setLoading((prev) => ({ ...prev, [key]: false }));
+   698→      }
+   699→    },
+   700→    [showToast]
+   701→  );
+   702→
+   703→  // Initial dashboard load
+   704→  useEffect(() => {
+   705→    async function fetchDashboardData() {
+   706→      setLoading((prev) => ({ ...prev, dashboard: true }));
+   707→      try {
+   708→        const healthRes = await fetch("/api");
+   709→        const healthData = await healthRes.json();
+   710→        setApiHealth(healthData.services || {});
+   711→
+   712→        const [contactsRes, blogRes, projectsRes, teamRes, servicesRes, newsletterRes, careersRes, testimonialsRes, settingsRes] =
+   713→          await Promise.all([
+   714→            fetch("/api/contacts"),
+   715→            fetch("/api/blog?admin=true"),
+   716→            fetch("/api/projects?admin=true"),
+   717→            fetch("/api/team?admin=true"),
+   718→            fetch("/api/services?admin=true"),
+   719→            fetch("/api/newsletter"),
+   720→            fetch("/api/careers?admin=true"),
+   721→            fetch("/api/testimonials?admin=true"),
+   722→            fetch("/api/settings"),
+   723→          ]);
+   724→
+   725→        const [contactsData, blogData, projectsData, teamData, servicesData, newsletterData, careersData, testimonialsData, settingsData] =
+   726→          await Promise.all([
+   727→            contactsRes.json(),
+   728→            blogRes.json(),
+   729→            projectsRes.json(),
+   730→            teamRes.json(),
+   731→            servicesRes.json(),
+   732→            newsletterRes.json(),
+   733→            careersRes.json(),
+   734→            testimonialsRes.json(),
+   735→            settingsRes.json(),
+   736→          ]);
+   737→
+   738→        setContacts(contactsData.data || []);
+   739→        setBlogPosts(blogData.data || []);
+   740→        setProjects(projectsData.data || []);
+   741→        setTeamMembers(teamData.data || []);
+   742→        setServices(servicesData.data || []);
+   743→        setSubscribers(newsletterData.data || []);
+   744→        setJobs(careersData.data || []);
+   745→        setTestimonials(testimonialsData.data || []);
+   746→        setSettings(settingsData.data || []);
+   747→      } catch (err) {
+   748→        console.error("Error fetching dashboard data:", err);
+   749→      } finally {
+   750→        setLoading((prev) => ({ ...prev, dashboard: false }));
+   751→      }
+   752→    }
+   753→    fetchDashboardData();
+   754→  }, []);
+   755→
+   756→  // Fetch on section change (lazy load)
+   757→  useEffect(() => {
+   758→    const sectionFetchMap: Record<string, () => void> = {
+   759→      contacts: () => fetchData("/api/contacts", setContacts, "contacts"),
+   760→      blog: () => fetchData("/api/blog?admin=true", setBlogPosts, "blog"),
+   761→      projects: () => fetchData("/api/projects?admin=true", setProjects, "projects"),
+   762→      team: () => fetchData("/api/team?admin=true", setTeamMembers, "team"),
+   763→      services: () => fetchData("/api/services?admin=true", setServices, "services"),
+   764→      testimonials: () => fetchData("/api/testimonials?admin=true", setTestimonials, "testimonials"),
+   765→      "newsletter-careers": () => {
+   766→        fetchData("/api/newsletter", setSubscribers, "newsletter");
+   767→        fetchData("/api/careers?admin=true", setJobs, "careers");
+   768→      },
+   769→      analytics: () => {
+   770→        fetchData("/api/contacts", setContacts, "analytics-contacts");
+   771→        fetchData("/api/settings", setSettings, "analytics-settings");
+   772→      },
+   773→      pages: () => fetchData("/api/settings", setSettings, "pages"),
+   774→      settings: () => fetchData("/api/settings", setSettings, "settings"),
+   775→    };
+   776→    if (sectionFetchMap[activeSection]) {
+   777→      sectionFetchMap[activeSection]();
+   778→    }
+   779→  }, [activeSection, fetchData]);
+   780→
+   781→  // Shared CRUD operations
+   782→  const createItem = useCallback(
+   783→    async (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => {
+   784→      try {
+   785→        const res = await fetch(endpoint, {
+   786→          method: "POST",
+   787→          headers: { "Content-Type": "application/json" },
+   788→          body: JSON.stringify(data),
+   789→        });
+   790→        const json = await res.json();
+   791→        if (!res.ok) throw new Error(json.error || "Failed to create");
+   792→        showToast("Created successfully!");
+   793→        onSuccess();
+   794→        return json.data;
+   795→      } catch (err: any) {
+   796→        showToast(err.message || "Failed to create", "error");
+   797→        return null;
+   798→      }
+   799→    },
+   800→    [showToast]
+   801→  );
+   802→
+   803→  const updateItem = useCallback(
+   804→    async (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => {
+   805→      try {
+   806→        const res = await fetch(endpoint, {
+   807→          method: "PUT",
+   808→          headers: { "Content-Type": "application/json" },
+   809→          body: JSON.stringify(data),
+   810→        });
+   811→        const json = await res.json();
+   812→        if (!res.ok) throw new Error(json.error || "Failed to update");
+   813→        showToast("Updated successfully!");
+   814→        onSuccess();
+   815→        return json.data;
+   816→      } catch (err: any) {
+   817→        showToast(err.message || "Failed to update", "error");
+   818→        return null;
+   819→      }
+   820→    },
+   821→    [showToast]
+   822→  );
+   823→
+   824→  const deleteItem = useCallback(
+   825→    async (endpoint: string, id: string, onSuccess: () => void) => {
+   826→      try {
+   827→        const res = await fetch(`${endpoint}?id=${id}`, { method: "DELETE" });
+   828→        const json = await res.json();
+   829→        if (!res.ok) throw new Error(json.error || "Failed to delete");
+   830→        showToast("Deleted successfully!");
+   831→        onSuccess();
+   832→        return true;
+   833→      } catch (err: any) {
+   834→        showToast(err.message || "Failed to delete", "error");
+   835→        return false;
+   836→      }
+   837→    },
+   838→    [showToast]
+   839→  );
+   840→
+   841→  const sectionTitle: Record<string, string> = {
+   842→    dashboard: "Dashboard",
+   843→    contacts: "Contacts",
+   844→    blog: "Blog Posts",
+   845→    projects: "Projects",
+   846→    team: "Team Members",
+   847→    services: "Services",
+   848→    testimonials: "Testimonials",
+   849→    "newsletter-careers": "Newsletter & Careers",
+   850→    analytics: "Analytics",
+   851→    pages: "Pages / Content Editor",
+   852→    settings: "Settings",
+   853→  };
+   854→
+   855→  return (
+   856→    <div className="min-h-screen bg-black text-white flex">
+   857→      {ToastContainer}
+   858→
+   859→      {/* Mobile Sidebar Overlay */}
+   860→      {sidebarOpen && (
+   861→        <div
+   862→          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+   863→          onClick={() => setSidebarOpen(false)}
+   864→        />
+   865→      )}
+   866→
+   867→      {/* Sidebar */}
+   868→      <aside
+   869→        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col transform transition-transform duration-300 ${
+   870→          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+   871→        }`}
+   872→      >
+   873→        {/* Logo */}
+   874→        <div className="p-6 border-b border-white/10">
+   875→          <div className="flex items-center gap-3">
+   876→            <img src="/logo.jpg" alt="Clipe233" className="w-10 h-10 rounded-lg object-cover" />
+   877→            <div>
+   878→              <h1 className="font-bold font-[family-name:var(--font-poppins)] text-sm">Clipe233</h1>
+   879→              <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">
+   880→                Admin CMS
+   881→              </span>
+   882→            </div>
+   883→          </div>
+   884→        </div>
+   885→
+   886→        {/* Nav Items */}
+   887→        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+   888→          {sidebarItems.map((item) => (
+   889→            <button
+   890→              key={item.id}
+   891→              onClick={() => {
+   892→                setActiveSection(item.id);
+   893→                setSidebarOpen(false);
+   894→              }}
+   895→              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-[family-name:var(--font-inter)] transition-all duration-200 ${
+   896→                activeSection === item.id
+   897→                  ? "bg-falu/20 text-falu-light border border-falu/30"
+   898→                  : "text-silver/60 hover:text-white hover:bg-white/5"
+   899→              }`}
+   900→            >
+   901→              <item.icon className="h-4 w-4" />
+   902→              {item.label}
+   903→            </button>
+   904→          ))}
+   905→        </nav>
+   906→
+   907→        {/* Backend Status */}
+   908→        <div className="p-4 border-t border-white/10">
+   909→          <h4 className="text-xs font-semibold text-silver/40 mb-3 font-[family-name:var(--font-inter)] uppercase tracking-wider">
+   910→            Backend Status
+   911→          </h4>
+   912→          <div className="space-y-2">
+   913→            {[
+   914→              { icon: Database, label: "Database", status: apiHealth?.database === "connected" ? "Online" : "Local", ok: apiHealth?.database === "connected" },
+   915→              { icon: Server, label: "Supabase", status: apiHealth?.supabase === "configured" ? "Active" : "Setup", ok: apiHealth?.supabase === "configured" },
+   916→              { icon: Globe, label: "Strapi CMS", status: apiHealth?.strapi === "configured" ? "Active" : "Setup", ok: apiHealth?.strapi === "configured" },
+   917→            ].map((item, i) => (
+   918→              <div key={i} className="flex items-center gap-2 text-xs font-[family-name:var(--font-inter)]">
+   919→                <item.icon className={`h-3 w-3 ${item.ok ? "text-green-400" : "text-yellow-400"}`} />
+   920→                <span className="text-silver/60">{item.label}</span>
+   921→                <span className={`ml-auto ${item.ok ? "text-green-400" : "text-yellow-400"}`}>{item.status}</span>
+   922→              </div>
+   923→            ))}
+   924→          </div>
+   925→        </div>
+   926→      </aside>
+   927→
+   928→      {/* Main Content */}
+   929→      <main className="flex-1 overflow-y-auto min-w-0">
+   930→        {/* Top Bar */}
+   931→        <header className="sticky top-0 z-30 bg-black/80 backdrop-blur-xl border-b border-white/10 px-4 sm:px-8 py-4">
+   932→          <div className="flex items-center justify-between">
+   933→            <div className="flex items-center gap-4">
+   934→              <button
+   935→                onClick={() => setSidebarOpen(true)}
+   936→                className="lg:hidden p-2 rounded-lg hover:bg-white/5 transition-colors"
+   937→              >
+   938→                <svg className="h-5 w-5 text-silver/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+   939→                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+   940→                </svg>
+   941→              </button>
+   942→              <div>
+   943→                <h2 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+   944→                  {sectionTitle[activeSection] || activeSection}
+   945→                </h2>
+   946→                <p className="text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+   947→                  Manage your website content and data
+   948→                </p>
+   949→              </div>
+   950→            </div>
+   951→            <div className="flex items-center gap-4">
+   952→              <button className="relative p-2 rounded-lg hover:bg-white/5 transition-colors">
+   953→                <Bell className="h-5 w-5 text-silver/60" />
+   954→                <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-falu-light" />
+   955→              </button>
+   956→              <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5">
+   957→                <div className="w-8 h-8 rounded-full bg-falu/30 flex items-center justify-center text-xs font-bold text-falu-light">
+   958→                  {authUser?.username?.[0]?.toUpperCase() || "A"}
+   959→                </div>
+   960→                <span className="text-sm font-[family-name:var(--font-inter)]">{authUser?.username || "Admin"}</span>
+   961→              </div>
+   962→              <button
+   963→                onClick={onLogout}
+   964→                className="p-2 rounded-lg hover:bg-white/5 transition-colors text-silver/60 hover:text-red-400"
+   965→                title="Logout"
+   966→              >
+   967→                <LogOut className="h-5 w-5" />
+   968→              </button>
+   969→            </div>
+   970→          </div>
+   971→        </header>
+   972→
+   973→        {/* Dashboard Content */}
+   974→        <div className="p-4 sm:p-8">
+   975→          {loading.dashboard && activeSection === "dashboard" ? (
+   976→            <LoadingSpinner />
+   977→          ) : activeSection === "dashboard" ? (
+   978→            <DashboardView
+   979→              contacts={contacts}
+   980→              blogPosts={blogPosts}
+   981→              projects={projects}
+   982→              teamMembers={teamMembers}
+   983→              services={services}
+   984→              subscribers={subscribers}
+   985→              jobs={jobs}
+   986→              testimonials={testimonials}
+   987→              apiHealth={apiHealth}
+   988→              settings={settings}
+   989→              onNavigate={setActiveSection}
+   990→            />
+   991→          ) : activeSection === "contacts" ? (
+   992→            <ContactsView
+   993→              contacts={contacts}
+   994→              loading={!!loading.contacts}
+   995→              onRefresh={() => fetchData("/api/contacts", setContacts, "contacts")}
+   996→              updateItem={updateItem}
+   997→              deleteItem={deleteItem}
+   998→              showToast={showToast}
+   999→            />
+  1000→          ) : activeSection === "blog" ? (
+  1001→            <BlogView
+  1002→              posts={blogPosts}
+  1003→              loading={!!loading.blog}
+  1004→              onRefresh={() => fetchData("/api/blog?admin=true", setBlogPosts, "blog")}
+  1005→              createItem={createItem}
+  1006→              updateItem={updateItem}
+  1007→              deleteItem={deleteItem}
+  1008→              showToast={showToast}
+  1009→            />
+  1010→          ) : activeSection === "projects" ? (
+  1011→            <ProjectsView
+  1012→              projects={projects}
+  1013→              loading={!!loading.projects}
+  1014→              onRefresh={() => fetchData("/api/projects?admin=true", setProjects, "projects")}
+  1015→              createItem={createItem}
+  1016→              updateItem={updateItem}
+  1017→              deleteItem={deleteItem}
+  1018→              showToast={showToast}
+  1019→            />
+  1020→          ) : activeSection === "team" ? (
+  1021→            <TeamView
+  1022→              members={teamMembers}
+  1023→              loading={!!loading.team}
+  1024→              onRefresh={() => fetchData("/api/team?admin=true", setTeamMembers, "team")}
+  1025→              createItem={createItem}
+  1026→              updateItem={updateItem}
+  1027→              deleteItem={deleteItem}
+  1028→              showToast={showToast}
+  1029→            />
+  1030→          ) : activeSection === "services" ? (
+  1031→            <ServicesView
+  1032→              services={services}
+  1033→              loading={!!loading.services}
+  1034→              onRefresh={() => fetchData("/api/services?admin=true", setServices, "services")}
+  1035→              createItem={createItem}
+  1036→              updateItem={updateItem}
+  1037→              deleteItem={deleteItem}
+  1038→              showToast={showToast}
+  1039→            />
+  1040→          ) : activeSection === "testimonials" ? (
+  1041→            <TestimonialsView
+  1042→              testimonials={testimonials}
+  1043→              loading={!!loading.testimonials}
+  1044→              onRefresh={() => fetchData("/api/testimonials?admin=true", setTestimonials, "testimonials")}
+  1045→              createItem={createItem}
+  1046→              updateItem={updateItem}
+  1047→              deleteItem={deleteItem}
+  1048→              showToast={showToast}
+  1049→            />
+  1050→          ) : activeSection === "newsletter-careers" ? (
+  1051→            <NewsletterCareersView
+  1052→              subscribers={subscribers}
+  1053→              jobs={jobs}
+  1054→              loadingNewsletter={!!loading.newsletter}
+  1055→              loadingCareers={!!loading.careers}
+  1056→              onRefreshNewsletter={() => fetchData("/api/newsletter", setSubscribers, "newsletter")}
+  1057→              onRefreshCareers={() => fetchData("/api/careers?admin=true", setJobs, "careers")}
+  1058→              createItem={createItem}
+  1059→              updateItem={updateItem}
+  1060→              deleteItem={deleteItem}
+  1061→              showToast={showToast}
+  1062→            />
+  1063→          ) : activeSection === "settings" ? (
+  1064→            <SettingsView
+  1065→              settings={settings}
+  1066→              loading={!!loading.settings}
+  1067→              onRefresh={() => fetchData("/api/settings", setSettings, "settings")}
+  1068→              updateItem={updateItem}
+  1069→              showToast={showToast}
+  1070→            />
+  1071→          ) : activeSection === "analytics" ? (
+  1072→            <AnalyticsView
+  1073→              contacts={contacts}
+  1074→              blogPosts={blogPosts}
+  1075→              services={services}
+  1076→              subscribers={subscribers}
+  1077→              settings={settings}
+  1078→            />
+  1079→          ) : activeSection === "pages" ? (
+  1080→            <PagesView
+  1081→              settings={settings}
+  1082→              loading={!!loading.pages}
+  1083→              onRefresh={() => fetchData("/api/settings", setSettings, "pages")}
+  1084→              updateItem={updateItem}
+  1085→              showToast={showToast}
+  1086→            />
+  1087→          ) : null}
+  1088→        </div>
+  1089→      </main>
+  1090→    </div>
+  1091→  );
+  1092→}
+  1093→
+  1094→// ─── 1. Dashboard View ──────────────────────────────────────────────────────────
+  1095→
+  1096→function DashboardView({
+  1097→  contacts,
+  1098→  blogPosts,
+  1099→  projects,
+  1100→  teamMembers,
+  1101→  services,
+  1102→  subscribers,
+  1103→  jobs,
+  1104→  testimonials,
+  1105→  apiHealth,
+  1106→  settings,
+  1107→  onNavigate,
+  1108→}: {
+  1109→  contacts: ContactItem[];
+  1110→  blogPosts: BlogPost[];
+  1111→  projects: Project[];
+  1112→  teamMembers: TeamMember[];
+  1113→  services: ServiceItem[];
+  1114→  subscribers: NewsletterSubscriber[];
+  1115→  jobs: JobOpening[];
+  1116→  testimonials: Testimonial[];
+  1117→  apiHealth: Record<string, string> | null;
+  1118→  settings: SiteSetting[];
+  1119→  onNavigate: (section: string) => void;
+  1120→}) {
+  1121→  const oneWeekAgo = new Date();
+  1122→  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  1123→
+  1124→  const oneMonthAgo = new Date();
+  1125→  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+  1126→
+  1127→  const newContactsWeek = contacts.filter((c) => new Date(c.createdAt) >= oneWeekAgo).length;
+  1128→  const newContactsMonth = contacts.filter((c) => new Date(c.createdAt) >= oneMonthAgo).length;
+  1129→  const closedContacts = contacts.filter((c) => c.status === "closed").length;
+  1130→  const conversionRate = contacts.length > 0 ? Math.round((closedContacts / contacts.length) * 100) : 0;
+  1131→
+  1132→  // Last 7 days contacts chart data
+  1133→  const last7Days = Array.from({ length: 7 }, (_, i) => {
+  1134→    const d = new Date();
+  1135→    d.setDate(d.getDate() - (6 - i));
+  1136→    d.setHours(0, 0, 0, 0);
+  1137→    return d;
+  1138→  });
+  1139→  const contactsPerDay = last7Days.map((day) => {
+  1140→    const nextDay = new Date(day);
+  1141→    nextDay.setDate(nextDay.getDate() + 1);
+  1142→    return contacts.filter((c) => {
+  1143→      const cd = new Date(c.createdAt);
+  1144→      return cd >= day && cd < nextDay;
+  1145→    }).length;
+  1146→  });
+  1147→  const maxContactsPerDay = Math.max(...contactsPerDay, 1);
+  1148→
+  1149→  // Contact status breakdown
+  1150→  const statusBreakdown = [
+  1151→    { label: "New", count: contacts.filter((c) => c.status === "new").length, color: "bg-blue-400" },
+  1152→    { label: "Contacted", count: contacts.filter((c) => c.status === "contacted").length, color: "bg-yellow-400" },
+  1153→    { label: "Qualified", count: contacts.filter((c) => c.status === "qualified").length, color: "bg-green-400" },
+  1154→    { label: "Closed", count: contacts.filter((c) => c.status === "closed").length, color: "bg-silver/40" },
+  1155→  ];
+  1156→
+  1157→  // Top services by inquiries
+  1158→  const serviceInquiries: Record<string, number> = {};
+  1159→  contacts.forEach((c) => {
+  1160→    if (c.service) {
+  1161→      serviceInquiries[c.service] = (serviceInquiries[c.service] || 0) + 1;
+  1162→    }
+  1163→  });
+  1164→  const topServices = Object.entries(serviceInquiries)
+  1165→    .sort(([, a], [, b]) => b - a)
+  1166→    .slice(0, 5);
+  1167→  const maxServiceCount = topServices.length > 0 ? topServices[0][1] : 1;
+  1168→
+  1169→  // System health
+  1170→  const systemHealth = [
+  1171→    { label: "Database", icon: Database, status: apiHealth?.database === "connected" ? "healthy" : "degraded", ok: apiHealth?.database === "connected" },
+  1172→    { label: "Email Service", icon: Mail, status: "healthy", ok: true },
+  1173→    { label: "API Server", icon: Server, status: apiHealth ? "healthy" : "degraded", ok: !!apiHealth },
+  1174→  ];
+  1175→
+  1176→  const getSetting = (key: string) => settings.find((s) => s.key === key)?.value || "";
+  1177→
+  1178→  const statCards = [
+  1179→    {
+  1180→      label: "New Contacts",
+  1181→      value: contacts.filter((c) => c.status === "new").length,
+  1182→      total: contacts.length,
+  1183→      icon: Mail,
+  1184→      color: "#7B1818",
+  1185→      trend: `${newContactsWeek} this week`,
+  1186→    },
+  1187→    {
+  1188→      label: "Blog Posts",
+  1189→      value: blogPosts.filter((p) => p.published).length,
+  1190→      total: blogPosts.length,
+  1191→      icon: FileText,
+  1192→      color: "#3FCF8E",
+  1193→      trend: `${blogPosts.filter((p) => p.featured).length} featured`,
+  1194→    },
+  1195→    {
+  1196→      label: "Projects",
+  1197→      value: projects.filter((p) => p.published).length,
+  1198→      total: projects.length,
+  1199→      icon: Briefcase,
+  1200→      color: "#4945FF",
+  1201→      trend: `${projects.filter((p) => p.featured).length} featured`,
+  1202→    },
+  1203→    {
+  1204→      label: "Team Members",
+  1205→      value: teamMembers.filter((m) => m.published).length,
+  1206→      total: teamMembers.length,
+  1207→      icon: Users,
+  1208→      color: "#61DAFB",
+  1209→      trend: `${services.length} services`,
+  1210→    },
+  1211→    {
+  1212→      label: "Services",
+  1213→      value: services.filter((s) => s.published).length,
+  1214→      total: services.length,
+  1215→      icon: Megaphone,
+  1216→      color: "#FF9800",
+  1217→      trend: "Active",
+  1218→    },
+  1219→    {
+  1220→      label: "Newsletter",
+  1221→      value: subscribers.length,
+  1222→      total: subscribers.length,
+  1223→      icon: Mail,
+  1224→      color: "#FFCA28",
+  1225→      trend: `${jobs.filter((j) => j.published).length} job openings`,
+  1226→    },
+  1227→  ];
+  1228→
+  1229→  return (
+  1230→    <div className="space-y-8">
+  1231→      {/* Stat Cards */}
+  1232→      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+  1233→        {statCards.map((card, i) => (
+  1234→          <div key={i} className="glass-card rounded-2xl p-6">
+  1235→            <div className="flex items-start justify-between mb-4">
+  1236→              <div
+  1237→                className="w-10 h-10 rounded-xl flex items-center justify-center"
+  1238→                style={{ backgroundColor: `${card.color}20`, color: card.color }}
+  1239→              >
+  1240→                <card.icon className="h-5 w-5" />
+  1241→              </div>
+  1242→              <span className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+  1243→                {card.trend}
+  1244→              </span>
+  1245→            </div>
+  1246→            <div className="text-3xl font-bold font-[family-name:var(--font-space-grotesk)] mb-1">
+  1247→              {card.value}
+  1248→            </div>
+  1249→            <div className="text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+  1250→              {card.label}
+  1251→              {card.total > card.value && (
+  1252→                <span className="text-silver/30"> / {card.total} total</span>
+  1253→              )}
+  1254→            </div>
+  1255→          </div>
+  1256→        ))}
+  1257→      </div>
+  1258→
+  1259→      {/* Quick Stats Row */}
+  1260→      <div className="grid sm:grid-cols-3 gap-4">
+  1261→        <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+  1262→          <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+  1263→            <TrendingUp className="h-5 w-5 text-blue-400" />
+  1264→          </div>
+  1265→          <div>
+  1266→            <div className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)]">{newContactsWeek}</div>
+  1267→            <div className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">This Week Contacts</div>
+  1268→          </div>
+  1269→        </div>
+  1270→        <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+  1271→          <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+  1272→            <Activity className="h-5 w-5 text-green-400" />
+  1273→          </div>
+  1274→          <div>
+  1275→            <div className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)]">{newContactsMonth}</div>
+  1276→            <div className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">This Month Contacts</div>
+  1277→          </div>
+  1278→        </div>
+  1279→        <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+  1280→          <div className="w-10 h-10 rounded-xl bg-falu/20 flex items-center justify-center">
+  1281→            <CheckCircle className="h-5 w-5 text-falu-light" />
+  1282→          </div>
+  1283→          <div>
+  1284→            <div className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)]">{conversionRate}%</div>
+  1285→            <div className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">Conversion Rate</div>
+  1286→          </div>
+  1287→        </div>
+  1288→      </div>
+  1289→
+  1290→      {/* Activity Chart + Status Breakdown */}
+  1291→      <div className="grid lg:grid-cols-3 gap-6">
+  1292→        {/* Last 7 Days Activity Chart */}
+  1293→        <div className="lg:col-span-2 glass-card rounded-2xl p-6">
+  1294→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-6">Contact Activity (Last 7 Days)</h3>
+  1295→          <div className="flex items-end gap-2 h-40">
+  1296→            {last7Days.map((day, i) => (
+  1297→              <div key={i} className="flex-1 flex flex-col items-center gap-2">
+  1298→                <div className="w-full relative" style={{ height: "120px" }}>
+  1299→                  <div
+  1300→                    className="absolute bottom-0 w-full rounded-t-lg bg-gradient-to-t from-falu to-falu-light transition-all duration-500"
+  1301→                    style={{ height: `${Math.max((contactsPerDay[i] / maxContactsPerDay) * 100, 4)}%` }}
+  1302→                  />
+  1303→                </div>
+  1304→                <span className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+  1305→                  {day.toLocaleDateString("en-US", { weekday: "short" })}
+  1306→                </span>
+  1307→                <span className="text-xs font-semibold text-silver/60 font-[family-name:var(--font-inter)]">
+  1308→                  {contactsPerDay[i]}
+  1309→                </span>
+  1310→              </div>
+  1311→            ))}
+  1312→          </div>
+  1313→        </div>
+  1314→
+  1315→        {/* Contact Status Breakdown */}
+  1316→        <div className="glass-card rounded-2xl p-6">
+  1317→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-6">Contact Status</h3>
+  1318→          <div className="space-y-4">
+  1319→            {statusBreakdown.map((status) => (
+  1320→              <div key={status.label}>
+  1321→                <div className="flex items-center justify-between mb-1">
+  1322→                  <span className="text-sm font-[family-name:var(--font-inter)] text-silver/70">{status.label}</span>
+  1323→                  <span className="text-sm font-semibold font-[family-name:var(--font-inter)]">{status.count}</span>
+  1324→                </div>
+  1325→                <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+  1326→                  <div
+  1327→                    className={`h-full ${status.color} rounded-full transition-all duration-500`}
+  1328→                    style={{ width: `${contacts.length > 0 ? (status.count / contacts.length) * 100 : 0}%` }}
+  1329→                  />
+  1330→                </div>
+  1331→              </div>
+  1332→            ))}
+  1333→          </div>
+  1334→        </div>
+  1335→      </div>
+  1336→
+  1337→      {/* Recent Contacts & Quick Actions */}
+  1338→      <div className="grid lg:grid-cols-3 gap-6">
+  1339→        {/* Recent Contacts */}
+  1340→        <div className="lg:col-span-2 glass-card rounded-2xl p-6">
+  1341→          <div className="flex items-center justify-between mb-6">
+  1342→            <h3 className="font-bold font-[family-name:var(--font-poppins)]">Recent Contacts</h3>
+  1343→            <Button
+  1344→              variant="ghost"
+  1345→              size="sm"
+  1346→              onClick={() => onNavigate("contacts")}
+  1347→              className="text-falu-light hover:text-white text-xs font-[family-name:var(--font-inter)]"
+  1348→            >
+  1349→              View All <ArrowRight className="ml-1 h-3 w-3" />
+  1350→            </Button>
+  1351→          </div>
+  1352→          {contacts.length > 0 ? (
+  1353→            <div className="space-y-2 max-h-96 overflow-y-auto">
+  1354→              {contacts.slice(0, 5).map((contact) => (
+  1355→                <div
+  1356→                  key={contact.id}
+  1357→                  className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
+  1358→                >
+  1359→                  <div className="w-10 h-10 rounded-full bg-falu/20 flex items-center justify-center text-sm font-bold text-falu-light shrink-0">
+  1360→                    {contact.name.charAt(0)}
+  1361→                  </div>
+  1362→                  <div className="flex-1 min-w-0">
+  1363→                    <div className="text-sm font-semibold font-[family-name:var(--font-inter)] truncate">
+  1364→                      {contact.name}
+  1365→                    </div>
+  1366→                    <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)] truncate">
+  1367→                      {contact.email}
+  1368→                    </div>
+  1369→                  </div>
+  1370→                  <StatusBadge status={contact.status} />
+  1371→                </div>
+  1372→              ))}
+  1373→            </div>
+  1374→          ) : (
+  1375→            <EmptyState icon={Mail} title="No contacts yet" description="Contact form submissions will appear here" />
+  1376→          )}
+  1377→        </div>
+  1378→
+  1379→        {/* Quick Actions */}
+  1380→        <div className="glass-card rounded-2xl p-6">
+  1381→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-6">Quick Actions</h3>
+  1382→          <div className="space-y-3">
+  1383→            {[
+  1384→              { icon: FileText, label: "New Blog Post", section: "blog", color: "#3FCF8E" },
+  1385→              { icon: Briefcase, label: "Add Project", section: "projects", color: "#4945FF" },
+  1386→              { icon: Users, label: "Add Team Member", section: "team", color: "#61DAFB" },
+  1387→              { icon: Megaphone, label: "Add Service", section: "services", color: "#FF9800" },
+  1388→              { icon: Star, label: "Add Testimonial", section: "testimonials", color: "#FFCA28" },
+  1389→            ].map((action, i) => (
+  1390→              <button
+  1391→                key={i}
+  1392→                onClick={() => onNavigate(action.section)}
+  1393→                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors text-left"
+  1394→              >
+  1395→                <div
+  1396→                  className="w-8 h-8 rounded-lg flex items-center justify-center"
+  1397→                  style={{ backgroundColor: `${action.color}20`, color: action.color }}
+  1398→                >
+  1399→                  <action.icon className="h-4 w-4" />
+  1400→                </div>
+  1401→                <span className="text-sm font-[family-name:var(--font-inter)] text-silver/70">
+  1402→                  {action.label}
+  1403→                </span>
+  1404→                <Plus className="h-4 w-4 text-silver/20 ml-auto" />
+  1405→              </button>
+  1406→            ))}
+  1407→          </div>
+  1408→        </div>
+  1409→      </div>
+  1410→
+  1411→      {/* Recent Blog Posts + System Health + Top Services */}
+  1412→      <div className="grid lg:grid-cols-3 gap-6">
+  1413→        {/* Recent Blog Posts */}
+  1414→        <div className="glass-card rounded-2xl p-6">
+  1415→          <div className="flex items-center justify-between mb-4">
+  1416→            <h3 className="font-bold font-[family-name:var(--font-poppins)]">Recent Posts</h3>
+  1417→            <Button
+  1418→              variant="ghost"
+  1419→              size="sm"
+  1420→              onClick={() => onNavigate("blog")}
+  1421→              className="text-falu-light hover:text-white text-xs font-[family-name:var(--font-inter)]"
+  1422→            >
+  1423→              View All
+  1424→            </Button>
+  1425→          </div>
+  1426→          <div className="space-y-3 max-h-64 overflow-y-auto">
+  1427→            {blogPosts.length > 0 ? (
+  1428→              blogPosts.slice(0, 3).map((post) => (
+  1429→                <div key={post.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5">
+  1430→                  <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+  1431→                    <FileText className="h-4 w-4 text-green-400" />
+  1432→                  </div>
+  1433→                  <div className="flex-1 min-w-0">
+  1434→                    <div className="text-sm font-semibold font-[family-name:var(--font-inter)] truncate">{post.title}</div>
+  1435→                    <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">{formatDate(post.createdAt)}</div>
+  1436→                  </div>
+  1437→                  <Badge
+  1438→                    variant="outline"
+  1439→                    className={`text-xs font-[family-name:var(--font-inter)] ${
+  1440→                      post.published ? "bg-green-500/20 text-green-400 border-0" : "border-white/10 text-silver/40"
+  1441→                    }`}
+  1442→                  >
+  1443→                    {post.published ? "Live" : "Draft"}
+  1444→                  </Badge>
+  1445→                </div>
+  1446→              ))
+  1447→            ) : (
+  1448→              <p className="text-sm text-silver/40 font-[family-name:var(--font-inter)]">No posts yet</p>
+  1449→            )}
+  1450→          </div>
+  1451→        </div>
+  1452→
+  1453→        {/* System Health */}
+  1454→        <div className="glass-card rounded-2xl p-6">
+  1455→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-4">System Health</h3>
+  1456→          <div className="space-y-4">
+  1457→            {systemHealth.map((item) => (
+  1458→              <div key={item.label} className="flex items-center gap-3">
+  1459→                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+  1460→                  item.ok ? "bg-green-500/20" : "bg-yellow-500/20"
+  1461→                }`}>
+  1462→                  <item.icon className={`h-4 w-4 ${item.ok ? "text-green-400" : "text-yellow-400"}`} />
+  1463→                </div>
+  1464→                <div className="flex-1">
+  1465→                  <div className="text-sm font-semibold font-[family-name:var(--font-inter)]">{item.label}</div>
+  1466→                  <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)] capitalize">{item.status}</div>
+  1467→                </div>
+  1468→                <div className={`w-2.5 h-2.5 rounded-full ${
+  1469→                  item.ok ? "bg-green-400" : "bg-yellow-400 animate-pulse"
+  1470→                }`} />
+  1471→              </div>
+  1472→            ))}
+  1473→          </div>
+  1474→        </div>
+  1475→
+  1476→        {/* Top Services */}
+  1477→        <div className="glass-card rounded-2xl p-6">
+  1478→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-4">Top Services by Inquiries</h3>
+  1479→          <div className="space-y-3">
+  1480→            {topServices.length > 0 ? (
+  1481→              topServices.map(([service, count]) => (
+  1482→                <div key={service}>
+  1483→                  <div className="flex items-center justify-between mb-1">
+  1484→                    <span className="text-sm font-[family-name:var(--font-inter)] text-silver/70 truncate">{service}</span>
+  1485→                    <span className="text-xs font-semibold font-[family-name:var(--font-inter)] text-falu-light">{count}</span>
+  1486→                  </div>
+  1487→                  <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+  1488→                    <div
+  1489→                      className="h-full bg-falu rounded-full"
+  1490→                      style={{ width: `${(count / maxServiceCount) * 100}%` }}
+  1491→                    />
+  1492→                  </div>
+  1493→                </div>
+  1494→              ))
+  1495→            ) : (
+  1496→              <p className="text-sm text-silver/40 font-[family-name:var(--font-inter)]">No service inquiries yet</p>
+  1497→            )}
+  1498→          </div>
+  1499→        </div>
+  1500→      </div>
+  1501→    </div>
+  1502→  );
+  1503→}
+  1504→
+  1505→// ─── 2. Contacts View ───────────────────────────────────────────────────────────
+  1506→
+  1507→function ContactsView({
+  1508→  contacts,
+  1509→  loading,
+  1510→  onRefresh,
+  1511→  updateItem,
+  1512→  deleteItem,
+  1513→  showToast,
+  1514→}: {
+  1515→  contacts: ContactItem[];
+  1516→  loading: boolean;
+  1517→  onRefresh: () => void;
+  1518→  updateItem: (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => Promise<any>;
+  1519→  deleteItem: (endpoint: string, id: string, onSuccess: () => void) => Promise<boolean>;
+  1520→  showToast: (msg: string, type?: "success" | "error") => void;
+  1521→}) {
+  1522→  const [searchQuery, setSearchQuery] = useState("");
+  1523→  const [statusFilter, setStatusFilter] = useState("all");
+  1524→  const [sourceFilter, setSourceFilter] = useState("all");
+  1525→  const [selectedContact, setSelectedContact] = useState<ContactItem | null>(null);
+  1526→  const [detailOpen, setDetailOpen] = useState(false);
+  1527→  const [deleteOpen, setDeleteOpen] = useState(false);
+  1528→  const [deleteTarget, setDeleteTarget] = useState<ContactItem | null>(null);
+  1529→  const [deleting, setDeleting] = useState(false);
+  1530→  const [updating, setUpdating] = useState(false);
+  1531→  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  1532→  const [bulkStatus, setBulkStatus] = useState(false);
+  1533→  const [bulkStatusValue, setBulkStatusValue] = useState("contacted");
+  1534→
+  1535→  // Get unique sources
+  1536→  const sources = [...new Set(contacts.map((c) => c.source).filter(Boolean))];
+  1537→
+  1538→  const filtered = contacts.filter((c) => {
+  1539→    const matchSearch =
+  1540→      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  1541→      c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  1542→      (c.company && c.company.toLowerCase().includes(searchQuery.toLowerCase()));
+  1543→    const matchStatus = statusFilter === "all" || c.status === statusFilter;
+  1544→    const matchSource = sourceFilter === "all" || c.source === sourceFilter;
+  1545→    return matchSearch && matchStatus && matchSource;
+  1546→  });
+  1547→
+  1548→  const handleStatusChange = async (contact: ContactItem, newStatus: string) => {
+  1549→    setUpdating(true);
+  1550→    await updateItem("/api/contacts", { id: contact.id, status: newStatus }, onRefresh);
+  1551→    setUpdating(false);
+  1552→  };
+  1553→
+  1554→  const handleDelete = async () => {
+  1555→    if (!deleteTarget) return;
+  1556→    setDeleting(true);
+  1557→    const ok = await deleteItem("/api/contacts", deleteTarget.id, onRefresh);
+  1558→    setDeleting(false);
+  1559→    if (ok) {
+  1560→      setDeleteOpen(false);
+  1561→      setDeleteTarget(null);
+  1562→    }
+  1563→  };
+  1564→
+  1565→  const toggleSelect = (id: string) => {
+  1566→    setSelectedIds((prev) => {
+  1567→      const next = new Set(prev);
+  1568→      if (next.has(id)) next.delete(id);
+  1569→      else next.add(id);
+  1570→      return next;
+  1571→    });
+  1572→  };
+  1573→
+  1574→  const toggleSelectAll = () => {
+  1575→    if (selectedIds.size === filtered.length) {
+  1576→      setSelectedIds(new Set());
+  1577→    } else {
+  1578→      setSelectedIds(new Set(filtered.map((c) => c.id)));
+  1579→    }
+  1580→  };
+  1581→
+  1582→  const handleBulkStatusChange = async () => {
+  1583→    if (selectedIds.size === 0) return;
+  1584→    setUpdating(true);
+  1585→    let successCount = 0;
+  1586→    for (const id of selectedIds) {
+  1587→      const result = await updateItem("/api/contacts", { id, status: bulkStatusValue }, () => {});
+  1588→      if (result) successCount++;
+  1589→    }
+  1590→    onRefresh();
+  1591→    setSelectedIds(new Set());
+  1592→    setBulkStatus(false);
+  1593→    setUpdating(false);
+  1594→    showToast(`Updated ${successCount} contact${successCount !== 1 ? "s" : ""}`);
+  1595→  };
+  1596→
+  1597→  const exportCSV = () => {
+  1598→    const headers = ["Name", "Email", "Phone", "Company", "Subject", "Service", "Budget", "Status", "Source", "Date"];
+  1599→    const rows = filtered.map((c) => [
+  1600→      c.name,
+  1601→      c.email,
+  1602→      c.phone || "",
+  1603→      c.company || "",
+  1604→      c.subject || "",
+  1605→      c.service || "",
+  1606→      c.budget || "",
+  1607→      c.status,
+  1608→      c.source || "",
+  1609→      c.createdAt,
+  1610→    ]);
+  1611→    const csv = [headers, ...rows].map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+  1612→    const blob = new Blob([csv], { type: "text/csv" });
+  1613→    const url = URL.createObjectURL(blob);
+  1614→    const a = document.createElement("a");
+  1615→    a.href = url;
+  1616→    a.download = `contacts-${new Date().toISOString().split("T")[0]}.csv`;
+  1617→    a.click();
+  1618→    URL.revokeObjectURL(url);
+  1619→    showToast("Contacts exported successfully!");
+  1620→  };
+  1621→
+  1622→  if (loading) return <LoadingSpinner />;
+  1623→
+  1624→  return (
+  1625→    <div className="space-y-6">
+  1626→      {/* Search & Filters */}
+  1627→      <div className="flex items-center gap-4 flex-wrap">
+  1628→        <div className="relative flex-1 max-w-md min-w-[200px]">
+  1629→          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/40" />
+  1630→          <input
+  1631→            type="text"
+  1632→            placeholder="Search contacts..."
+  1633→            value={searchQuery}
+  1634→            onChange={(e) => setSearchQuery(e.target.value)}
+  1635→            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-[family-name:var(--font-inter)] text-white placeholder:text-silver/30 focus:outline-none focus:border-falu/40 transition-colors"
+  1636→          />
+  1637→        </div>
+  1638→        <Select value={statusFilter} onValueChange={setStatusFilter}>
+  1639→          <SelectTrigger className="w-36 h-10 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1640→            <Filter className="h-3 w-3 mr-1" />
+  1641→            <SelectValue placeholder="Status" />
+  1642→          </SelectTrigger>
+  1643→          <SelectContent>
+  1644→            <SelectItem value="all">All Statuses</SelectItem>
+  1645→            <SelectItem value="new">New</SelectItem>
+  1646→            <SelectItem value="contacted">Contacted</SelectItem>
+  1647→            <SelectItem value="qualified">Qualified</SelectItem>
+  1648→            <SelectItem value="closed">Closed</SelectItem>
+  1649→          </SelectContent>
+  1650→        </Select>
+  1651→        <Select value={sourceFilter} onValueChange={setSourceFilter}>
+  1652→          <SelectTrigger className="w-36 h-10 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1653→            <SelectValue placeholder="Source" />
+  1654→          </SelectTrigger>
+  1655→          <SelectContent>
+  1656→            <SelectItem value="all">All Sources</SelectItem>
+  1657→            {sources.map((source) => (
+  1658→              <SelectItem key={source} value={source!}>
+  1659→                {source}
+  1660→              </SelectItem>
+  1661→            ))}
+  1662→          </SelectContent>
+  1663→        </Select>
+  1664→        <Badge variant="outline" className="font-[family-name:var(--font-inter)] border-white/10 text-silver/60">
+  1665→          {filtered.length} contact{filtered.length !== 1 ? "s" : ""}
+  1666→        </Badge>
+  1667→        <Button
+  1668→          variant="outline"
+  1669→          size="sm"
+  1670→          onClick={exportCSV}
+  1671→          className="font-[family-name:var(--font-inter)] border-white/10 text-silver/60 hover:text-white"
+  1672→        >
+  1673→          <Download className="h-4 w-4 mr-2" />
+  1674→          Export
+  1675→        </Button>
+  1676→      </div>
+  1677→
+  1678→      {/* Bulk Actions Bar */}
+  1679→      {selectedIds.size > 0 && (
+  1680→        <div className="glass-card rounded-xl p-3 flex items-center gap-4 flex-wrap">
+  1681→          <span className="text-sm font-[family-name:var(--font-inter)] text-silver/60">
+  1682→            {selectedIds.size} selected
+  1683→          </span>
+  1684→          <Select value={bulkStatusValue} onValueChange={setBulkStatusValue}>
+  1685→            <SelectTrigger className="w-36 h-8 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1686→              <SelectValue />
+  1687→            </SelectTrigger>
+  1688→            <SelectContent>
+  1689→              <SelectItem value="new">New</SelectItem>
+  1690→              <SelectItem value="contacted">Contacted</SelectItem>
+  1691→              <SelectItem value="qualified">Qualified</SelectItem>
+  1692→              <SelectItem value="closed">Closed</SelectItem>
+  1693→            </SelectContent>
+  1694→          </Select>
+  1695→          <Button
+  1696→            size="sm"
+  1697→            onClick={handleBulkStatusChange}
+  1698→            disabled={updating}
+  1699→            className="bg-falu hover:bg-falu-light text-white font-[family-name:var(--font-inter)] h-8"
+  1700→          >
+  1701→            {updating ? <Loader2 className="h-3 w-3 animate-spin mr-1" /> : null}
+  1702→            Apply Status
+  1703→          </Button>
+  1704→          <Button
+  1705→            variant="ghost"
+  1706→            size="sm"
+  1707→            onClick={() => setSelectedIds(new Set())}
+  1708→            className="font-[family-name:var(--font-inter)] text-silver/50 h-8"
+  1709→          >
+  1710→            Clear Selection
+  1711→          </Button>
+  1712→        </div>
+  1713→      )}
+  1714→
+  1715→      {/* Contacts Table */}
+  1716→      <div className="glass-card rounded-2xl overflow-hidden">
+  1717→        <div className="overflow-x-auto">
+  1718→          <table className="w-full">
+  1719→            <thead>
+  1720→              <tr className="border-b border-white/10">
+  1721→                <th className="text-left px-4 py-4 w-10">
+  1722→                  <button onClick={toggleSelectAll} className="text-silver/40 hover:text-white transition-colors">
+  1723→                    {selectedIds.size === filtered.length && filtered.length > 0 ? (
+  1724→                      <CheckSquare className="h-4 w-4 text-falu-light" />
+  1725→                    ) : (
+  1726→                      <Square className="h-4 w-4" />
+  1727→                    )}
+  1728→                  </button>
+  1729→                </th>
+  1730→                {["Contact", "Service", "Status", "Date", ""].map((h) => (
+  1731→                  <th
+  1732→                    key={h}
+  1733→                    className="text-left px-6 py-4 text-xs font-semibold text-silver/40 font-[family-name:var(--font-inter)] uppercase tracking-wider"
+  1734→                  >
+  1735→                    {h}
+  1736→                  </th>
+  1737→                ))}
+  1738→              </tr>
+  1739→            </thead>
+  1740→            <tbody>
+  1741→              {filtered.length > 0 ? (
+  1742→                filtered.map((contact) => (
+  1743→                  <tr
+  1744→                    key={contact.id}
+  1745→                    className={`border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer ${
+  1746→                      selectedIds.has(contact.id) ? "bg-falu/10" : ""
+  1747→                    }`}
+  1748→                    onClick={() => {
+  1749→                      setSelectedContact(contact);
+  1750→                      setDetailOpen(true);
+  1751→                    }}
+  1752→                  >
+  1753→                    <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
+  1754→                      <button onClick={() => toggleSelect(contact.id)} className="text-silver/40 hover:text-white transition-colors">
+  1755→                        {selectedIds.has(contact.id) ? (
+  1756→                          <CheckSquare className="h-4 w-4 text-falu-light" />
+  1757→                        ) : (
+  1758→                          <Square className="h-4 w-4" />
+  1759→                        )}
+  1760→                      </button>
+  1761→                    </td>
+  1762→                    <td className="px-6 py-4">
+  1763→                      <div className="flex items-center gap-3">
+  1764→                        <div className="w-8 h-8 rounded-full bg-falu/20 flex items-center justify-center text-xs font-bold text-falu-light shrink-0">
+  1765→                          {contact.name.charAt(0)}
+  1766→                        </div>
+  1767→                        <div>
+  1768→                          <div className="text-sm font-semibold font-[family-name:var(--font-inter)]">
+  1769→                            {contact.name}
+  1770→                          </div>
+  1771→                          <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+  1772→                            {contact.email}
+  1773→                          </div>
+  1774→                        </div>
+  1775→                      </div>
+  1776→                    </td>
+  1777→                    <td className="px-6 py-4 text-sm text-silver/60 font-[family-name:var(--font-inter)]">
+  1778→                      {contact.service || "—"}
+  1779→                    </td>
+  1780→                    <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+  1781→                      <Select
+  1782→                        value={contact.status}
+  1783→                        onValueChange={(v) => handleStatusChange(contact, v)}
+  1784→                        disabled={updating}
+  1785→                      >
+  1786→                        <SelectTrigger className="w-32 h-8 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1787→                          <SelectValue />
+  1788→                        </SelectTrigger>
+  1789→                        <SelectContent>
+  1790→                          <SelectItem value="new">New</SelectItem>
+  1791→                          <SelectItem value="contacted">Contacted</SelectItem>
+  1792→                          <SelectItem value="qualified">Qualified</SelectItem>
+  1793→                          <SelectItem value="closed">Closed</SelectItem>
+  1794→                        </SelectContent>
+  1795→                      </Select>
+  1796→                    </td>
+  1797→                    <td className="px-6 py-4 text-sm text-silver/40 font-[family-name:var(--font-inter)]">
+  1798→                      {formatDate(contact.createdAt)}
+  1799→                    </td>
+  1800→                    <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+  1801→                      <Button
+  1802→                        variant="ghost"
+  1803→                        size="sm"
+  1804→                        onClick={() => {
+  1805→                          setDeleteTarget(contact);
+  1806→                          setDeleteOpen(true);
+  1807→                        }}
+  1808→                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-8 w-8 p-0"
+  1809→                      >
+  1810→                        <Trash2 className="h-4 w-4" />
+  1811→                      </Button>
+  1812→                    </td>
+  1813→                  </tr>
+  1814→                ))
+  1815→              ) : (
+  1816→                <tr>
+  1817→                  <td colSpan={6}>
+  1818→                    <EmptyState
+  1819→                      icon={Mail}
+  1820→                      title="No contacts found"
+  1821→                      description={searchQuery ? "Try a different search" : "Contact submissions will appear here"}
+  1822→                    />
+  1823→                  </td>
+  1824→                </tr>
+  1825→              )}
+  1826→            </tbody>
+  1827→          </table>
+  1828→        </div>
+  1829→      </div>
+  1830→
+  1831→      {/* Contact Detail Dialog */}
+  1832→      <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
+  1833→        <DialogContent className="sm:max-w-lg bg-background border-white/10 max-h-[90vh] overflow-y-auto">
+  1834→          <DialogHeader>
+  1835→            <DialogTitle className="font-[family-name:var(--font-poppins)]">
+  1836→              Contact Details
+  1837→            </DialogTitle>
+  1838→          </DialogHeader>
+  1839→          {selectedContact && (
+  1840→            <div className="space-y-4 font-[family-name:var(--font-inter)]">
+  1841→              <div className="flex items-center gap-4">
+  1842→                <div className="w-14 h-14 rounded-full bg-falu/20 flex items-center justify-center text-xl font-bold text-falu-light">
+  1843→                  {selectedContact.name.charAt(0)}
+  1844→                </div>
+  1845→                <div>
+  1846→                  <div className="font-semibold text-lg">{selectedContact.name}</div>
+  1847→                  <div className="text-sm text-silver/50">{selectedContact.email}</div>
+  1848→                </div>
+  1849→              </div>
+  1850→              <Separator className="bg-white/10" />
+  1851→              <div className="grid grid-cols-2 gap-4 text-sm">
+  1852→                {selectedContact.phone && (
+  1853→                  <div><span className="text-silver/40">Phone:</span> <span className="ml-2">{selectedContact.phone}</span></div>
+  1854→                )}
+  1855→                {selectedContact.company && (
+  1856→                  <div><span className="text-silver/40">Company:</span> <span className="ml-2">{selectedContact.company}</span></div>
+  1857→                )}
+  1858→                {selectedContact.service && (
+  1859→                  <div><span className="text-silver/40">Service:</span> <span className="ml-2">{selectedContact.service}</span></div>
+  1860→                )}
+  1861→                {selectedContact.budget && (
+  1862→                  <div><span className="text-silver/40">Budget:</span> <span className="ml-2">{selectedContact.budget}</span></div>
+  1863→                )}
+  1864→                {selectedContact.source && (
+  1865→                  <div><span className="text-silver/40">Source:</span> <span className="ml-2">{selectedContact.source}</span></div>
+  1866→                )}
+  1867→                <div>
+  1868→                  <span className="text-silver/40">Status:</span>
+  1869→                  <span className="ml-2"><StatusBadge status={selectedContact.status} /></span>
+  1870→                </div>
+  1871→              </div>
+  1872→              {selectedContact.subject && (
+  1873→                <div>
+  1874→                  <span className="text-silver/40 text-sm">Subject:</span>
+  1875→                  <p className="mt-1 text-sm">{selectedContact.subject}</p>
+  1876→                </div>
+  1877→              )}
+  1878→              {selectedContact.message && (
+  1879→                <div>
+  1880→                  <span className="text-silver/40 text-sm">Message:</span>
+  1881→                  <p className="mt-1 text-sm bg-white/5 p-3 rounded-xl whitespace-pre-wrap">{selectedContact.message}</p>
+  1882→                </div>
+  1883→              )}
+  1884→              <div className="text-xs text-silver/30">
+  1885→                Submitted {formatDate(selectedContact.createdAt)}
+  1886→              </div>
+  1887→              <Separator className="bg-white/10" />
+  1888→              <div className="flex items-center gap-3">
+  1889→                <a
+  1890→                  href={`mailto:${selectedContact.email}?subject=Re: ${selectedContact.subject || "Your inquiry"}`}
+  1891→                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-falu hover:bg-falu-light text-white text-sm font-[family-name:var(--font-inter)] transition-colors"
+  1892→                >
+  1893→                  <Reply className="h-4 w-4" />
+  1894→                  Reply via Email
+  1895→                </a>
+  1896→                <Button
+  1897→                  variant="outline"
+  1898→                  size="sm"
+  1899→                  onClick={() => {
+  1900→                    setDetailOpen(false);
+  1901→                    handleStatusChange(selectedContact, "contacted");
+  1902→                  }}
+  1903→                  className="font-[family-name:var(--font-inter)] border-white/10 text-silver/60"
+  1904→                >
+  1905→                  Mark Contacted
+  1906→                </Button>
+  1907→              </div>
+  1908→            </div>
+  1909→          )}
+  1910→        </DialogContent>
+  1911→      </Dialog>
+  1912→
+  1913→      {/* Delete Confirm */}
+  1914→      <DeleteConfirmDialog
+  1915→        open={deleteOpen}
+  1916→        onOpenChange={setDeleteOpen}
+  1917→        onConfirm={handleDelete}
+  1918→        itemName={deleteTarget?.name || ""}
+  1919→        loading={deleting}
+  1920→      />
+  1921→    </div>
+  1922→  );
+  1923→}
+  1924→
+  1925→// ─── 3. Blog Posts View ─────────────────────────────────────────────────────────
+  1926→
+  1927→function BlogView({
+  1928→  posts,
+  1929→  loading,
+  1930→  onRefresh,
+  1931→  createItem,
+  1932→  updateItem,
+  1933→  deleteItem,
+  1934→  showToast,
+  1935→}: {
+  1936→  posts: BlogPost[];
+  1937→  loading: boolean;
+  1938→  onRefresh: () => void;
+  1939→  createItem: (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => Promise<any>;
+  1940→  updateItem: (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => Promise<any>;
+  1941→  deleteItem: (endpoint: string, id: string, onSuccess: () => void) => Promise<boolean>;
+  1942→  showToast: (msg: string, type?: "success" | "error") => void;
+  1943→}) {
+  1944→  const [formOpen, setFormOpen] = useState(false);
+  1945→  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  1946→  const [deleteOpen, setDeleteOpen] = useState(false);
+  1947→  const [deleteTarget, setDeleteTarget] = useState<BlogPost | null>(null);
+  1948→  const [saving, setSaving] = useState(false);
+  1949→  const [deleting, setDeleting] = useState(false);
+  1950→
+  1951→  const emptyForm = {
+  1952→    title: "",
+  1953→    slug: "",
+  1954→    excerpt: "",
+  1955→    content: "",
+  1956→    coverImage: "",
+  1957→    category: "",
+  1958→    tags: "",
+  1959→    published: false,
+  1960→    featured: false,
+  1961→  };
+  1962→  const [form, setForm] = useState(emptyForm);
+  1963→
+  1964→  const openCreate = () => {
+  1965→    setEditingPost(null);
+  1966→    setForm(emptyForm);
+  1967→    setFormOpen(true);
+  1968→  };
+  1969→
+  1970→  const openEdit = (post: BlogPost) => {
+  1971→    setEditingPost(post);
+  1972→    setForm({
+  1973→      title: post.title,
+  1974→      slug: post.slug,
+  1975→      excerpt: post.excerpt || "",
+  1976→      content: post.content || "",
+  1977→      coverImage: post.coverImage || "",
+  1978→      category: post.category || "",
+  1979→      tags: post.tags || "",
+  1980→      published: post.published,
+  1981→      featured: post.featured,
+  1982→    });
+  1983→    setFormOpen(true);
+  1984→  };
+  1985→
+  1986→  const handleSave = async () => {
+  1987→    if (!form.title || !form.slug) {
+  1988→      showToast("Title and slug are required", "error");
+  1989→      return;
+  1990→    }
+  1991→    setSaving(true);
+  1992→    const data = {
+  1993→      ...form,
+  1994→      ...(editingPost ? { id: editingPost.id } : { authorId: "admin" }),
+  1995→    };
+  1996→    if (editingPost) {
+  1997→      await updateItem("/api/blog", data, onRefresh);
+  1998→    } else {
+  1999→      await createItem("/api/blog", data, onRefresh);
+  2000→    }
+
+[showing lines 1-2000 of 4546; use offset=2001 with limit to continue reading]

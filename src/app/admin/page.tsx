@@ -520,29 +520,12 @@ function EmptyState({ icon: Icon, title, description }: { icon: typeof Mail; tit
   );
 }
 
-// ─── Main Component ─────────────────────────────────────────────────────────────
+// ─── Login Component ────────────────────────────────────────────────────────────
 
-export default function AdminDashboard() {
-  // Auth state
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authUser, setAuthUser] = useState<{ username: string; role: string } | null>(null);
+function AdminLogin({ onLogin }: { onLogin: (user: { username: string; role: string }) => void }) {
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
   const [loginError, setLoginError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
-
-  // Check for existing session on mount
-  useEffect(() => {
-    const session = sessionStorage.getItem("clipe233_admin");
-    if (session) {
-      try {
-        const data = JSON.parse(session);
-        setIsAuthenticated(true);
-        setAuthUser(data.user);
-      } catch {
-        sessionStorage.removeItem("clipe233_admin");
-      }
-    }
-  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -560,13 +543,108 @@ export default function AdminDashboard() {
         return;
       }
       sessionStorage.setItem("clipe233_admin", JSON.stringify(data));
-      setIsAuthenticated(true);
-      setAuthUser(data.user);
+      onLogin(data.user);
     } catch {
       setLoginError("Connection error. Please try again.");
     } finally {
       setLoginLoading(false);
     }
+  };
+
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-4">
+            <ShieldCheck className="h-8 w-8 text-falu-light" />
+          </div>
+          <h1 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-white">Clipe233 Admin</h1>
+          <p className="text-silver/50 font-[family-name:var(--font-inter)] text-sm mt-1">Sign in to manage your website</p>
+        </div>
+
+        {/* Login Form */}
+        <div className="glass-card rounded-2xl p-8">
+          <form onSubmit={handleLogin} className="space-y-5">
+            {loginError && (
+              <div className="p-3 rounded-lg bg-red-900/30 border border-red-800/50 flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+                <span className="text-red-300 text-sm font-[family-name:var(--font-inter)]">{loginError}</span>
+              </div>
+            )}
+            <div>
+              <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Username</Label>
+              <div className="relative">
+                <Input
+                  value={loginForm.username}
+                  onChange={(e) => setLoginForm((p) => ({ ...p, username: e.target.value }))}
+                  placeholder="Enter username"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
+                  required
+                />
+                <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
+              </div>
+            </div>
+            <div>
+              <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Password</Label>
+              <div className="relative">
+                <Input
+                  type="password"
+                  value={loginForm.password}
+                  onChange={(e) => setLoginForm((p) => ({ ...p, password: e.target.value }))}
+                  placeholder="Enter password"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
+                  required
+                />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
+              </div>
+            </div>
+            <Button
+              type="submit"
+              disabled={loginLoading}
+              className="w-full bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
+            >
+              {loginLoading ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...</>
+              ) : (
+                <><Lock className="mr-2 h-4 w-4" /> Sign In</>
+              )}
+            </Button>
+          </form>
+        </div>
+
+        <p className="text-center text-silver/30 text-xs font-[family-name:var(--font-inter)] mt-6">
+          Clipe233 Engineers &copy; {new Date().getFullYear()} — Admin CMS
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component (Auth Wrapper) ─────────────────────────────────────────────
+
+export default function AdminDashboard() {
+  // Auth state only — no dashboard hooks here
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authUser, setAuthUser] = useState<{ username: string; role: string } | null>(null);
+
+  // Check for existing session on mount
+  useEffect(() => {
+    const session = sessionStorage.getItem("clipe233_admin");
+    if (session) {
+      try {
+        const data = JSON.parse(session);
+        setIsAuthenticated(true);
+        setAuthUser(data.user);
+      } catch {
+        sessionStorage.removeItem("clipe233_admin");
+      }
+    }
+  }, []);
+
+  const handleLogin = (user: { username: string; role: string }) => {
+    setIsAuthenticated(true);
+    setAuthUser(user);
   };
 
   const handleLogout = () => {
@@ -575,78 +653,18 @@ export default function AdminDashboard() {
     setAuthUser(null);
   };
 
-  // Login screen
+  // Conditionally render login or dashboard — hooks are never called conditionally
   if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-4">
-              <ShieldCheck className="h-8 w-8 text-falu-light" />
-            </div>
-            <h1 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-white">Clipe233 Admin</h1>
-            <p className="text-silver/50 font-[family-name:var(--font-inter)] text-sm mt-1">Sign in to manage your website</p>
-          </div>
-
-          {/* Login Form */}
-          <div className="glass-card rounded-2xl p-8">
-            <form onSubmit={handleLogin} className="space-y-5">
-              {loginError && (
-                <div className="p-3 rounded-lg bg-red-900/30 border border-red-800/50 flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
-                  <span className="text-red-300 text-sm font-[family-name:var(--font-inter)]">{loginError}</span>
-                </div>
-              )}
-              <div>
-                <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Username</Label>
-                <div className="relative">
-                  <Input
-                    value={loginForm.username}
-                    onChange={(e) => setLoginForm((p) => ({ ...p, username: e.target.value }))}
-                    placeholder="Enter username"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
-                    required
-                  />
-                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
-                </div>
-              </div>
-              <div>
-                <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Password</Label>
-                <div className="relative">
-                  <Input
-                    type="password"
-                    value={loginForm.password}
-                    onChange={(e) => setLoginForm((p) => ({ ...p, password: e.target.value }))}
-                    placeholder="Enter password"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
-                    required
-                  />
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
-                </div>
-              </div>
-              <Button
-                type="submit"
-                disabled={loginLoading}
-                className="w-full bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
-              >
-                {loginLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...</>
-                ) : (
-                  <><Lock className="mr-2 h-4 w-4" /> Sign In</>
-                )}
-              </Button>
-            </form>
-          </div>
-
-          <p className="text-center text-silver/30 text-xs font-[family-name:var(--font-inter)] mt-6">
-            Clipe233 Engineers &copy; {new Date().getFullYear()} — Admin CMS
-          </p>
-        </div>
-      </div>
-    );
+    return <AdminLogin onLogin={handleLogin} />;
   }
 
+  return <AdminDashboardInner authUser={authUser} onLogout={handleLogout} />;
+}
+
+// ─── Dashboard Inner Component ──────────────────────────────────────────────────
+// All dashboard hooks live here so they are ALWAYS called in the same order.
+
+function AdminDashboardInner({ authUser, onLogout }: { authUser: { username: string; role: string } | null; onLogout: () => void }) {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [apiHealth, setApiHealth] = useState<Record<string, string> | null>(null);
@@ -942,7 +960,7 @@ export default function AdminDashboard() {
                 <span className="text-sm font-[family-name:var(--font-inter)]">{authUser?.username || "Admin"}</span>
               </div>
               <button
-                onClick={handleLogout}
+                onClick={onLogout}
                 className="p-2 rounded-lg hover:bg-white/5 transition-colors text-silver/60 hover:text-red-400"
                 title="Logout"
               >

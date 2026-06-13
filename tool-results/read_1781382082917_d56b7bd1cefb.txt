@@ -1,0 +1,2002 @@
+     1→"use client";
+     2→
+     3→import { useState, useEffect, useCallback } from "react";
+     4→import {
+     5→  LayoutDashboard,
+     6→  Users,
+     7→  FileText,
+     8→  Briefcase,
+     9→  Mail,
+    10→  Settings,
+    11→  BarChart3,
+    12→  Eye,
+    13→  CheckCircle,
+    14→  Clock,
+    15→  AlertCircle,
+    16→  ArrowRight,
+    17→  Plus,
+    18→  Search,
+    19→  Bell,
+    20→  ChevronDown,
+    21→  Pencil,
+    22→  Trash2,
+    23→  X,
+    24→  Loader2,
+    25→  Database,
+    26→  Server,
+    27→  Globe,
+    28→  Star,
+    29→  ExternalLink,
+    30→  MapPin,
+    31→  CalendarDays,
+    32→  Megaphone,
+    33→  MessageSquare,
+    34→  Download,
+    35→  Upload,
+    36→  Activity,
+    37→  TrendingUp,
+    38→  Filter,
+    39→  CheckSquare,
+    40→  Square,
+    41→  Reply,
+    42→  Lock,
+    43→  LogOut,
+    44→  ShieldCheck,
+    45→} from "lucide-react";
+    46→import { Button } from "@/components/ui/button";
+    47→import { Input } from "@/components/ui/input";
+    48→import { Textarea } from "@/components/ui/textarea";
+    49→import { Label } from "@/components/ui/label";
+    50→import { Switch } from "@/components/ui/switch";
+    51→import { Badge } from "@/components/ui/badge";
+    52→import { Separator } from "@/components/ui/separator";
+    53→import {
+    54→  Dialog,
+    55→  DialogContent,
+    56→  DialogHeader,
+    57→  DialogTitle,
+    58→  DialogDescription,
+    59→  DialogFooter,
+    60→} from "@/components/ui/dialog";
+    61→import {
+    62→  AlertDialog,
+    63→  AlertDialogContent,
+    64→  AlertDialogHeader,
+    65→  AlertDialogTitle,
+    66→  AlertDialogDescription,
+    67→  AlertDialogFooter,
+    68→  AlertDialogAction,
+    69→  AlertDialogCancel,
+    70→} from "@/components/ui/alert-dialog";
+    71→import {
+    72→  Select,
+    73→  SelectContent,
+    74→  SelectItem,
+    75→  SelectTrigger,
+    76→  SelectValue,
+    77→} from "@/components/ui/select";
+    78→import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+    79→
+    80→// ─── Types ──────────────────────────────────────────────────────────────────────
+    81→
+    82→interface ContactItem {
+    83→  id: string;
+    84→  name: string;
+    85→  email: string;
+    86→  phone?: string;
+    87→  company?: string;
+    88→  subject?: string;
+    89→  message?: string;
+    90→  service?: string;
+    91→  budget?: string;
+    92→  status: string;
+    93→  source?: string;
+    94→  createdAt: string;
+    95→}
+    96→
+    97→interface BlogPost {
+    98→  id: string;
+    99→  title: string;
+   100→  slug: string;
+   101→  excerpt?: string;
+   102→  content?: string;
+   103→  coverImage?: string;
+   104→  category?: string;
+   105→  tags?: string;
+   106→  published: boolean;
+   107→  featured: boolean;
+   108→  authorId: string;
+   109→  createdAt: string;
+   110→  updatedAt: string;
+   111→  publishedAt?: string;
+   112→  author?: { id: string; name: string; avatar?: string };
+   113→}
+   114→
+   115→interface Project {
+   116→  id: string;
+   117→  title: string;
+   118→  slug: string;
+   119→  description?: string;
+   120→  content?: string;
+   121→  coverImage?: string;
+   122→  images?: string;
+   123→  category?: string;
+   124→  client?: string;
+   125→  technologies?: string;
+   126→  liveUrl?: string;
+   127→  githubUrl?: string;
+   128→  featured: boolean;
+   129→  published: boolean;
+   130→  startDate?: string;
+   131→  endDate?: string;
+   132→  createdAt: string;
+   133→  updatedAt: string;
+   134→}
+   135→
+   136→interface TeamMember {
+   137→  id: string;
+   138→  name: string;
+   139→  title: string;
+   140→  bio?: string;
+   141→  image?: string;
+   142→  expertise?: string;
+   143→  qualifications?: string;
+   144→  technicalSkills?: string;
+   145→  order: number;
+   146→  published: boolean;
+   147→  createdAt: string;
+   148→  updatedAt: string;
+   149→}
+   150→
+   151→interface ServiceItem {
+   152→  id: string;
+   153→  title: string;
+   154→  slug: string;
+   155→  description?: string;
+   156→  icon?: string;
+   157→  features?: string;
+   158→  benefits?: string;
+   159→  order: number;
+   160→  published: boolean;
+   161→  createdAt: string;
+   162→  updatedAt: string;
+   163→}
+   164→
+   165→interface Testimonial {
+   166→  id: string;
+   167→  name: string;
+   168→  title?: string;
+   169→  company?: string;
+   170→  avatar?: string;
+   171→  content: string;
+   172→  rating?: number;
+   173→  featured: boolean;
+   174→  published: boolean;
+   175→  createdAt: string;
+   176→  updatedAt: string;
+   177→}
+   178→
+   179→interface JobOpening {
+   180→  id: string;
+   181→  title: string;
+   182→  slug: string;
+   183→  department?: string;
+   184→  location?: string;
+   185→  type?: string;
+   186→  description?: string;
+   187→  requirements?: string;
+   188→  salary?: string;
+   189→  published: boolean;
+   190→  deadline?: string;
+   191→  createdAt: string;
+   192→  updatedAt: string;
+   193→  _count?: { applications: number };
+   194→}
+   195→
+   196→interface NewsletterSubscriber {
+   197→  id: string;
+   198→  email: string;
+   199→  source?: string;
+   200→  active: boolean;
+   201→  createdAt: string;
+   202→}
+   203→
+   204→interface SiteSetting {
+   205→  id: string;
+   206→  key: string;
+   207→  value: string;
+   208→}
+   209→
+   210→// ─── Sidebar Navigation ────────────────────────────────────────────────────────
+   211→
+   212→const sidebarItems = [
+   213→  { icon: LayoutDashboard, label: "Dashboard", id: "dashboard" },
+   214→  { icon: Mail, label: "Contacts", id: "contacts" },
+   215→  { icon: FileText, label: "Blog Posts", id: "blog" },
+   216→  { icon: Briefcase, label: "Projects", id: "projects" },
+   217→  { icon: Users, label: "Team", id: "team" },
+   218→  { icon: Megaphone, label: "Services", id: "services" },
+   219→  { icon: Star, label: "Testimonials", id: "testimonials" },
+   220→  { icon: BarChart3, label: "Newsletter & Careers", id: "newsletter-careers" },
+   221→  { icon: Activity, label: "Analytics", id: "analytics" },
+   222→  { icon: Globe, label: "Pages", id: "pages" },
+   223→  { icon: Settings, label: "Settings", id: "settings" },
+   224→];
+   225→
+   226→// ─── Utility Functions ──────────────────────────────────────────────────────────
+   227→
+   228→function generateSlug(text: string): string {
+   229→  return text
+   230→    .toLowerCase()
+   231→    .trim()
+   232→    .replace(/[^\w\s-]/g, "")
+   233→    .replace(/[\s_]+/g, "-")
+   234→    .replace(/-+/g, "-")
+   235→    .replace(/^-+|-+$/g, "");
+   236→}
+   237→
+   238→function formatDate(dateStr: string): string {
+   239→  if (!dateStr) return "—";
+   240→  try {
+   241→    return new Date(dateStr).toLocaleDateString("en-US", {
+   242→      year: "numeric",
+   243→      month: "short",
+   244→      day: "numeric",
+   245→    });
+   246→  } catch {
+   247→    return "—";
+   248→  }
+   249→}
+   250→
+   251→// ─── Toast System ───────────────────────────────────────────────────────────────
+   252→
+   253→interface ToastMessage {
+   254→  id: number;
+   255→  message: string;
+   256→  type: "success" | "error";
+   257→}
+   258→
+   259→let toastIdCounter = 0;
+   260→
+   261→function useToast() {
+   262→  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+   263→
+   264→  const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+   265→    const id = ++toastIdCounter;
+   266→    setToasts((prev) => [...prev, { id, message, type }]);
+   267→    setTimeout(() => {
+   268→      setToasts((prev) => prev.filter((t) => t.id !== id));
+   269→    }, 3500);
+   270→  }, []);
+   271→
+   272→  const ToastContainer = (
+   273→    <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2">
+   274→      {toasts.map((toast) => (
+   275→        <div
+   276→          key={toast.id}
+   277→          className={`px-4 py-3 rounded-xl shadow-lg text-sm font-[family-name:var(--font-inter)] flex items-center gap-2 animate-in slide-in-from-right duration-300 ${
+   278→            toast.type === "success"
+   279→              ? "bg-green-500/90 text-white backdrop-blur-sm"
+   280→              : "bg-red-500/90 text-white backdrop-blur-sm"
+   281→          }`}
+   282→        >
+   283→          {toast.type === "success" ? (
+   284→            <CheckCircle className="h-4 w-4 shrink-0" />
+   285→          ) : (
+   286→            <AlertCircle className="h-4 w-4 shrink-0" />
+   287→          )}
+   288→          {toast.message}
+   289→        </div>
+   290→      ))}
+   291→    </div>
+   292→  );
+   293→
+   294→  return { showToast, ToastContainer };
+   295→}
+   296→
+   297→// ─── Status Badge ───────────────────────────────────────────────────────────────
+   298→
+   299→function StatusBadge({ status }: { status: string }) {
+   300→  const config: Record<string, { icon: typeof CheckCircle; color: string; label: string }> = {
+   301→    new: { icon: AlertCircle, color: "text-blue-400", label: "New" },
+   302→    contacted: { icon: Clock, color: "text-yellow-400", label: "Contacted" },
+   303→    qualified: { icon: Eye, color: "text-green-400", label: "Qualified" },
+   304→    closed: { icon: CheckCircle, color: "text-silver/40", label: "Closed" },
+   305→  };
+   306→  const { icon: Icon, color, label } = config[status] || config.new;
+   307→  return (
+   308→    <span
+   309→      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold font-[family-name:var(--font-inter)] ${color} bg-white/5`}
+   310→    >
+   311→      <Icon className="h-3 w-3" />
+   312→      {label}
+   313→    </span>
+   314→  );
+   315→}
+   316→
+   317→// ─── Shared Form Dialog ─────────────────────────────────────────────────────────
+   318→
+   319→function FormDialog({
+   320→  open,
+   321→  onOpenChange,
+   322→  title,
+   323→  children,
+   324→  onSubmit,
+   325→  submitLabel = "Save",
+   326→  loading = false,
+   327→  maxWidth = "sm:max-w-lg",
+   328→}: {
+   329→  open: boolean;
+   330→  onOpenChange: (open: boolean) => void;
+   331→  title: string;
+   332→  children: React.ReactNode;
+   333→  onSubmit: () => void;
+   334→  submitLabel?: string;
+   335→  loading?: boolean;
+   336→  maxWidth?: string;
+   337→}) {
+   338→  return (
+   339→    <Dialog open={open} onOpenChange={onOpenChange}>
+   340→      <DialogContent className={`${maxWidth} max-h-[90vh] overflow-y-auto bg-background border-white/10`}>
+   341→        <DialogHeader>
+   342→          <DialogTitle className="font-[family-name:var(--font-poppins)]">{title}</DialogTitle>
+   343→          <DialogDescription className="font-[family-name:var(--font-inter)] text-silver/50">
+   344→            Fill in the fields below. All required fields must be completed.
+   345→          </DialogDescription>
+   346→        </DialogHeader>
+   347→        <div className="space-y-4 py-2">{children}</div>
+   348→        <DialogFooter>
+   349→          <Button
+   350→            variant="outline"
+   351→            onClick={() => onOpenChange(false)}
+   352→            className="font-[family-name:var(--font-inter)] border-white/10"
+   353→          >
+   354→            Cancel
+   355→          </Button>
+   356→          <Button
+   357→            onClick={onSubmit}
+   358→            disabled={loading}
+   359→            className="bg-falu hover:bg-falu-light text-white font-[family-name:var(--font-inter)]"
+   360→          >
+   361→            {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+   362→            {submitLabel}
+   363→          </Button>
+   364→        </DialogFooter>
+   365→      </DialogContent>
+   366→    </Dialog>
+   367→  );
+   368→}
+   369→
+   370→// ─── Delete Confirm Dialog ──────────────────────────────────────────────────────
+   371→
+   372→function DeleteConfirmDialog({
+   373→  open,
+   374→  onOpenChange,
+   375→  onConfirm,
+   376→  itemName,
+   377→  loading = false,
+   378→}: {
+   379→  open: boolean;
+   380→  onOpenChange: (open: boolean) => void;
+   381→  onConfirm: () => void;
+   382→  itemName: string;
+   383→  loading?: boolean;
+   384→}) {
+   385→  return (
+   386→    <AlertDialog open={open} onOpenChange={onOpenChange}>
+   387→      <AlertDialogContent className="bg-background border-white/10">
+   388→        <AlertDialogHeader>
+   389→          <AlertDialogTitle className="font-[family-name:var(--font-poppins)]">
+   390→            Confirm Deletion
+   391→          </AlertDialogTitle>
+   392→          <AlertDialogDescription className="font-[family-name:var(--font-inter)] text-silver/50">
+   393→            Are you sure you want to delete <strong className="text-white">{itemName}</strong>? This
+   394→            action cannot be undone.
+   395→          </AlertDialogDescription>
+   396→        </AlertDialogHeader>
+   397→        <AlertDialogFooter>
+   398→          <AlertDialogCancel className="font-[family-name:var(--font-inter)] border-white/10">
+   399→            Cancel
+   400→          </AlertDialogCancel>
+   401→          <AlertDialogAction
+   402→            onClick={onConfirm}
+   403→            disabled={loading}
+   404→            className="bg-red-600 hover:bg-red-700 text-white font-[family-name:var(--font-inter)]"
+   405→          >
+   406→            {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+   407→            Delete
+   408→          </AlertDialogAction>
+   409→        </AlertDialogFooter>
+   410→      </AlertDialogContent>
+   411→    </AlertDialog>
+   412→  );
+   413→}
+   414→
+   415→// ─── Form Field Helpers ─────────────────────────────────────────────────────────
+   416→
+   417→function FormField({
+   418→  label,
+   419→  children,
+   420→  required = false,
+   421→}: {
+   422→  label: string;
+   423→  children: React.ReactNode;
+   424→  required?: boolean;
+   425→}) {
+   426→  return (
+   427→    <div className="space-y-2">
+   428→      <Label className="text-sm font-[family-name:var(--font-inter)] text-silver/70">
+   429→        {label}
+   430→        {required && <span className="text-falu-light ml-1">*</span>}
+   431→      </Label>
+   432→      {children}
+   433→    </div>
+   434→  );
+   435→}
+   436→
+   437→function FormInput({
+   438→  value,
+   439→  onChange,
+   440→  placeholder,
+   441→  type = "text",
+   442→  required = false,
+   443→}: {
+   444→  value: string;
+   445→  onChange: (v: string) => void;
+   446→  placeholder?: string;
+   447→  type?: string;
+   448→  required?: boolean;
+   449→}) {
+   450→  return (
+   451→    <Input
+   452→      type={type}
+   453→      value={value}
+   454→      onChange={(e) => onChange(e.target.value)}
+   455→      placeholder={placeholder}
+   456→      required={required}
+   457→      className="bg-white/5 border-white/10 text-white font-[family-name:var(--font-inter)] placeholder:text-silver/30 focus:border-falu/40"
+   458→    />
+   459→  );
+   460→}
+   461→
+   462→function FormTextarea({
+   463→  value,
+   464→  onChange,
+   465→  placeholder,
+   466→  rows = 4,
+   467→}: {
+   468→  value: string;
+   469→  onChange: (v: string) => void;
+   470→  placeholder?: string;
+   471→  rows?: number;
+   472→}) {
+   473→  return (
+   474→    <Textarea
+   475→      value={value}
+   476→      onChange={(e) => onChange(e.target.value)}
+   477→      placeholder={placeholder}
+   478→      rows={rows}
+   479→      className="bg-white/5 border-white/10 text-white font-[family-name:var(--font-inter)] placeholder:text-silver/30 focus:border-falu/40 resize-none"
+   480→    />
+   481→  );
+   482→}
+   483→
+   484→function FormSwitch({
+   485→  checked,
+   486→  onChange,
+   487→  label,
+   488→}: {
+   489→  checked: boolean;
+   490→  onChange: (v: boolean) => void;
+   491→  label: string;
+   492→}) {
+   493→  return (
+   494→    <div className="flex items-center justify-between">
+   495→      <Label className="text-sm font-[family-name:var(--font-inter)] text-silver/70">{label}</Label>
+   496→      <Switch checked={checked} onCheckedChange={onChange} />
+   497→    </div>
+   498→  );
+   499→}
+   500→
+   501→// ─── Loading Spinner ────────────────────────────────────────────────────────────
+   502→
+   503→function LoadingSpinner() {
+   504→  return (
+   505→    <div className="flex items-center justify-center py-20">
+   506→      <div className="w-8 h-8 border-2 border-falu-light border-t-transparent rounded-full animate-spin" />
+   507→    </div>
+   508→  );
+   509→}
+   510→
+   511→// ─── Empty State ────────────────────────────────────────────────────────────────
+   512→
+   513→function EmptyState({ icon: Icon, title, description }: { icon: typeof Mail; title: string; description: string }) {
+   514→  return (
+   515→    <div className="text-center py-12 text-silver/40 font-[family-name:var(--font-inter)]">
+   516→      <Icon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+   517→      <p className="font-semibold text-silver/60">{title}</p>
+   518→      <p className="text-xs mt-1">{description}</p>
+   519→    </div>
+   520→  );
+   521→}
+   522→
+   523→// ─── Main Component ─────────────────────────────────────────────────────────────
+   524→
+   525→export default function AdminDashboard() {
+   526→  // Auth state
+   527→  const [isAuthenticated, setIsAuthenticated] = useState(false);
+   528→  const [authUser, setAuthUser] = useState<{ username: string; role: string } | null>(null);
+   529→  const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+   530→  const [loginError, setLoginError] = useState("");
+   531→  const [loginLoading, setLoginLoading] = useState(false);
+   532→
+   533→  // Check for existing session on mount
+   534→  useEffect(() => {
+   535→    const session = sessionStorage.getItem("clipe233_admin");
+   536→    if (session) {
+   537→      try {
+   538→        const data = JSON.parse(session);
+   539→        setIsAuthenticated(true);
+   540→        setAuthUser(data.user);
+   541→      } catch {
+   542→        sessionStorage.removeItem("clipe233_admin");
+   543→      }
+   544→    }
+   545→  }, []);
+   546→
+   547→  const handleLogin = async (e: React.FormEvent) => {
+   548→    e.preventDefault();
+   549→    setLoginError("");
+   550→    setLoginLoading(true);
+   551→    try {
+   552→      const res = await fetch("/api/auth", {
+   553→        method: "POST",
+   554→        headers: { "Content-Type": "application/json" },
+   555→        body: JSON.stringify(loginForm),
+   556→      });
+   557→      const data = await res.json();
+   558→      if (!res.ok) {
+   559→        setLoginError(data.error || "Invalid credentials");
+   560→        return;
+   561→      }
+   562→      sessionStorage.setItem("clipe233_admin", JSON.stringify(data));
+   563→      setIsAuthenticated(true);
+   564→      setAuthUser(data.user);
+   565→    } catch {
+   566→      setLoginError("Connection error. Please try again.");
+   567→    } finally {
+   568→      setLoginLoading(false);
+   569→    }
+   570→  };
+   571→
+   572→  const handleLogout = () => {
+   573→    sessionStorage.removeItem("clipe233_admin");
+   574→    setIsAuthenticated(false);
+   575→    setAuthUser(null);
+   576→  };
+   577→
+   578→  // Login screen
+   579→  if (!isAuthenticated) {
+   580→    return (
+   581→      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+   582→        <div className="w-full max-w-md">
+   583→          {/* Logo */}
+   584→          <div className="text-center mb-8">
+   585→            <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-4">
+   586→              <ShieldCheck className="h-8 w-8 text-falu-light" />
+   587→            </div>
+   588→            <h1 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-white">Clipe233 Admin</h1>
+   589→            <p className="text-silver/50 font-[family-name:var(--font-inter)] text-sm mt-1">Sign in to manage your website</p>
+   590→          </div>
+   591→
+   592→          {/* Login Form */}
+   593→          <div className="glass-card rounded-2xl p-8">
+   594→            <form onSubmit={handleLogin} className="space-y-5">
+   595→              {loginError && (
+   596→                <div className="p-3 rounded-lg bg-red-900/30 border border-red-800/50 flex items-center gap-2">
+   597→                  <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+   598→                  <span className="text-red-300 text-sm font-[family-name:var(--font-inter)]">{loginError}</span>
+   599→                </div>
+   600→              )}
+   601→              <div>
+   602→                <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Username</Label>
+   603→                <div className="relative">
+   604→                  <Input
+   605→                    value={loginForm.username}
+   606→                    onChange={(e) => setLoginForm((p) => ({ ...p, username: e.target.value }))}
+   607→                    placeholder="Enter username"
+   608→                    className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
+   609→                    required
+   610→                  />
+   611→                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
+   612→                </div>
+   613→              </div>
+   614→              <div>
+   615→                <Label className="text-silver/70 font-[family-name:var(--font-inter)] mb-1.5 block">Password</Label>
+   616→                <div className="relative">
+   617→                  <Input
+   618→                    type="password"
+   619→                    value={loginForm.password}
+   620→                    onChange={(e) => setLoginForm((p) => ({ ...p, password: e.target.value }))}
+   621→                    placeholder="Enter password"
+   622→                    className="bg-white/5 border-white/10 text-white placeholder:text-silver/30 font-[family-name:var(--font-inter)] pl-10"
+   623→                    required
+   624→                  />
+   625→                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/30" />
+   626→                </div>
+   627→              </div>
+   628→              <Button
+   629→                type="submit"
+   630→                disabled={loginLoading}
+   631→                className="w-full bg-falu hover:bg-falu-light text-white glow-red-sm hover:glow-red transition-all duration-300 font-[family-name:var(--font-inter)]"
+   632→              >
+   633→                {loginLoading ? (
+   634→                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...</>
+   635→                ) : (
+   636→                  <><Lock className="mr-2 h-4 w-4" /> Sign In</>
+   637→                )}
+   638→              </Button>
+   639→            </form>
+   640→          </div>
+   641→
+   642→          <p className="text-center text-silver/30 text-xs font-[family-name:var(--font-inter)] mt-6">
+   643→            Clipe233 Engineers &copy; {new Date().getFullYear()} — Admin CMS
+   644→          </p>
+   645→        </div>
+   646→      </div>
+   647→    );
+   648→  }
+   649→
+   650→  const [activeSection, setActiveSection] = useState("dashboard");
+   651→  const [sidebarOpen, setSidebarOpen] = useState(false);
+   652→  const [apiHealth, setApiHealth] = useState<Record<string, string> | null>(null);
+   653→  const { showToast, ToastContainer } = useToast();
+   654→
+   655→  // Data states
+   656→  const [contacts, setContacts] = useState<ContactItem[]>([]);
+   657→  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+   658→  const [projects, setProjects] = useState<Project[]>([]);
+   659→  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+   660→  const [services, setServices] = useState<ServiceItem[]>([]);
+   661→  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+   662→  const [jobs, setJobs] = useState<JobOpening[]>([]);
+   663→  const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([]);
+   664→  const [settings, setSettings] = useState<SiteSetting[]>([]);
+   665→  const [loading, setLoading] = useState<Record<string, boolean>>({ dashboard: true });
+   666→
+   667→  // Fetch helpers
+   668→  const fetchData = useCallback(
+   669→    async (endpoint: string, setter: (data: any[]) => void, key: string) => {
+   670→      setLoading((prev) => ({ ...prev, [key]: true }));
+   671→      try {
+   672→        const res = await fetch(endpoint);
+   673→        const json = await res.json();
+   674→        setter(json.data || []);
+   675→      } catch (err) {
+   676→        console.error(`Error fetching ${key}:`, err);
+   677→        showToast(`Failed to load ${key}`, "error");
+   678→      } finally {
+   679→        setLoading((prev) => ({ ...prev, [key]: false }));
+   680→      }
+   681→    },
+   682→    [showToast]
+   683→  );
+   684→
+   685→  // Initial dashboard load
+   686→  useEffect(() => {
+   687→    async function fetchDashboardData() {
+   688→      setLoading((prev) => ({ ...prev, dashboard: true }));
+   689→      try {
+   690→        const healthRes = await fetch("/api");
+   691→        const healthData = await healthRes.json();
+   692→        setApiHealth(healthData.services || {});
+   693→
+   694→        const [contactsRes, blogRes, projectsRes, teamRes, servicesRes, newsletterRes, careersRes, testimonialsRes, settingsRes] =
+   695→          await Promise.all([
+   696→            fetch("/api/contacts"),
+   697→            fetch("/api/blog?admin=true"),
+   698→            fetch("/api/projects?admin=true"),
+   699→            fetch("/api/team?admin=true"),
+   700→            fetch("/api/services?admin=true"),
+   701→            fetch("/api/newsletter"),
+   702→            fetch("/api/careers?admin=true"),
+   703→            fetch("/api/testimonials?admin=true"),
+   704→            fetch("/api/settings"),
+   705→          ]);
+   706→
+   707→        const [contactsData, blogData, projectsData, teamData, servicesData, newsletterData, careersData, testimonialsData, settingsData] =
+   708→          await Promise.all([
+   709→            contactsRes.json(),
+   710→            blogRes.json(),
+   711→            projectsRes.json(),
+   712→            teamRes.json(),
+   713→            servicesRes.json(),
+   714→            newsletterRes.json(),
+   715→            careersRes.json(),
+   716→            testimonialsRes.json(),
+   717→            settingsRes.json(),
+   718→          ]);
+   719→
+   720→        setContacts(contactsData.data || []);
+   721→        setBlogPosts(blogData.data || []);
+   722→        setProjects(projectsData.data || []);
+   723→        setTeamMembers(teamData.data || []);
+   724→        setServices(servicesData.data || []);
+   725→        setSubscribers(newsletterData.data || []);
+   726→        setJobs(careersData.data || []);
+   727→        setTestimonials(testimonialsData.data || []);
+   728→        setSettings(settingsData.data || []);
+   729→      } catch (err) {
+   730→        console.error("Error fetching dashboard data:", err);
+   731→      } finally {
+   732→        setLoading((prev) => ({ ...prev, dashboard: false }));
+   733→      }
+   734→    }
+   735→    fetchDashboardData();
+   736→  }, []);
+   737→
+   738→  // Fetch on section change (lazy load)
+   739→  useEffect(() => {
+   740→    const sectionFetchMap: Record<string, () => void> = {
+   741→      contacts: () => fetchData("/api/contacts", setContacts, "contacts"),
+   742→      blog: () => fetchData("/api/blog?admin=true", setBlogPosts, "blog"),
+   743→      projects: () => fetchData("/api/projects?admin=true", setProjects, "projects"),
+   744→      team: () => fetchData("/api/team?admin=true", setTeamMembers, "team"),
+   745→      services: () => fetchData("/api/services?admin=true", setServices, "services"),
+   746→      testimonials: () => fetchData("/api/testimonials?admin=true", setTestimonials, "testimonials"),
+   747→      "newsletter-careers": () => {
+   748→        fetchData("/api/newsletter", setSubscribers, "newsletter");
+   749→        fetchData("/api/careers?admin=true", setJobs, "careers");
+   750→      },
+   751→      analytics: () => {
+   752→        fetchData("/api/contacts", setContacts, "analytics-contacts");
+   753→        fetchData("/api/settings", setSettings, "analytics-settings");
+   754→      },
+   755→      pages: () => fetchData("/api/settings", setSettings, "pages"),
+   756→      settings: () => fetchData("/api/settings", setSettings, "settings"),
+   757→    };
+   758→    if (sectionFetchMap[activeSection]) {
+   759→      sectionFetchMap[activeSection]();
+   760→    }
+   761→  }, [activeSection, fetchData]);
+   762→
+   763→  // Shared CRUD operations
+   764→  const createItem = useCallback(
+   765→    async (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => {
+   766→      try {
+   767→        const res = await fetch(endpoint, {
+   768→          method: "POST",
+   769→          headers: { "Content-Type": "application/json" },
+   770→          body: JSON.stringify(data),
+   771→        });
+   772→        const json = await res.json();
+   773→        if (!res.ok) throw new Error(json.error || "Failed to create");
+   774→        showToast("Created successfully!");
+   775→        onSuccess();
+   776→        return json.data;
+   777→      } catch (err: any) {
+   778→        showToast(err.message || "Failed to create", "error");
+   779→        return null;
+   780→      }
+   781→    },
+   782→    [showToast]
+   783→  );
+   784→
+   785→  const updateItem = useCallback(
+   786→    async (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => {
+   787→      try {
+   788→        const res = await fetch(endpoint, {
+   789→          method: "PUT",
+   790→          headers: { "Content-Type": "application/json" },
+   791→          body: JSON.stringify(data),
+   792→        });
+   793→        const json = await res.json();
+   794→        if (!res.ok) throw new Error(json.error || "Failed to update");
+   795→        showToast("Updated successfully!");
+   796→        onSuccess();
+   797→        return json.data;
+   798→      } catch (err: any) {
+   799→        showToast(err.message || "Failed to update", "error");
+   800→        return null;
+   801→      }
+   802→    },
+   803→    [showToast]
+   804→  );
+   805→
+   806→  const deleteItem = useCallback(
+   807→    async (endpoint: string, id: string, onSuccess: () => void) => {
+   808→      try {
+   809→        const res = await fetch(`${endpoint}?id=${id}`, { method: "DELETE" });
+   810→        const json = await res.json();
+   811→        if (!res.ok) throw new Error(json.error || "Failed to delete");
+   812→        showToast("Deleted successfully!");
+   813→        onSuccess();
+   814→        return true;
+   815→      } catch (err: any) {
+   816→        showToast(err.message || "Failed to delete", "error");
+   817→        return false;
+   818→      }
+   819→    },
+   820→    [showToast]
+   821→  );
+   822→
+   823→  const sectionTitle: Record<string, string> = {
+   824→    dashboard: "Dashboard",
+   825→    contacts: "Contacts",
+   826→    blog: "Blog Posts",
+   827→    projects: "Projects",
+   828→    team: "Team Members",
+   829→    services: "Services",
+   830→    testimonials: "Testimonials",
+   831→    "newsletter-careers": "Newsletter & Careers",
+   832→    analytics: "Analytics",
+   833→    pages: "Pages / Content Editor",
+   834→    settings: "Settings",
+   835→  };
+   836→
+   837→  return (
+   838→    <div className="min-h-screen bg-black text-white flex">
+   839→      {ToastContainer}
+   840→
+   841→      {/* Mobile Sidebar Overlay */}
+   842→      {sidebarOpen && (
+   843→        <div
+   844→          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+   845→          onClick={() => setSidebarOpen(false)}
+   846→        />
+   847→      )}
+   848→
+   849→      {/* Sidebar */}
+   850→      <aside
+   851→        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col transform transition-transform duration-300 ${
+   852→          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+   853→        }`}
+   854→      >
+   855→        {/* Logo */}
+   856→        <div className="p-6 border-b border-white/10">
+   857→          <div className="flex items-center gap-3">
+   858→            <img src="/logo.jpg" alt="Clipe233" className="w-10 h-10 rounded-lg object-cover" />
+   859→            <div>
+   860→              <h1 className="font-bold font-[family-name:var(--font-poppins)] text-sm">Clipe233</h1>
+   861→              <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">
+   862→                Admin CMS
+   863→              </span>
+   864→            </div>
+   865→          </div>
+   866→        </div>
+   867→
+   868→        {/* Nav Items */}
+   869→        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+   870→          {sidebarItems.map((item) => (
+   871→            <button
+   872→              key={item.id}
+   873→              onClick={() => {
+   874→                setActiveSection(item.id);
+   875→                setSidebarOpen(false);
+   876→              }}
+   877→              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-[family-name:var(--font-inter)] transition-all duration-200 ${
+   878→                activeSection === item.id
+   879→                  ? "bg-falu/20 text-falu-light border border-falu/30"
+   880→                  : "text-silver/60 hover:text-white hover:bg-white/5"
+   881→              }`}
+   882→            >
+   883→              <item.icon className="h-4 w-4" />
+   884→              {item.label}
+   885→            </button>
+   886→          ))}
+   887→        </nav>
+   888→
+   889→        {/* Backend Status */}
+   890→        <div className="p-4 border-t border-white/10">
+   891→          <h4 className="text-xs font-semibold text-silver/40 mb-3 font-[family-name:var(--font-inter)] uppercase tracking-wider">
+   892→            Backend Status
+   893→          </h4>
+   894→          <div className="space-y-2">
+   895→            {[
+   896→              { icon: Database, label: "Database", status: apiHealth?.database === "connected" ? "Online" : "Local", ok: apiHealth?.database === "connected" },
+   897→              { icon: Server, label: "Supabase", status: apiHealth?.supabase === "configured" ? "Active" : "Setup", ok: apiHealth?.supabase === "configured" },
+   898→              { icon: Globe, label: "Strapi CMS", status: apiHealth?.strapi === "configured" ? "Active" : "Setup", ok: apiHealth?.strapi === "configured" },
+   899→            ].map((item, i) => (
+   900→              <div key={i} className="flex items-center gap-2 text-xs font-[family-name:var(--font-inter)]">
+   901→                <item.icon className={`h-3 w-3 ${item.ok ? "text-green-400" : "text-yellow-400"}`} />
+   902→                <span className="text-silver/60">{item.label}</span>
+   903→                <span className={`ml-auto ${item.ok ? "text-green-400" : "text-yellow-400"}`}>{item.status}</span>
+   904→              </div>
+   905→            ))}
+   906→          </div>
+   907→        </div>
+   908→      </aside>
+   909→
+   910→      {/* Main Content */}
+   911→      <main className="flex-1 overflow-y-auto min-w-0">
+   912→        {/* Top Bar */}
+   913→        <header className="sticky top-0 z-30 bg-black/80 backdrop-blur-xl border-b border-white/10 px-4 sm:px-8 py-4">
+   914→          <div className="flex items-center justify-between">
+   915→            <div className="flex items-center gap-4">
+   916→              <button
+   917→                onClick={() => setSidebarOpen(true)}
+   918→                className="lg:hidden p-2 rounded-lg hover:bg-white/5 transition-colors"
+   919→              >
+   920→                <svg className="h-5 w-5 text-silver/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+   921→                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+   922→                </svg>
+   923→              </button>
+   924→              <div>
+   925→                <h2 className="text-xl font-bold font-[family-name:var(--font-poppins)]">
+   926→                  {sectionTitle[activeSection] || activeSection}
+   927→                </h2>
+   928→                <p className="text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+   929→                  Manage your website content and data
+   930→                </p>
+   931→              </div>
+   932→            </div>
+   933→            <div className="flex items-center gap-4">
+   934→              <button className="relative p-2 rounded-lg hover:bg-white/5 transition-colors">
+   935→                <Bell className="h-5 w-5 text-silver/60" />
+   936→                <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-falu-light" />
+   937→              </button>
+   938→              <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5">
+   939→                <div className="w-8 h-8 rounded-full bg-falu/30 flex items-center justify-center text-xs font-bold text-falu-light">
+   940→                  {authUser?.username?.[0]?.toUpperCase() || "A"}
+   941→                </div>
+   942→                <span className="text-sm font-[family-name:var(--font-inter)]">{authUser?.username || "Admin"}</span>
+   943→              </div>
+   944→              <button
+   945→                onClick={handleLogout}
+   946→                className="p-2 rounded-lg hover:bg-white/5 transition-colors text-silver/60 hover:text-red-400"
+   947→                title="Logout"
+   948→              >
+   949→                <LogOut className="h-5 w-5" />
+   950→              </button>
+   951→            </div>
+   952→          </div>
+   953→        </header>
+   954→
+   955→        {/* Dashboard Content */}
+   956→        <div className="p-4 sm:p-8">
+   957→          {loading.dashboard && activeSection === "dashboard" ? (
+   958→            <LoadingSpinner />
+   959→          ) : activeSection === "dashboard" ? (
+   960→            <DashboardView
+   961→              contacts={contacts}
+   962→              blogPosts={blogPosts}
+   963→              projects={projects}
+   964→              teamMembers={teamMembers}
+   965→              services={services}
+   966→              subscribers={subscribers}
+   967→              jobs={jobs}
+   968→              testimonials={testimonials}
+   969→              apiHealth={apiHealth}
+   970→              settings={settings}
+   971→              onNavigate={setActiveSection}
+   972→            />
+   973→          ) : activeSection === "contacts" ? (
+   974→            <ContactsView
+   975→              contacts={contacts}
+   976→              loading={!!loading.contacts}
+   977→              onRefresh={() => fetchData("/api/contacts", setContacts, "contacts")}
+   978→              updateItem={updateItem}
+   979→              deleteItem={deleteItem}
+   980→              showToast={showToast}
+   981→            />
+   982→          ) : activeSection === "blog" ? (
+   983→            <BlogView
+   984→              posts={blogPosts}
+   985→              loading={!!loading.blog}
+   986→              onRefresh={() => fetchData("/api/blog?admin=true", setBlogPosts, "blog")}
+   987→              createItem={createItem}
+   988→              updateItem={updateItem}
+   989→              deleteItem={deleteItem}
+   990→              showToast={showToast}
+   991→            />
+   992→          ) : activeSection === "projects" ? (
+   993→            <ProjectsView
+   994→              projects={projects}
+   995→              loading={!!loading.projects}
+   996→              onRefresh={() => fetchData("/api/projects?admin=true", setProjects, "projects")}
+   997→              createItem={createItem}
+   998→              updateItem={updateItem}
+   999→              deleteItem={deleteItem}
+  1000→              showToast={showToast}
+  1001→            />
+  1002→          ) : activeSection === "team" ? (
+  1003→            <TeamView
+  1004→              members={teamMembers}
+  1005→              loading={!!loading.team}
+  1006→              onRefresh={() => fetchData("/api/team?admin=true", setTeamMembers, "team")}
+  1007→              createItem={createItem}
+  1008→              updateItem={updateItem}
+  1009→              deleteItem={deleteItem}
+  1010→              showToast={showToast}
+  1011→            />
+  1012→          ) : activeSection === "services" ? (
+  1013→            <ServicesView
+  1014→              services={services}
+  1015→              loading={!!loading.services}
+  1016→              onRefresh={() => fetchData("/api/services?admin=true", setServices, "services")}
+  1017→              createItem={createItem}
+  1018→              updateItem={updateItem}
+  1019→              deleteItem={deleteItem}
+  1020→              showToast={showToast}
+  1021→            />
+  1022→          ) : activeSection === "testimonials" ? (
+  1023→            <TestimonialsView
+  1024→              testimonials={testimonials}
+  1025→              loading={!!loading.testimonials}
+  1026→              onRefresh={() => fetchData("/api/testimonials?admin=true", setTestimonials, "testimonials")}
+  1027→              createItem={createItem}
+  1028→              updateItem={updateItem}
+  1029→              deleteItem={deleteItem}
+  1030→              showToast={showToast}
+  1031→            />
+  1032→          ) : activeSection === "newsletter-careers" ? (
+  1033→            <NewsletterCareersView
+  1034→              subscribers={subscribers}
+  1035→              jobs={jobs}
+  1036→              loadingNewsletter={!!loading.newsletter}
+  1037→              loadingCareers={!!loading.careers}
+  1038→              onRefreshNewsletter={() => fetchData("/api/newsletter", setSubscribers, "newsletter")}
+  1039→              onRefreshCareers={() => fetchData("/api/careers?admin=true", setJobs, "careers")}
+  1040→              createItem={createItem}
+  1041→              updateItem={updateItem}
+  1042→              deleteItem={deleteItem}
+  1043→              showToast={showToast}
+  1044→            />
+  1045→          ) : activeSection === "settings" ? (
+  1046→            <SettingsView
+  1047→              settings={settings}
+  1048→              loading={!!loading.settings}
+  1049→              onRefresh={() => fetchData("/api/settings", setSettings, "settings")}
+  1050→              updateItem={updateItem}
+  1051→              showToast={showToast}
+  1052→            />
+  1053→          ) : activeSection === "analytics" ? (
+  1054→            <AnalyticsView
+  1055→              contacts={contacts}
+  1056→              blogPosts={blogPosts}
+  1057→              services={services}
+  1058→              subscribers={subscribers}
+  1059→              settings={settings}
+  1060→            />
+  1061→          ) : activeSection === "pages" ? (
+  1062→            <PagesView
+  1063→              settings={settings}
+  1064→              loading={!!loading.pages}
+  1065→              onRefresh={() => fetchData("/api/settings", setSettings, "pages")}
+  1066→              updateItem={updateItem}
+  1067→              showToast={showToast}
+  1068→            />
+  1069→          ) : null}
+  1070→        </div>
+  1071→      </main>
+  1072→    </div>
+  1073→  );
+  1074→}
+  1075→
+  1076→// ─── 1. Dashboard View ──────────────────────────────────────────────────────────
+  1077→
+  1078→function DashboardView({
+  1079→  contacts,
+  1080→  blogPosts,
+  1081→  projects,
+  1082→  teamMembers,
+  1083→  services,
+  1084→  subscribers,
+  1085→  jobs,
+  1086→  testimonials,
+  1087→  apiHealth,
+  1088→  settings,
+  1089→  onNavigate,
+  1090→}: {
+  1091→  contacts: ContactItem[];
+  1092→  blogPosts: BlogPost[];
+  1093→  projects: Project[];
+  1094→  teamMembers: TeamMember[];
+  1095→  services: ServiceItem[];
+  1096→  subscribers: NewsletterSubscriber[];
+  1097→  jobs: JobOpening[];
+  1098→  testimonials: Testimonial[];
+  1099→  apiHealth: Record<string, string> | null;
+  1100→  settings: SiteSetting[];
+  1101→  onNavigate: (section: string) => void;
+  1102→}) {
+  1103→  const oneWeekAgo = new Date();
+  1104→  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  1105→
+  1106→  const oneMonthAgo = new Date();
+  1107→  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+  1108→
+  1109→  const newContactsWeek = contacts.filter((c) => new Date(c.createdAt) >= oneWeekAgo).length;
+  1110→  const newContactsMonth = contacts.filter((c) => new Date(c.createdAt) >= oneMonthAgo).length;
+  1111→  const closedContacts = contacts.filter((c) => c.status === "closed").length;
+  1112→  const conversionRate = contacts.length > 0 ? Math.round((closedContacts / contacts.length) * 100) : 0;
+  1113→
+  1114→  // Last 7 days contacts chart data
+  1115→  const last7Days = Array.from({ length: 7 }, (_, i) => {
+  1116→    const d = new Date();
+  1117→    d.setDate(d.getDate() - (6 - i));
+  1118→    d.setHours(0, 0, 0, 0);
+  1119→    return d;
+  1120→  });
+  1121→  const contactsPerDay = last7Days.map((day) => {
+  1122→    const nextDay = new Date(day);
+  1123→    nextDay.setDate(nextDay.getDate() + 1);
+  1124→    return contacts.filter((c) => {
+  1125→      const cd = new Date(c.createdAt);
+  1126→      return cd >= day && cd < nextDay;
+  1127→    }).length;
+  1128→  });
+  1129→  const maxContactsPerDay = Math.max(...contactsPerDay, 1);
+  1130→
+  1131→  // Contact status breakdown
+  1132→  const statusBreakdown = [
+  1133→    { label: "New", count: contacts.filter((c) => c.status === "new").length, color: "bg-blue-400" },
+  1134→    { label: "Contacted", count: contacts.filter((c) => c.status === "contacted").length, color: "bg-yellow-400" },
+  1135→    { label: "Qualified", count: contacts.filter((c) => c.status === "qualified").length, color: "bg-green-400" },
+  1136→    { label: "Closed", count: contacts.filter((c) => c.status === "closed").length, color: "bg-silver/40" },
+  1137→  ];
+  1138→
+  1139→  // Top services by inquiries
+  1140→  const serviceInquiries: Record<string, number> = {};
+  1141→  contacts.forEach((c) => {
+  1142→    if (c.service) {
+  1143→      serviceInquiries[c.service] = (serviceInquiries[c.service] || 0) + 1;
+  1144→    }
+  1145→  });
+  1146→  const topServices = Object.entries(serviceInquiries)
+  1147→    .sort(([, a], [, b]) => b - a)
+  1148→    .slice(0, 5);
+  1149→  const maxServiceCount = topServices.length > 0 ? topServices[0][1] : 1;
+  1150→
+  1151→  // System health
+  1152→  const systemHealth = [
+  1153→    { label: "Database", icon: Database, status: apiHealth?.database === "connected" ? "healthy" : "degraded", ok: apiHealth?.database === "connected" },
+  1154→    { label: "Email Service", icon: Mail, status: "healthy", ok: true },
+  1155→    { label: "API Server", icon: Server, status: apiHealth ? "healthy" : "degraded", ok: !!apiHealth },
+  1156→  ];
+  1157→
+  1158→  const getSetting = (key: string) => settings.find((s) => s.key === key)?.value || "";
+  1159→
+  1160→  const statCards = [
+  1161→    {
+  1162→      label: "New Contacts",
+  1163→      value: contacts.filter((c) => c.status === "new").length,
+  1164→      total: contacts.length,
+  1165→      icon: Mail,
+  1166→      color: "#7B1818",
+  1167→      trend: `${newContactsWeek} this week`,
+  1168→    },
+  1169→    {
+  1170→      label: "Blog Posts",
+  1171→      value: blogPosts.filter((p) => p.published).length,
+  1172→      total: blogPosts.length,
+  1173→      icon: FileText,
+  1174→      color: "#3FCF8E",
+  1175→      trend: `${blogPosts.filter((p) => p.featured).length} featured`,
+  1176→    },
+  1177→    {
+  1178→      label: "Projects",
+  1179→      value: projects.filter((p) => p.published).length,
+  1180→      total: projects.length,
+  1181→      icon: Briefcase,
+  1182→      color: "#4945FF",
+  1183→      trend: `${projects.filter((p) => p.featured).length} featured`,
+  1184→    },
+  1185→    {
+  1186→      label: "Team Members",
+  1187→      value: teamMembers.filter((m) => m.published).length,
+  1188→      total: teamMembers.length,
+  1189→      icon: Users,
+  1190→      color: "#61DAFB",
+  1191→      trend: `${services.length} services`,
+  1192→    },
+  1193→    {
+  1194→      label: "Services",
+  1195→      value: services.filter((s) => s.published).length,
+  1196→      total: services.length,
+  1197→      icon: Megaphone,
+  1198→      color: "#FF9800",
+  1199→      trend: "Active",
+  1200→    },
+  1201→    {
+  1202→      label: "Newsletter",
+  1203→      value: subscribers.length,
+  1204→      total: subscribers.length,
+  1205→      icon: Mail,
+  1206→      color: "#FFCA28",
+  1207→      trend: `${jobs.filter((j) => j.published).length} job openings`,
+  1208→    },
+  1209→  ];
+  1210→
+  1211→  return (
+  1212→    <div className="space-y-8">
+  1213→      {/* Stat Cards */}
+  1214→      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+  1215→        {statCards.map((card, i) => (
+  1216→          <div key={i} className="glass-card rounded-2xl p-6">
+  1217→            <div className="flex items-start justify-between mb-4">
+  1218→              <div
+  1219→                className="w-10 h-10 rounded-xl flex items-center justify-center"
+  1220→                style={{ backgroundColor: `${card.color}20`, color: card.color }}
+  1221→              >
+  1222→                <card.icon className="h-5 w-5" />
+  1223→              </div>
+  1224→              <span className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+  1225→                {card.trend}
+  1226→              </span>
+  1227→            </div>
+  1228→            <div className="text-3xl font-bold font-[family-name:var(--font-space-grotesk)] mb-1">
+  1229→              {card.value}
+  1230→            </div>
+  1231→            <div className="text-sm text-silver/50 font-[family-name:var(--font-inter)]">
+  1232→              {card.label}
+  1233→              {card.total > card.value && (
+  1234→                <span className="text-silver/30"> / {card.total} total</span>
+  1235→              )}
+  1236→            </div>
+  1237→          </div>
+  1238→        ))}
+  1239→      </div>
+  1240→
+  1241→      {/* Quick Stats Row */}
+  1242→      <div className="grid sm:grid-cols-3 gap-4">
+  1243→        <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+  1244→          <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+  1245→            <TrendingUp className="h-5 w-5 text-blue-400" />
+  1246→          </div>
+  1247→          <div>
+  1248→            <div className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)]">{newContactsWeek}</div>
+  1249→            <div className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">This Week Contacts</div>
+  1250→          </div>
+  1251→        </div>
+  1252→        <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+  1253→          <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+  1254→            <Activity className="h-5 w-5 text-green-400" />
+  1255→          </div>
+  1256→          <div>
+  1257→            <div className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)]">{newContactsMonth}</div>
+  1258→            <div className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">This Month Contacts</div>
+  1259→          </div>
+  1260→        </div>
+  1261→        <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+  1262→          <div className="w-10 h-10 rounded-xl bg-falu/20 flex items-center justify-center">
+  1263→            <CheckCircle className="h-5 w-5 text-falu-light" />
+  1264→          </div>
+  1265→          <div>
+  1266→            <div className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)]">{conversionRate}%</div>
+  1267→            <div className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">Conversion Rate</div>
+  1268→          </div>
+  1269→        </div>
+  1270→      </div>
+  1271→
+  1272→      {/* Activity Chart + Status Breakdown */}
+  1273→      <div className="grid lg:grid-cols-3 gap-6">
+  1274→        {/* Last 7 Days Activity Chart */}
+  1275→        <div className="lg:col-span-2 glass-card rounded-2xl p-6">
+  1276→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-6">Contact Activity (Last 7 Days)</h3>
+  1277→          <div className="flex items-end gap-2 h-40">
+  1278→            {last7Days.map((day, i) => (
+  1279→              <div key={i} className="flex-1 flex flex-col items-center gap-2">
+  1280→                <div className="w-full relative" style={{ height: "120px" }}>
+  1281→                  <div
+  1282→                    className="absolute bottom-0 w-full rounded-t-lg bg-gradient-to-t from-falu to-falu-light transition-all duration-500"
+  1283→                    style={{ height: `${Math.max((contactsPerDay[i] / maxContactsPerDay) * 100, 4)}%` }}
+  1284→                  />
+  1285→                </div>
+  1286→                <span className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+  1287→                  {day.toLocaleDateString("en-US", { weekday: "short" })}
+  1288→                </span>
+  1289→                <span className="text-xs font-semibold text-silver/60 font-[family-name:var(--font-inter)]">
+  1290→                  {contactsPerDay[i]}
+  1291→                </span>
+  1292→              </div>
+  1293→            ))}
+  1294→          </div>
+  1295→        </div>
+  1296→
+  1297→        {/* Contact Status Breakdown */}
+  1298→        <div className="glass-card rounded-2xl p-6">
+  1299→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-6">Contact Status</h3>
+  1300→          <div className="space-y-4">
+  1301→            {statusBreakdown.map((status) => (
+  1302→              <div key={status.label}>
+  1303→                <div className="flex items-center justify-between mb-1">
+  1304→                  <span className="text-sm font-[family-name:var(--font-inter)] text-silver/70">{status.label}</span>
+  1305→                  <span className="text-sm font-semibold font-[family-name:var(--font-inter)]">{status.count}</span>
+  1306→                </div>
+  1307→                <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+  1308→                  <div
+  1309→                    className={`h-full ${status.color} rounded-full transition-all duration-500`}
+  1310→                    style={{ width: `${contacts.length > 0 ? (status.count / contacts.length) * 100 : 0}%` }}
+  1311→                  />
+  1312→                </div>
+  1313→              </div>
+  1314→            ))}
+  1315→          </div>
+  1316→        </div>
+  1317→      </div>
+  1318→
+  1319→      {/* Recent Contacts & Quick Actions */}
+  1320→      <div className="grid lg:grid-cols-3 gap-6">
+  1321→        {/* Recent Contacts */}
+  1322→        <div className="lg:col-span-2 glass-card rounded-2xl p-6">
+  1323→          <div className="flex items-center justify-between mb-6">
+  1324→            <h3 className="font-bold font-[family-name:var(--font-poppins)]">Recent Contacts</h3>
+  1325→            <Button
+  1326→              variant="ghost"
+  1327→              size="sm"
+  1328→              onClick={() => onNavigate("contacts")}
+  1329→              className="text-falu-light hover:text-white text-xs font-[family-name:var(--font-inter)]"
+  1330→            >
+  1331→              View All <ArrowRight className="ml-1 h-3 w-3" />
+  1332→            </Button>
+  1333→          </div>
+  1334→          {contacts.length > 0 ? (
+  1335→            <div className="space-y-2 max-h-96 overflow-y-auto">
+  1336→              {contacts.slice(0, 5).map((contact) => (
+  1337→                <div
+  1338→                  key={contact.id}
+  1339→                  className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
+  1340→                >
+  1341→                  <div className="w-10 h-10 rounded-full bg-falu/20 flex items-center justify-center text-sm font-bold text-falu-light shrink-0">
+  1342→                    {contact.name.charAt(0)}
+  1343→                  </div>
+  1344→                  <div className="flex-1 min-w-0">
+  1345→                    <div className="text-sm font-semibold font-[family-name:var(--font-inter)] truncate">
+  1346→                      {contact.name}
+  1347→                    </div>
+  1348→                    <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)] truncate">
+  1349→                      {contact.email}
+  1350→                    </div>
+  1351→                  </div>
+  1352→                  <StatusBadge status={contact.status} />
+  1353→                </div>
+  1354→              ))}
+  1355→            </div>
+  1356→          ) : (
+  1357→            <EmptyState icon={Mail} title="No contacts yet" description="Contact form submissions will appear here" />
+  1358→          )}
+  1359→        </div>
+  1360→
+  1361→        {/* Quick Actions */}
+  1362→        <div className="glass-card rounded-2xl p-6">
+  1363→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-6">Quick Actions</h3>
+  1364→          <div className="space-y-3">
+  1365→            {[
+  1366→              { icon: FileText, label: "New Blog Post", section: "blog", color: "#3FCF8E" },
+  1367→              { icon: Briefcase, label: "Add Project", section: "projects", color: "#4945FF" },
+  1368→              { icon: Users, label: "Add Team Member", section: "team", color: "#61DAFB" },
+  1369→              { icon: Megaphone, label: "Add Service", section: "services", color: "#FF9800" },
+  1370→              { icon: Star, label: "Add Testimonial", section: "testimonials", color: "#FFCA28" },
+  1371→            ].map((action, i) => (
+  1372→              <button
+  1373→                key={i}
+  1374→                onClick={() => onNavigate(action.section)}
+  1375→                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors text-left"
+  1376→              >
+  1377→                <div
+  1378→                  className="w-8 h-8 rounded-lg flex items-center justify-center"
+  1379→                  style={{ backgroundColor: `${action.color}20`, color: action.color }}
+  1380→                >
+  1381→                  <action.icon className="h-4 w-4" />
+  1382→                </div>
+  1383→                <span className="text-sm font-[family-name:var(--font-inter)] text-silver/70">
+  1384→                  {action.label}
+  1385→                </span>
+  1386→                <Plus className="h-4 w-4 text-silver/20 ml-auto" />
+  1387→              </button>
+  1388→            ))}
+  1389→          </div>
+  1390→        </div>
+  1391→      </div>
+  1392→
+  1393→      {/* Recent Blog Posts + System Health + Top Services */}
+  1394→      <div className="grid lg:grid-cols-3 gap-6">
+  1395→        {/* Recent Blog Posts */}
+  1396→        <div className="glass-card rounded-2xl p-6">
+  1397→          <div className="flex items-center justify-between mb-4">
+  1398→            <h3 className="font-bold font-[family-name:var(--font-poppins)]">Recent Posts</h3>
+  1399→            <Button
+  1400→              variant="ghost"
+  1401→              size="sm"
+  1402→              onClick={() => onNavigate("blog")}
+  1403→              className="text-falu-light hover:text-white text-xs font-[family-name:var(--font-inter)]"
+  1404→            >
+  1405→              View All
+  1406→            </Button>
+  1407→          </div>
+  1408→          <div className="space-y-3 max-h-64 overflow-y-auto">
+  1409→            {blogPosts.length > 0 ? (
+  1410→              blogPosts.slice(0, 3).map((post) => (
+  1411→                <div key={post.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5">
+  1412→                  <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+  1413→                    <FileText className="h-4 w-4 text-green-400" />
+  1414→                  </div>
+  1415→                  <div className="flex-1 min-w-0">
+  1416→                    <div className="text-sm font-semibold font-[family-name:var(--font-inter)] truncate">{post.title}</div>
+  1417→                    <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">{formatDate(post.createdAt)}</div>
+  1418→                  </div>
+  1419→                  <Badge
+  1420→                    variant="outline"
+  1421→                    className={`text-xs font-[family-name:var(--font-inter)] ${
+  1422→                      post.published ? "bg-green-500/20 text-green-400 border-0" : "border-white/10 text-silver/40"
+  1423→                    }`}
+  1424→                  >
+  1425→                    {post.published ? "Live" : "Draft"}
+  1426→                  </Badge>
+  1427→                </div>
+  1428→              ))
+  1429→            ) : (
+  1430→              <p className="text-sm text-silver/40 font-[family-name:var(--font-inter)]">No posts yet</p>
+  1431→            )}
+  1432→          </div>
+  1433→        </div>
+  1434→
+  1435→        {/* System Health */}
+  1436→        <div className="glass-card rounded-2xl p-6">
+  1437→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-4">System Health</h3>
+  1438→          <div className="space-y-4">
+  1439→            {systemHealth.map((item) => (
+  1440→              <div key={item.label} className="flex items-center gap-3">
+  1441→                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+  1442→                  item.ok ? "bg-green-500/20" : "bg-yellow-500/20"
+  1443→                }`}>
+  1444→                  <item.icon className={`h-4 w-4 ${item.ok ? "text-green-400" : "text-yellow-400"}`} />
+  1445→                </div>
+  1446→                <div className="flex-1">
+  1447→                  <div className="text-sm font-semibold font-[family-name:var(--font-inter)]">{item.label}</div>
+  1448→                  <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)] capitalize">{item.status}</div>
+  1449→                </div>
+  1450→                <div className={`w-2.5 h-2.5 rounded-full ${
+  1451→                  item.ok ? "bg-green-400" : "bg-yellow-400 animate-pulse"
+  1452→                }`} />
+  1453→              </div>
+  1454→            ))}
+  1455→          </div>
+  1456→        </div>
+  1457→
+  1458→        {/* Top Services */}
+  1459→        <div className="glass-card rounded-2xl p-6">
+  1460→          <h3 className="font-bold font-[family-name:var(--font-poppins)] mb-4">Top Services by Inquiries</h3>
+  1461→          <div className="space-y-3">
+  1462→            {topServices.length > 0 ? (
+  1463→              topServices.map(([service, count]) => (
+  1464→                <div key={service}>
+  1465→                  <div className="flex items-center justify-between mb-1">
+  1466→                    <span className="text-sm font-[family-name:var(--font-inter)] text-silver/70 truncate">{service}</span>
+  1467→                    <span className="text-xs font-semibold font-[family-name:var(--font-inter)] text-falu-light">{count}</span>
+  1468→                  </div>
+  1469→                  <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+  1470→                    <div
+  1471→                      className="h-full bg-falu rounded-full"
+  1472→                      style={{ width: `${(count / maxServiceCount) * 100}%` }}
+  1473→                    />
+  1474→                  </div>
+  1475→                </div>
+  1476→              ))
+  1477→            ) : (
+  1478→              <p className="text-sm text-silver/40 font-[family-name:var(--font-inter)]">No service inquiries yet</p>
+  1479→            )}
+  1480→          </div>
+  1481→        </div>
+  1482→      </div>
+  1483→    </div>
+  1484→  );
+  1485→}
+  1486→
+  1487→// ─── 2. Contacts View ───────────────────────────────────────────────────────────
+  1488→
+  1489→function ContactsView({
+  1490→  contacts,
+  1491→  loading,
+  1492→  onRefresh,
+  1493→  updateItem,
+  1494→  deleteItem,
+  1495→  showToast,
+  1496→}: {
+  1497→  contacts: ContactItem[];
+  1498→  loading: boolean;
+  1499→  onRefresh: () => void;
+  1500→  updateItem: (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => Promise<any>;
+  1501→  deleteItem: (endpoint: string, id: string, onSuccess: () => void) => Promise<boolean>;
+  1502→  showToast: (msg: string, type?: "success" | "error") => void;
+  1503→}) {
+  1504→  const [searchQuery, setSearchQuery] = useState("");
+  1505→  const [statusFilter, setStatusFilter] = useState("all");
+  1506→  const [sourceFilter, setSourceFilter] = useState("all");
+  1507→  const [selectedContact, setSelectedContact] = useState<ContactItem | null>(null);
+  1508→  const [detailOpen, setDetailOpen] = useState(false);
+  1509→  const [deleteOpen, setDeleteOpen] = useState(false);
+  1510→  const [deleteTarget, setDeleteTarget] = useState<ContactItem | null>(null);
+  1511→  const [deleting, setDeleting] = useState(false);
+  1512→  const [updating, setUpdating] = useState(false);
+  1513→  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  1514→  const [bulkStatus, setBulkStatus] = useState(false);
+  1515→  const [bulkStatusValue, setBulkStatusValue] = useState("contacted");
+  1516→
+  1517→  // Get unique sources
+  1518→  const sources = [...new Set(contacts.map((c) => c.source).filter(Boolean))];
+  1519→
+  1520→  const filtered = contacts.filter((c) => {
+  1521→    const matchSearch =
+  1522→      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  1523→      c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  1524→      (c.company && c.company.toLowerCase().includes(searchQuery.toLowerCase()));
+  1525→    const matchStatus = statusFilter === "all" || c.status === statusFilter;
+  1526→    const matchSource = sourceFilter === "all" || c.source === sourceFilter;
+  1527→    return matchSearch && matchStatus && matchSource;
+  1528→  });
+  1529→
+  1530→  const handleStatusChange = async (contact: ContactItem, newStatus: string) => {
+  1531→    setUpdating(true);
+  1532→    await updateItem("/api/contacts", { id: contact.id, status: newStatus }, onRefresh);
+  1533→    setUpdating(false);
+  1534→  };
+  1535→
+  1536→  const handleDelete = async () => {
+  1537→    if (!deleteTarget) return;
+  1538→    setDeleting(true);
+  1539→    const ok = await deleteItem("/api/contacts", deleteTarget.id, onRefresh);
+  1540→    setDeleting(false);
+  1541→    if (ok) {
+  1542→      setDeleteOpen(false);
+  1543→      setDeleteTarget(null);
+  1544→    }
+  1545→  };
+  1546→
+  1547→  const toggleSelect = (id: string) => {
+  1548→    setSelectedIds((prev) => {
+  1549→      const next = new Set(prev);
+  1550→      if (next.has(id)) next.delete(id);
+  1551→      else next.add(id);
+  1552→      return next;
+  1553→    });
+  1554→  };
+  1555→
+  1556→  const toggleSelectAll = () => {
+  1557→    if (selectedIds.size === filtered.length) {
+  1558→      setSelectedIds(new Set());
+  1559→    } else {
+  1560→      setSelectedIds(new Set(filtered.map((c) => c.id)));
+  1561→    }
+  1562→  };
+  1563→
+  1564→  const handleBulkStatusChange = async () => {
+  1565→    if (selectedIds.size === 0) return;
+  1566→    setUpdating(true);
+  1567→    let successCount = 0;
+  1568→    for (const id of selectedIds) {
+  1569→      const result = await updateItem("/api/contacts", { id, status: bulkStatusValue }, () => {});
+  1570→      if (result) successCount++;
+  1571→    }
+  1572→    onRefresh();
+  1573→    setSelectedIds(new Set());
+  1574→    setBulkStatus(false);
+  1575→    setUpdating(false);
+  1576→    showToast(`Updated ${successCount} contact${successCount !== 1 ? "s" : ""}`);
+  1577→  };
+  1578→
+  1579→  const exportCSV = () => {
+  1580→    const headers = ["Name", "Email", "Phone", "Company", "Subject", "Service", "Budget", "Status", "Source", "Date"];
+  1581→    const rows = filtered.map((c) => [
+  1582→      c.name,
+  1583→      c.email,
+  1584→      c.phone || "",
+  1585→      c.company || "",
+  1586→      c.subject || "",
+  1587→      c.service || "",
+  1588→      c.budget || "",
+  1589→      c.status,
+  1590→      c.source || "",
+  1591→      c.createdAt,
+  1592→    ]);
+  1593→    const csv = [headers, ...rows].map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+  1594→    const blob = new Blob([csv], { type: "text/csv" });
+  1595→    const url = URL.createObjectURL(blob);
+  1596→    const a = document.createElement("a");
+  1597→    a.href = url;
+  1598→    a.download = `contacts-${new Date().toISOString().split("T")[0]}.csv`;
+  1599→    a.click();
+  1600→    URL.revokeObjectURL(url);
+  1601→    showToast("Contacts exported successfully!");
+  1602→  };
+  1603→
+  1604→  if (loading) return <LoadingSpinner />;
+  1605→
+  1606→  return (
+  1607→    <div className="space-y-6">
+  1608→      {/* Search & Filters */}
+  1609→      <div className="flex items-center gap-4 flex-wrap">
+  1610→        <div className="relative flex-1 max-w-md min-w-[200px]">
+  1611→          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-silver/40" />
+  1612→          <input
+  1613→            type="text"
+  1614→            placeholder="Search contacts..."
+  1615→            value={searchQuery}
+  1616→            onChange={(e) => setSearchQuery(e.target.value)}
+  1617→            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-[family-name:var(--font-inter)] text-white placeholder:text-silver/30 focus:outline-none focus:border-falu/40 transition-colors"
+  1618→          />
+  1619→        </div>
+  1620→        <Select value={statusFilter} onValueChange={setStatusFilter}>
+  1621→          <SelectTrigger className="w-36 h-10 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1622→            <Filter className="h-3 w-3 mr-1" />
+  1623→            <SelectValue placeholder="Status" />
+  1624→          </SelectTrigger>
+  1625→          <SelectContent>
+  1626→            <SelectItem value="all">All Statuses</SelectItem>
+  1627→            <SelectItem value="new">New</SelectItem>
+  1628→            <SelectItem value="contacted">Contacted</SelectItem>
+  1629→            <SelectItem value="qualified">Qualified</SelectItem>
+  1630→            <SelectItem value="closed">Closed</SelectItem>
+  1631→          </SelectContent>
+  1632→        </Select>
+  1633→        <Select value={sourceFilter} onValueChange={setSourceFilter}>
+  1634→          <SelectTrigger className="w-36 h-10 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1635→            <SelectValue placeholder="Source" />
+  1636→          </SelectTrigger>
+  1637→          <SelectContent>
+  1638→            <SelectItem value="all">All Sources</SelectItem>
+  1639→            {sources.map((source) => (
+  1640→              <SelectItem key={source} value={source!}>
+  1641→                {source}
+  1642→              </SelectItem>
+  1643→            ))}
+  1644→          </SelectContent>
+  1645→        </Select>
+  1646→        <Badge variant="outline" className="font-[family-name:var(--font-inter)] border-white/10 text-silver/60">
+  1647→          {filtered.length} contact{filtered.length !== 1 ? "s" : ""}
+  1648→        </Badge>
+  1649→        <Button
+  1650→          variant="outline"
+  1651→          size="sm"
+  1652→          onClick={exportCSV}
+  1653→          className="font-[family-name:var(--font-inter)] border-white/10 text-silver/60 hover:text-white"
+  1654→        >
+  1655→          <Download className="h-4 w-4 mr-2" />
+  1656→          Export
+  1657→        </Button>
+  1658→      </div>
+  1659→
+  1660→      {/* Bulk Actions Bar */}
+  1661→      {selectedIds.size > 0 && (
+  1662→        <div className="glass-card rounded-xl p-3 flex items-center gap-4 flex-wrap">
+  1663→          <span className="text-sm font-[family-name:var(--font-inter)] text-silver/60">
+  1664→            {selectedIds.size} selected
+  1665→          </span>
+  1666→          <Select value={bulkStatusValue} onValueChange={setBulkStatusValue}>
+  1667→            <SelectTrigger className="w-36 h-8 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1668→              <SelectValue />
+  1669→            </SelectTrigger>
+  1670→            <SelectContent>
+  1671→              <SelectItem value="new">New</SelectItem>
+  1672→              <SelectItem value="contacted">Contacted</SelectItem>
+  1673→              <SelectItem value="qualified">Qualified</SelectItem>
+  1674→              <SelectItem value="closed">Closed</SelectItem>
+  1675→            </SelectContent>
+  1676→          </Select>
+  1677→          <Button
+  1678→            size="sm"
+  1679→            onClick={handleBulkStatusChange}
+  1680→            disabled={updating}
+  1681→            className="bg-falu hover:bg-falu-light text-white font-[family-name:var(--font-inter)] h-8"
+  1682→          >
+  1683→            {updating ? <Loader2 className="h-3 w-3 animate-spin mr-1" /> : null}
+  1684→            Apply Status
+  1685→          </Button>
+  1686→          <Button
+  1687→            variant="ghost"
+  1688→            size="sm"
+  1689→            onClick={() => setSelectedIds(new Set())}
+  1690→            className="font-[family-name:var(--font-inter)] text-silver/50 h-8"
+  1691→          >
+  1692→            Clear Selection
+  1693→          </Button>
+  1694→        </div>
+  1695→      )}
+  1696→
+  1697→      {/* Contacts Table */}
+  1698→      <div className="glass-card rounded-2xl overflow-hidden">
+  1699→        <div className="overflow-x-auto">
+  1700→          <table className="w-full">
+  1701→            <thead>
+  1702→              <tr className="border-b border-white/10">
+  1703→                <th className="text-left px-4 py-4 w-10">
+  1704→                  <button onClick={toggleSelectAll} className="text-silver/40 hover:text-white transition-colors">
+  1705→                    {selectedIds.size === filtered.length && filtered.length > 0 ? (
+  1706→                      <CheckSquare className="h-4 w-4 text-falu-light" />
+  1707→                    ) : (
+  1708→                      <Square className="h-4 w-4" />
+  1709→                    )}
+  1710→                  </button>
+  1711→                </th>
+  1712→                {["Contact", "Service", "Status", "Date", ""].map((h) => (
+  1713→                  <th
+  1714→                    key={h}
+  1715→                    className="text-left px-6 py-4 text-xs font-semibold text-silver/40 font-[family-name:var(--font-inter)] uppercase tracking-wider"
+  1716→                  >
+  1717→                    {h}
+  1718→                  </th>
+  1719→                ))}
+  1720→              </tr>
+  1721→            </thead>
+  1722→            <tbody>
+  1723→              {filtered.length > 0 ? (
+  1724→                filtered.map((contact) => (
+  1725→                  <tr
+  1726→                    key={contact.id}
+  1727→                    className={`border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer ${
+  1728→                      selectedIds.has(contact.id) ? "bg-falu/10" : ""
+  1729→                    }`}
+  1730→                    onClick={() => {
+  1731→                      setSelectedContact(contact);
+  1732→                      setDetailOpen(true);
+  1733→                    }}
+  1734→                  >
+  1735→                    <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
+  1736→                      <button onClick={() => toggleSelect(contact.id)} className="text-silver/40 hover:text-white transition-colors">
+  1737→                        {selectedIds.has(contact.id) ? (
+  1738→                          <CheckSquare className="h-4 w-4 text-falu-light" />
+  1739→                        ) : (
+  1740→                          <Square className="h-4 w-4" />
+  1741→                        )}
+  1742→                      </button>
+  1743→                    </td>
+  1744→                    <td className="px-6 py-4">
+  1745→                      <div className="flex items-center gap-3">
+  1746→                        <div className="w-8 h-8 rounded-full bg-falu/20 flex items-center justify-center text-xs font-bold text-falu-light shrink-0">
+  1747→                          {contact.name.charAt(0)}
+  1748→                        </div>
+  1749→                        <div>
+  1750→                          <div className="text-sm font-semibold font-[family-name:var(--font-inter)]">
+  1751→                            {contact.name}
+  1752→                          </div>
+  1753→                          <div className="text-xs text-silver/40 font-[family-name:var(--font-inter)]">
+  1754→                            {contact.email}
+  1755→                          </div>
+  1756→                        </div>
+  1757→                      </div>
+  1758→                    </td>
+  1759→                    <td className="px-6 py-4 text-sm text-silver/60 font-[family-name:var(--font-inter)]">
+  1760→                      {contact.service || "—"}
+  1761→                    </td>
+  1762→                    <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+  1763→                      <Select
+  1764→                        value={contact.status}
+  1765→                        onValueChange={(v) => handleStatusChange(contact, v)}
+  1766→                        disabled={updating}
+  1767→                      >
+  1768→                        <SelectTrigger className="w-32 h-8 text-xs font-[family-name:var(--font-inter)] bg-white/5 border-white/10">
+  1769→                          <SelectValue />
+  1770→                        </SelectTrigger>
+  1771→                        <SelectContent>
+  1772→                          <SelectItem value="new">New</SelectItem>
+  1773→                          <SelectItem value="contacted">Contacted</SelectItem>
+  1774→                          <SelectItem value="qualified">Qualified</SelectItem>
+  1775→                          <SelectItem value="closed">Closed</SelectItem>
+  1776→                        </SelectContent>
+  1777→                      </Select>
+  1778→                    </td>
+  1779→                    <td className="px-6 py-4 text-sm text-silver/40 font-[family-name:var(--font-inter)]">
+  1780→                      {formatDate(contact.createdAt)}
+  1781→                    </td>
+  1782→                    <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+  1783→                      <Button
+  1784→                        variant="ghost"
+  1785→                        size="sm"
+  1786→                        onClick={() => {
+  1787→                          setDeleteTarget(contact);
+  1788→                          setDeleteOpen(true);
+  1789→                        }}
+  1790→                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-8 w-8 p-0"
+  1791→                      >
+  1792→                        <Trash2 className="h-4 w-4" />
+  1793→                      </Button>
+  1794→                    </td>
+  1795→                  </tr>
+  1796→                ))
+  1797→              ) : (
+  1798→                <tr>
+  1799→                  <td colSpan={6}>
+  1800→                    <EmptyState
+  1801→                      icon={Mail}
+  1802→                      title="No contacts found"
+  1803→                      description={searchQuery ? "Try a different search" : "Contact submissions will appear here"}
+  1804→                    />
+  1805→                  </td>
+  1806→                </tr>
+  1807→              )}
+  1808→            </tbody>
+  1809→          </table>
+  1810→        </div>
+  1811→      </div>
+  1812→
+  1813→      {/* Contact Detail Dialog */}
+  1814→      <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
+  1815→        <DialogContent className="sm:max-w-lg bg-background border-white/10 max-h-[90vh] overflow-y-auto">
+  1816→          <DialogHeader>
+  1817→            <DialogTitle className="font-[family-name:var(--font-poppins)]">
+  1818→              Contact Details
+  1819→            </DialogTitle>
+  1820→          </DialogHeader>
+  1821→          {selectedContact && (
+  1822→            <div className="space-y-4 font-[family-name:var(--font-inter)]">
+  1823→              <div className="flex items-center gap-4">
+  1824→                <div className="w-14 h-14 rounded-full bg-falu/20 flex items-center justify-center text-xl font-bold text-falu-light">
+  1825→                  {selectedContact.name.charAt(0)}
+  1826→                </div>
+  1827→                <div>
+  1828→                  <div className="font-semibold text-lg">{selectedContact.name}</div>
+  1829→                  <div className="text-sm text-silver/50">{selectedContact.email}</div>
+  1830→                </div>
+  1831→              </div>
+  1832→              <Separator className="bg-white/10" />
+  1833→              <div className="grid grid-cols-2 gap-4 text-sm">
+  1834→                {selectedContact.phone && (
+  1835→                  <div><span className="text-silver/40">Phone:</span> <span className="ml-2">{selectedContact.phone}</span></div>
+  1836→                )}
+  1837→                {selectedContact.company && (
+  1838→                  <div><span className="text-silver/40">Company:</span> <span className="ml-2">{selectedContact.company}</span></div>
+  1839→                )}
+  1840→                {selectedContact.service && (
+  1841→                  <div><span className="text-silver/40">Service:</span> <span className="ml-2">{selectedContact.service}</span></div>
+  1842→                )}
+  1843→                {selectedContact.budget && (
+  1844→                  <div><span className="text-silver/40">Budget:</span> <span className="ml-2">{selectedContact.budget}</span></div>
+  1845→                )}
+  1846→                {selectedContact.source && (
+  1847→                  <div><span className="text-silver/40">Source:</span> <span className="ml-2">{selectedContact.source}</span></div>
+  1848→                )}
+  1849→                <div>
+  1850→                  <span className="text-silver/40">Status:</span>
+  1851→                  <span className="ml-2"><StatusBadge status={selectedContact.status} /></span>
+  1852→                </div>
+  1853→              </div>
+  1854→              {selectedContact.subject && (
+  1855→                <div>
+  1856→                  <span className="text-silver/40 text-sm">Subject:</span>
+  1857→                  <p className="mt-1 text-sm">{selectedContact.subject}</p>
+  1858→                </div>
+  1859→              )}
+  1860→              {selectedContact.message && (
+  1861→                <div>
+  1862→                  <span className="text-silver/40 text-sm">Message:</span>
+  1863→                  <p className="mt-1 text-sm bg-white/5 p-3 rounded-xl whitespace-pre-wrap">{selectedContact.message}</p>
+  1864→                </div>
+  1865→              )}
+  1866→              <div className="text-xs text-silver/30">
+  1867→                Submitted {formatDate(selectedContact.createdAt)}
+  1868→              </div>
+  1869→              <Separator className="bg-white/10" />
+  1870→              <div className="flex items-center gap-3">
+  1871→                <a
+  1872→                  href={`mailto:${selectedContact.email}?subject=Re: ${selectedContact.subject || "Your inquiry"}`}
+  1873→                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-falu hover:bg-falu-light text-white text-sm font-[family-name:var(--font-inter)] transition-colors"
+  1874→                >
+  1875→                  <Reply className="h-4 w-4" />
+  1876→                  Reply via Email
+  1877→                </a>
+  1878→                <Button
+  1879→                  variant="outline"
+  1880→                  size="sm"
+  1881→                  onClick={() => {
+  1882→                    setDetailOpen(false);
+  1883→                    handleStatusChange(selectedContact, "contacted");
+  1884→                  }}
+  1885→                  className="font-[family-name:var(--font-inter)] border-white/10 text-silver/60"
+  1886→                >
+  1887→                  Mark Contacted
+  1888→                </Button>
+  1889→              </div>
+  1890→            </div>
+  1891→          )}
+  1892→        </DialogContent>
+  1893→      </Dialog>
+  1894→
+  1895→      {/* Delete Confirm */}
+  1896→      <DeleteConfirmDialog
+  1897→        open={deleteOpen}
+  1898→        onOpenChange={setDeleteOpen}
+  1899→        onConfirm={handleDelete}
+  1900→        itemName={deleteTarget?.name || ""}
+  1901→        loading={deleting}
+  1902→      />
+  1903→    </div>
+  1904→  );
+  1905→}
+  1906→
+  1907→// ─── 3. Blog Posts View ─────────────────────────────────────────────────────────
+  1908→
+  1909→function BlogView({
+  1910→  posts,
+  1911→  loading,
+  1912→  onRefresh,
+  1913→  createItem,
+  1914→  updateItem,
+  1915→  deleteItem,
+  1916→  showToast,
+  1917→}: {
+  1918→  posts: BlogPost[];
+  1919→  loading: boolean;
+  1920→  onRefresh: () => void;
+  1921→  createItem: (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => Promise<any>;
+  1922→  updateItem: (endpoint: string, data: Record<string, unknown>, onSuccess: () => void) => Promise<any>;
+  1923→  deleteItem: (endpoint: string, id: string, onSuccess: () => void) => Promise<boolean>;
+  1924→  showToast: (msg: string, type?: "success" | "error") => void;
+  1925→}) {
+  1926→  const [formOpen, setFormOpen] = useState(false);
+  1927→  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  1928→  const [deleteOpen, setDeleteOpen] = useState(false);
+  1929→  const [deleteTarget, setDeleteTarget] = useState<BlogPost | null>(null);
+  1930→  const [saving, setSaving] = useState(false);
+  1931→  const [deleting, setDeleting] = useState(false);
+  1932→
+  1933→  const emptyForm = {
+  1934→    title: "",
+  1935→    slug: "",
+  1936→    excerpt: "",
+  1937→    content: "",
+  1938→    coverImage: "",
+  1939→    category: "",
+  1940→    tags: "",
+  1941→    published: false,
+  1942→    featured: false,
+  1943→  };
+  1944→  const [form, setForm] = useState(emptyForm);
+  1945→
+  1946→  const openCreate = () => {
+  1947→    setEditingPost(null);
+  1948→    setForm(emptyForm);
+  1949→    setFormOpen(true);
+  1950→  };
+  1951→
+  1952→  const openEdit = (post: BlogPost) => {
+  1953→    setEditingPost(post);
+  1954→    setForm({
+  1955→      title: post.title,
+  1956→      slug: post.slug,
+  1957→      excerpt: post.excerpt || "",
+  1958→      content: post.content || "",
+  1959→      coverImage: post.coverImage || "",
+  1960→      category: post.category || "",
+  1961→      tags: post.tags || "",
+  1962→      published: post.published,
+  1963→      featured: post.featured,
+  1964→    });
+  1965→    setFormOpen(true);
+  1966→  };
+  1967→
+  1968→  const handleSave = async () => {
+  1969→    if (!form.title || !form.slug) {
+  1970→      showToast("Title and slug are required", "error");
+  1971→      return;
+  1972→    }
+  1973→    setSaving(true);
+  1974→    const data = {
+  1975→      ...form,
+  1976→      ...(editingPost ? { id: editingPost.id } : { authorId: "admin" }),
+  1977→    };
+  1978→    if (editingPost) {
+  1979→      await updateItem("/api/blog", data, onRefresh);
+  1980→    } else {
+  1981→      await createItem("/api/blog", data, onRefresh);
+  1982→    }
+  1983→    setSaving(false);
+  1984→    setFormOpen(false);
+  1985→  };
+  1986→
+  1987→  const handleDelete = async () => {
+  1988→    if (!deleteTarget) return;
+  1989→    setDeleting(true);
+  1990→    const ok = await deleteItem("/api/blog", deleteTarget.id, onRefresh);
+  1991→    setDeleting(false);
+  1992→    if (ok) {
+  1993→      setDeleteOpen(false);
+  1994→      setDeleteTarget(null);
+  1995→    }
+  1996→  };
+  1997→
+  1998→  const toggleField = async (post: BlogPost, field: "published" | "featured") => {
+  1999→    await updateItem("/api/blog", { id: post.id, [field]: !post[field] }, onRefresh);
+  2000→  };
+
+[showing lines 1-2000 of 4528; use offset=2001 with limit to continue reading]
