@@ -12,8 +12,8 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get("category") || undefined;
     const featured = searchParams.get("featured") === "true" ? true : undefined;
     const source = searchParams.get("source") || "local";
+    const admin = searchParams.get("admin") === "true";
 
-    // If slug is provided, get a single post
     if (slug) {
       if (source === "strapi") {
         const result = await getBlogPost(slug);
@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ data: post });
     }
 
-    // Try Strapi first, fall back to local DB
     if (source === "strapi") {
       const result = await getBlogPosts({ page, pageSize, category, featured });
       if (!result.error) {
@@ -47,7 +46,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Local database query
     const db = await ensureConnection();
     if (!db) {
       return NextResponse.json({
@@ -57,7 +55,7 @@ export async function GET(request: NextRequest) {
     }
 
     const where = {
-      published: true,
+      ...(admin ? {} : { published: true }),
       ...(category ? { category } : {}),
       ...(featured !== undefined ? { featured } : {}),
     };
@@ -83,5 +81,122 @@ export async function GET(request: NextRequest) {
       { error: "Failed to fetch blog posts" },
       { status: 500 }
     );
+  }
+}
+
+// POST /api/blog - Create a new blog post
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { title, slug, excerpt, content, coverImage, category, tags, published, featured, authorId } = body;
+
+    if (!title || !slug) {
+      return NextResponse.json({ error: "Title and slug are required" }, { status: 400 });
+    }
+
+    const db = await ensureConnection();
+    if (!db) {
+      return NextResponse.json({ error: "Database not available" }, { status: 503 });
+    }
+
+    // Check slug uniqueness
+    const existing = await db.post.findUnique({ where: { slug } });
+    if (existing) {
+      return NextResponse.json({ error: "A post with this slug already exists" }, { status: 409 });
+    }
+
+    const post = await db.post.create({
+      data: {
+        title,
+        slug,
+        excerpt: excerpt || null,
+        content: content || null,
+        coverImage: coverImage || null,
+        category: category || null,
+        tags: tags || null,
+        published: published ?? false,
+        featured: featured ?? false,
+        authorId: authorId || "admin",
+        publishedAt: published ? new Date() : null,
+      },
+    });
+
+    return NextResponse.json({ data: post }, { status: 201 });
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    return NextResponse.json({ error: "Failed to create blog post" }, { status: 500 });
+  }
+}
+
+// PUT /api/blog - Update a blog post
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, title, slug, excerpt, content, coverImage, category, tags, published, featured } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
+    }
+
+    const db = await ensureConnection();
+    if (!db) {
+      return NextResponse.json({ error: "Database not available" }, { status: 503 });
+    }
+
+    const existing = await db.post.findUnique({ where: { id } });
+    if (!existing) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+
+    // Check slug uniqueness if changing
+    if (slug && slug !== existing.slug) {
+      const slugConflict = await db.post.findUnique({ where: { slug } });
+      if (slugConflict) {
+        return NextResponse.json({ error: "A post with this slug already exists" }, { status: 409 });
+      }
+    }
+
+    const post = await db.post.update({
+      where: { id },
+      data: {
+        ...(title !== undefined && { title }),
+        ...(slug !== undefined && { slug }),
+        ...(excerpt !== undefined && { excerpt }),
+        ...(content !== undefined && { content }),
+        ...(coverImage !== undefined && { coverImage }),
+        ...(category !== undefined && { category }),
+        ...(tags !== undefined && { tags }),
+        ...(published !== undefined && { published, publishedAt: published && !existing.publishedAt ? new Date() : existing.publishedAt }),
+        ...(featured !== undefined && { featured }),
+      },
+    });
+
+    return NextResponse.json({ data: post });
+  } catch (error) {
+    console.error("Error updating blog post:", error);
+    return NextResponse.json({ error: "Failed to update blog post" }, { status: 500 });
+  }
+}
+
+// DELETE /api/blog - Delete a blog post
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
+    }
+
+    const db = await ensureConnection();
+    if (!db) {
+      return NextResponse.json({ error: "Database not available" }, { status: 503 });
+    }
+
+    await db.post.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting blog post:", error);
+    return NextResponse.json({ error: "Failed to delete blog post" }, { status: 500 });
   }
 }

@@ -33,10 +33,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error fetching contacts:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch contacts" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch contacts" }, { status: 500 });
   }
 }
 
@@ -47,10 +44,7 @@ export async function POST(request: NextRequest) {
     const { name, email, phone, company, subject, message, service, budget, source } = body;
 
     if (!name || !email) {
-      return NextResponse.json(
-        { error: "Name and email are required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
     }
 
     const contactData = {
@@ -65,7 +59,6 @@ export async function POST(request: NextRequest) {
       source: source || "website",
     };
 
-    // Save to database
     const db = await ensureConnection();
     if (db) {
       await db.contact.create({
@@ -86,25 +79,75 @@ export async function POST(request: NextRequest) {
       console.log("[Contact Form] Submission received (no DB):", { name, email, phone, company, subject, message });
     }
 
-    // Send notification email to clipe233eng@gmail.com
     const emailSent = await sendContactEmail(contactData);
-
-    // Send auto-reply to the person who submitted the form
     const autoReplySent = await sendAutoReply(contactData);
 
     return NextResponse.json(
-      {
-        data: { name, email, phone, company, subject, message, service, budget, source: source || "website", status: "received" },
-        emailSent,
-        autoReplySent,
-      },
+      { data: { name, email, phone, company, subject, message, service, budget, source: source || "website", status: "received" }, emailSent, autoReplySent },
       { status: 201 }
     );
   } catch (error) {
     console.error("Error creating contact:", error);
-    return NextResponse.json(
-      { error: "Failed to submit contact" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to submit contact" }, { status: 500 });
+  }
+}
+
+// PUT /api/contacts - Update a contact (status changes, etc.)
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, status, name, email, phone, company, subject, message, service, budget } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: "Contact ID is required" }, { status: 400 });
+    }
+
+    const db = await ensureConnection();
+    if (!db) {
+      return NextResponse.json({ error: "Database not available" }, { status: 503 });
+    }
+
+    const contact = await db.contact.update({
+      where: { id },
+      data: {
+        ...(status !== undefined && { status }),
+        ...(name !== undefined && { name }),
+        ...(email !== undefined && { email }),
+        ...(phone !== undefined && { phone }),
+        ...(company !== undefined && { company }),
+        ...(subject !== undefined && { subject }),
+        ...(message !== undefined && { message }),
+        ...(service !== undefined && { service }),
+        ...(budget !== undefined && { budget }),
+      },
+    });
+
+    return NextResponse.json({ data: contact });
+  } catch (error) {
+    console.error("Error updating contact:", error);
+    return NextResponse.json({ error: "Failed to update contact" }, { status: 500 });
+  }
+}
+
+// DELETE /api/contacts - Delete a contact
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "Contact ID is required" }, { status: 400 });
+    }
+
+    const db = await ensureConnection();
+    if (!db) {
+      return NextResponse.json({ error: "Database not available" }, { status: 503 });
+    }
+
+    await db.contact.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting contact:", error);
+    return NextResponse.json({ error: "Failed to delete contact" }, { status: 500 });
   }
 }
