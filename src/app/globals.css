@@ -220,6 +220,12 @@
   mask-composite: exclude;
 }
 
+/* Splash screen loading bar */
+@keyframes splash-load {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
 /* Particle animation keyframes */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
