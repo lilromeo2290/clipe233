@@ -76,20 +76,22 @@ export default function SplashScreen({
             to increase our system&apos;s performance metrics as much as possible.
           </p>
 
-          {/* Founder attribution */}
-          <div className="mt-10 flex flex-col items-center gap-3">
-            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-2 ring-falu/40 animate-pulse-glow">
+          {/* Founder attribution — larger photo */}
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden ring-[3px] ring-falu/50 animate-pulse-glow shadow-lg shadow-falu/20">
               <Image
                 src="/team-raymond.jpg"
                 alt="Raymond Romeo Dravie"
                 fill
-                className="object-cover"
+                className="object-cover object-top scale-110"
                 priority
+                sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 144px"
+                quality={95}
               />
             </div>
-            <div className="flex flex-col items-center gap-0.5">
+            <div className="flex flex-col items-center gap-1">
               <p
-                className="text-sm sm:text-base font-semibold text-white"
+                className="text-base sm:text-lg font-semibold text-white"
                 style={{ fontFamily: "var(--font-poppins)" }}
               >
                 Raymond Romeo Dravie
