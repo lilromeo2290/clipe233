@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Force static export for shared hosting deployment
+export const dynamic = "force-static";
+
 // POST /api/auth/login - Verify admin credentials
 export async function POST(request: NextRequest) {
   try {

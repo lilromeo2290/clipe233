@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+
+// Force static export for shared hosting deployment
+export const dynamic = "force-static";
 import { ensureConnection } from "@/lib/prisma";
 
 export async function GET() {
