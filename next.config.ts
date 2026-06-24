@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: [
     ".space.chatglm.site",
     ".space-z.ai",
+    "clipe233.com",
+    "www.clipe233.com",
   ],
   // Next.js 16 uses Turbopack by default
   turbopack: {},
@@ -16,10 +18,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // Static export for shared hosting deployment
-  output: "export",
-  // Trailing slashes for cleaner static hosting
-  trailingSlash: true,
 };
 
 export default nextConfig;
