@@ -13,6 +13,7 @@ import {
   HeartPulse,
   Pill,
   MessageSquareWarning,
+  MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -92,6 +93,20 @@ const products = [
       "Reporting & analytics dashboard",
     ],
   },
+  {
+    icon: MessageSquare,
+    title: "Clipe SMS CRM",
+    subtitle: "SMS & Customer Relationship Management",
+    href: "/clipe-sms-crm",
+    description:
+      "A powerful SMS-based Customer Relationship Management platform that helps businesses engage customers through bulk messaging, automated campaigns, and contact management. Clipe SMS CRM combines the reach of SMS with smart CRM tools to boost customer retention, drive sales, and streamline communication — all from one intuitive dashboard.",
+    features: [
+      "Bulk SMS & scheduled messaging",
+      "Contact & group management",
+      "Automated campaigns & follow-ups",
+      "Delivery reports & analytics",
+    ],
+  },
 ];
 
 const highlights = [
@@ -100,6 +115,7 @@ const highlights = [
   { icon: HeartPulse, label: "Clipe Medic" },
   { icon: Pill, label: "Clipe Pharma" },
   { icon: MessageSquareWarning, label: "Clipe Complaint" },
+  { icon: MessageSquare, label: "Clipe SMS CRM" },
   { icon: Shield, label: "Secure & Reliable" },
 ];
 

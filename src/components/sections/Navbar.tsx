@@ -37,6 +37,7 @@ const navLinks: NavLink[] = [
       { label: "Clipe Medic", href: "/clipe-medic", isPage: true },
       { label: "Clipe Pharma", href: "/clipe-pharma", isPage: true },
       { label: "Clipe Complaint", href: "/clipe-complaint", isPage: true },
+      { label: "Clipe SMS CRM", href: "/clipe-sms-crm", isPage: true },
     ],
   },
   { label: "Our Team", href: "#team" },
