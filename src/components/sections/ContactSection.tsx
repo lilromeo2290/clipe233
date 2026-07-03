@@ -25,8 +25,9 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "clipe233eng@gmail.com",
-    href: "mailto:clipe233eng@gmail.com",
+    value: "info@clipe233eng.net",
+    subValue: "clipe233eng@gmail.com",
+    href: "mailto:info@clipe233eng.net",
   },
   {
     icon: Phone,
@@ -320,6 +321,11 @@ export default function ContactSection() {
                   <p className="text-gray-900 dark:text-white font-medium font-[family-name:var(--font-inter)]">
                     {info.value}
                   </p>
+                  {info.subValue && (
+                    <p className="text-xs text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)] mt-0.5">
+                      {info.subValue}
+                    </p>
+                  )}
                 </div>
               </a>
             ))}
