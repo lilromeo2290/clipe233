@@ -3,6 +3,10 @@ import { Poppins, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import TawkToChat from "@/components/TawkToChat";
+
+const TAWK_PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || "YOUR_PROPERTY_ID";
+const TAWK_WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || "YOUR_WIDGET_ID";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -89,6 +93,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           {children}
+          <TawkToChat propertyId={TAWK_PROPERTY_ID} widgetId={TAWK_WIDGET_ID} />
           <Toaster />
         </ThemeProvider>
       </body>
