@@ -160,7 +160,15 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Phone className="h-4 w-4 text-falu-light" />
-                +233 24 978 3736
+                <a href="tel:+233249783736" className="hover:text-falu-light transition-colors">
+                  +233 24 978 3736
+                </a>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
+                <Phone className="h-4 w-4 text-falu-light" />
+                <a href="tel:+233535399562" className="hover:text-falu-light transition-colors">
+                  053 539 9562
+                </a>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <MapPin className="h-4 w-4 text-falu-light" />
