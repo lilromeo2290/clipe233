@@ -3,7 +3,6 @@ import { Poppins, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import SplashScreen from "@/components/SplashScreen";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -89,9 +88,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${inter.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
       >
         <ThemeProvider>
-          <SplashScreen>
-            {children}
-          </SplashScreen>
+          {children}
           <Toaster />
         </ThemeProvider>
       </body>
