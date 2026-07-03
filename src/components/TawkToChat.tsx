@@ -25,52 +25,61 @@ interface TawkToProps {
 /**
  * Tawk.to Live Chat Widget
  *
- * To enable:
- * 1. Create a free account at https://www.tawk.to
- * 2. Add your site (clipe233.com or clipe233eng.net)
- * 3. Copy the Property ID and Widget ID from your dashboard
- *    (Administration > Chat Widget > Direct Chat Link)
- * 4. Set them in .env.local:
- *      NEXT_PUBLIC_TAWK_PROPERTY_ID=your_property_id
- *      NEXT_PUBLIC_TAWK_WIDGET_ID=your_widget_id
- * 5. Restart the dev server
+ * Loads the official Tawk.to embed script. Tawk renders its own
+ * floating chat bubble by default, so we don't render a duplicate.
+ *
+ * If the script fails to load (network issue / missing credentials),
+ * we fall back to a branded WhatsApp chat bubble so visitors can
+ * still reach us.
  */
 export default function TawkToChat({ propertyId, widgetId }: TawkToProps) {
-  const [loaded, setLoaded] = useState(false);
+  const [tawkLoaded, setTawkLoaded] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
   const [bubbleOpen, setBubbleOpen] = useState(false);
 
   useEffect(() => {
-    if (!propertyId || !widgetId || propertyId === "YOUR_PROPERTY_ID") {
-      // No credentials — show WhatsApp fallback
+    if (!propertyId || !widgetId) {
       setShowFallback(true);
       return;
     }
 
-    // Tawk.to embed script
+    // Use Tawk's official embed snippet
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = new Date();
+
     const s1 = document.createElement("script");
+    const s0 = document.getElementsByTagName("script")[0];
+
     s1.async = true;
     s1.src = `https://embed.tawk.to/${propertyId}/${widgetId}`;
     s1.charset = "UTF-8";
     s1.setAttribute("crossorigin", "*");
 
-    s1.onload = () => setLoaded(true);
+    // Hook into Tawk's onLoad callback
+    window.Tawk_API.onLoad = () => {
+      setTawkLoaded(true);
+    };
 
-    document.head.appendChild(s1);
+    s0.parentNode?.insertBefore(s1, s0);
 
-    // Detect load failure after 8s
+    // Fallback if Tawk doesn't load within 8 seconds
     const failTimer = setTimeout(() => {
-      if (!loaded) setShowFallback(true);
+      if (!tawkLoaded) setShowFallback(true);
     }, 8000);
 
     return () => {
       clearTimeout(failTimer);
-      document.head.removeChild(s1);
+      try {
+        s1.remove();
+      } catch (e) {
+        // ignore
+      }
     };
-  }, [propertyId, widgetId, loaded]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [propertyId, widgetId]);
 
   // ── Fallback: WhatsApp chat bubble ────────────────────────
-  if (showFallback) {
+  if (showFallback && !tawkLoaded) {
     return (
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         {bubbleOpen && (
@@ -136,25 +145,7 @@ export default function TawkToChat({ propertyId, widgetId }: TawkToProps) {
     );
   }
 
-  // Tawk.to loaded — render a styled trigger bubble that opens the Tawk widget
-  return (
-    <button
-      onClick={() => {
-        try {
-          if (window.Tawk_API?.popup) {
-            window.Tawk_API.popup();
-          } else if (window.Tawk_API?.toggle) {
-            window.Tawk_API.toggle();
-          }
-        } catch (e) {
-          console.warn("[Tawk] Failed to open chat widget", e);
-        }
-      }}
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-falu hover:bg-falu-light text-white shadow-lg shadow-falu/30 transition-all duration-300 flex items-center justify-center glow-red-sm hover:glow-red animate-pulse-glow"
-      aria-label="Open live chat"
-    >
-      <MessageCircle className="h-6 w-6" />
-      <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-500 border-2 border-white animate-pulse" />
-    </button>
-  );
+  // Tawk.to loaded successfully — its native bubble is shown by default.
+  // Render nothing extra to avoid duplicate bubbles.
+  return null;
 }

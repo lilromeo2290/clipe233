@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import TawkToChat from "@/components/TawkToChat";
 
-const TAWK_PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || "YOUR_PROPERTY_ID";
-const TAWK_WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || "YOUR_WIDGET_ID";
+const TAWK_PROPERTY_ID = "6a471aaa539b7e1d4b7d3457";
+const TAWK_WIDGET_ID = "1jsis0aos";
 
 const poppins = Poppins({
   variable: "--font-poppins",
