@@ -30,7 +30,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Clipe233 Engineers | Engineering Smart Digital Solutions",
+  title: "Clipe233 Engineers | Building Innovations, Engineering Excellence",
   description:
     "Clipe233 Engineers delivers innovative software, networking, branding, and digital transformation solutions tailored for businesses and organizations in Ghana and beyond.",
   keywords: [
@@ -50,14 +50,14 @@ export const metadata: Metadata = {
     icon: "/logo.jpg",
   },
   openGraph: {
-    title: "Clipe233 Engineers | Engineering Smart Digital Solutions",
+    title: "Clipe233 Engineers | Building Innovations, Engineering Excellence",
     description:
       "Innovative software, networking, branding, and digital transformation solutions for modern businesses.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clipe233 Engineers | Engineering Smart Digital Solutions",
+    title: "Clipe233 Engineers | Building Innovations, Engineering Excellence",
     description:
       "Innovative software, networking, branding, and digital transformation solutions for modern businesses.",
   },
