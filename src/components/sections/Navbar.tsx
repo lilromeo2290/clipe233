@@ -11,6 +11,7 @@ interface NavLink {
   label: string;
   href: string;
   isHome?: boolean;
+  isPage?: boolean;
   submenu?: { label: string; href: string; isPage?: boolean }[];
 }
 

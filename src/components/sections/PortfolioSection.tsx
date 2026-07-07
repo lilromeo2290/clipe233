@@ -7,7 +7,6 @@ import {
   Filter,
   Code2,
   Globe,
-  Palette,
   Network,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,6 @@ const categories = [
   "All",
   "Software",
   "Websites",
-  "Branding",
   "Networking",
 ];
 
@@ -36,14 +34,6 @@ const projects = [
       "An interactive church website with event management, sermon streaming, donation integration, and member directory serving over 2,000 congregants.",
     tags: ["Next.js", "Tailwind CSS", "Stripe"],
     icon: Globe,
-  },
-  {
-    title: "AgriTech Brand Identity",
-    category: "Branding",
-    description:
-      "Complete brand identity design for an agricultural technology startup, including logo, color system, typography, marketing materials, and social media templates.",
-    tags: ["Branding", "Logo Design", "Print"],
-    icon: Palette,
   },
   {
     title: "Enterprise Network Infrastructure",
@@ -68,22 +58,6 @@ const projects = [
       "A patient appointment scheduling and telemedicine application enabling healthcare facilities to manage bookings, virtual consultations, and medical records securely.",
     tags: ["React Native", "Node.js", "HIPAA"],
     icon: Code2,
-  },
-  {
-    title: "NGO Annual Report Design",
-    category: "Branding",
-    description:
-      "Designed and produced comprehensive annual reports and impact documentation for an international NGO, with infographics, data visualization, and print-ready layouts.",
-    tags: ["Graphic Design", "Data Viz", "Print"],
-    icon: Palette,
-  },
-  {
-    title: "Government Office Network",
-    category: "Networking",
-    description:
-      "Deployed secure networking infrastructure for a district government office, including structured cabling, server room setup, and cybersecurity implementation.",
-    tags: ["Infrastructure", "Security", "Server"],
-    icon: Network,
   },
 ];
 
