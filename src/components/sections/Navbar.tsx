@@ -40,6 +40,7 @@ const navLinks: NavLink[] = [
       { label: "Clipe SMS CRM", href: "/clipe-sms-crm", isPage: true },
     ],
   },
+  { label: "Portfolio", href: "#portfolio" },
   { label: "Our Team", href: "#team" },
   { label: "Contact Us", href: "/contact", isPage: true },
 ];
