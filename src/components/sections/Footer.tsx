@@ -52,7 +52,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <img
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="Clipe233 Engineers Logo"
                 className="h-10 w-auto rounded-lg"
               />

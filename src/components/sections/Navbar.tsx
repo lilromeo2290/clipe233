@@ -170,7 +170,7 @@ export default function Navbar() {
               className="flex items-center gap-2.5 group"
             >
               <img
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="Clipe233 Engineers Logo"
                 className="h-10 w-auto rounded-lg group-hover:glow-red transition-all duration-300"
               />

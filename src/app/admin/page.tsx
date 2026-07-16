@@ -873,7 +873,7 @@ function AdminDashboardInner({ authUser, onLogout }: { authUser: { username: str
         {/* Logo */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <img src="/logo.jpg" alt="Clipe233" className="w-10 h-10 rounded-lg object-cover" />
+            <img src="/logo.png" alt="Clipe233" className="h-10 w-auto rounded-lg object-contain" />
             <div>
               <h1 className="font-bold font-[family-name:var(--font-poppins)] text-sm">Clipe233</h1>
               <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">

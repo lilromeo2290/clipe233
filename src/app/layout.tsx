@@ -43,7 +43,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Clipe233 Engineers" }],
   icons: {
-    icon: "/logo.jpg",
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+    ],
   },
   openGraph: {
     title: "Clipe233 Engineers | Building Innovations, Engineering Excellence",
