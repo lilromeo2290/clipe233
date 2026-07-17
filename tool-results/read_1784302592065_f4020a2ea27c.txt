@@ -1,0 +1,255 @@
+     1→[root@vps ~]# # Get a real story URL — exclude wp-json, feed, comments, wp-content, category, tag, etc.
+     2→[root@vps ~]# STORY=$(curl -s -k https://24hournewsonline.com/ | grep -oE 'href="https://24hournewsonline.com/[a-z0-9][a-z0-9-]*/"' | \
+     3→>         grep -vE "feed|comments|wp-json|wp-content|wp-admin|wp-login|wp-includes|category|tag|author|page|xmlrpc|oembed" | \
+     4→>         head -3)
+     5→echo "Found story URLs:"
+     6→echo "$STORY"
+     7→
+     8→# Test the first one
+     9→FIRST_STORY=$(echo "$STORY" | head -1 | grep -oE '/[a-z0-9-]+/')
+    10→echo ""
+    11→echo "Testing: https://24hournewsonline.com$FIRST_STORY"
+    12→echo ""
+    13→
+    14→# Get full HTML head and check for og tags
+    15→curl -s -k "https://24hournewsonline.com$FIRST_STORY" > /tmp/story.html
+    16→echo "=== og:image tags ==="
+    17→grep -iE "og:image|og:title|og:description|twitter:image|twitter:card" /tmp/story.html | head -10
+    18→echo ""
+    19→echo "=== HTML head section ==="
+    20→sed -n '/<head>/,/<\/head>/p' /tmp/story.html | head -50[root@vps ~]#
+    21→[root@vps ~]# echo "Found story URLs:"
+    22→Found story URLs:
+    23→[root@vps ~]# echo "$STORY"
+    24→
+    25→[root@vps ~]#
+    26→[root@vps ~]# # Test the first one
+    27→[root@vps ~]# FIRST_STORY=$(echo "$STORY" | head -1 | grep -oE '/[a-z0-9-]+/')
+    28→[root@vps ~]# echo ""
+    29→
+    30→[root@vps ~]# echo "Testing: https://24hournewsonline.com$FIRST_STORY"
+    31→Testing: https://24hournewsonline.com
+    32→[root@vps ~]# echo ""
+    33→
+    34→[root@vps ~]#
+    35→[root@vps ~]# # Get full HTML head and check for og tags
+    36→[root@vps ~]# curl -s -k "https://24hournewsonline.com$FIRST_STORY" > /tmp/story.html
+    37→[root@vps ~]# echo "=== og:image tags ==="
+    38→=== og:image tags ===
+    39→[root@vps ~]# grep -iE "og:image|og:title|og:description|twitter:image|twitter:card" /tmp/story.html | head -10
+    40→        <meta property="og:title" content="Home - 24Hour News" />
+    41→        <meta name="twitter:card" content="summary_large_image" />
+    42→[root@vps ~]# echo ""
+    43→
+    44→[root@vps ~]# echo "=== HTML head section ==="
+    45→=== HTML head section ===
+    46→[root@vps ~]# sed -n '/<head>/,/<\/head>/p' /tmp/story.html | head -50
+    47→<head>
+    48→<meta charset="UTF-8" />
+    49→<link rel="pingback" href="https://24hournewsonline.com/xmlrpc.php" />
+    50→<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    51→
+    52→        <!-- This site is optimized with the Yoast SEO plugin v28.0 - https://yoast.com/product/yoast-seo-wordpress/ -->
+    53→        <title>Home - 24Hour News</title>
+    54→        <link rel="canonical" href="https://24hournewsonline.com/" />
+    55→        <meta property="og:locale" content="en_US" />
+    56→        <meta property="og:type" content="website" />
+    57→        <meta property="og:title" content="Home - 24Hour News" />
+    58→        <meta property="og:url" content="https://24hournewsonline.com/" />
+    59→        <meta property="og:site_name" content="24Hour News" />
+    60→        <meta property="article:modified_time" content="2026-07-16T23:35:54+00:00" />
+    61→        <meta name="twitter:card" content="summary_large_image" />
+    62→        <script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebPage","@id":"https:\/\/24hournewsonline.com\/","url":"https:\/\/24hournewsonline.com\/","name":"Home - 24Hour News","isPartOf":{"@id":"https:\/\/24hournewsonline.com\/#website"},"datePublished":"2026-07-14T03:28:13+00:00","dateModified":"2026-07-16T23:35:54+00:00","breadcrumb":{"@id":"https:\/\/24hournewsonline.com\/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https:\/\/24hournewsonline.com\/"]}]},{"@type":"BreadcrumbList","@id":"https:\/\/24hournewsonline.com\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https:\/\/24hournewsonline.com\/#website","url":"https:\/\/24hournewsonline.com\/","name":"24Hour News","description":"Truth, Timely and Trusted","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/24hournewsonline.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"}]}</script>
+    63→        <!-- / Yoast SEO plugin. -->
+    64→
+    65→
+    66→<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+    67→<link rel="alternate" type="application/rss+xml" title="24Hour News &raquo; Feed" href="https://24hournewsonline.com/feed/" />
+    68→<link rel="alternate" type="application/rss+xml" title="24Hour News &raquo; Comments Feed" href="https://24hournewsonline.com/comments/feed/" />
+    69→<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://24hournewsonline.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2F24hournewsonline.com%2F" />
+    70→<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://24hournewsonline.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2F24hournewsonline.com%2F&#038;format=xml" />
+    71→                <!-- This site uses the Google Analytics by MonsterInsights plugin v10.2.2 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+    72→                <!-- Note: MonsterInsights is not currently configured on this site. The site owner needs to authenticate with Google Analytics in the MonsterInsights settings panel. -->
+    73→                                        <!-- No tracking code set -->
+    74→                                <!-- / Google Analytics by MonsterInsights -->
+    75→                <style id="wp-img-auto-sizes-contain-inline-css">
+    76→img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+    77→/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+    78→</style>
+    79→<style id="wp-emoji-styles-inline-css">
+    80→
+    81→        img.wp-smiley, img.emoji {
+    82→                display: inline !important;
+    83→                border: none !important;
+    84→                box-shadow: none !important;
+    85→                height: 1em !important;
+    86→                width: 1em !important;
+    87→                margin: 0 0.07em !important;
+    88→                vertical-align: -0.1em !important;
+    89→                background: none !important;
+    90→                padding: 0 !important;
+    91→        }
+    92→/*# sourceURL=wp-emoji-styles-inline-css */
+    93→</style>
+    94→<style id="wp-block-library-inline-css">
+    95→:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-color]){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+    96→
+    97→[root@vps ~]#
+    98→[root@vps ~]#
+    99→[root@vps ~]#
+   100→[root@vps ~]#
+   101→[root@vps ~]# WP_CONFIG=/home/clipe233/public_html/24hournewsonline.com/wp-config.php
+   102→[root@vps ~]# DB_NAME=$(grep -oP "define\(\s*'DB_NAME'\s*,\s*'\K[^']+" $WP_CONFIG)
+   103→[root@vps ~]# DB_USER=$(grep -oP "define\(\s*'DB_USER'\s*,\s*'\K[^']+" $WP_CONFIG)
+   104→[root@vps ~]# DB_PASS=$(grep -oP "define\(\s*'DB_PASSWORD'\s*,\s*'\K[^']+" $WP_CONFIG)
+   105→E" -e "SHOW TABLES;" 2>&1 | he[root@vps ~]#
+   106→[root@vps ~]# # Confirm the actual table names
+   107→[root@vps ~]# mysql -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "SHOW TABLES;" 2>&1 | head -30
+   108→Tables_in_clipe233_24hournews
+   109→actionscheduler_actions
+   110→actionscheduler_claims
+   111→actionscheduler_groups
+   112→actionscheduler_logs
+   113→aioseo_ai_insights_keyword_reports
+   114→aioseo_blc_cache
+   115→aioseo_blc_link_status
+   116→aioseo_blc_links
+   117→aioseo_blc_notifications
+   118→aioseo_blc_posts
+   119→aioseo_cache
+   120→aioseo_crawl_cleanup_blocked_args
+   121→aioseo_crawl_cleanup_logs
+   122→aioseo_notifications
+   123→aioseo_posts
+   124→aioseo_seo_analyzer_results
+   125→aioseo_writing_assistant_keywords
+   126→aioseo_writing_assistant_posts
+   127→commentmeta
+   128→comments
+   129→defender_antibot
+   130→defender_audit_log
+   131→defender_email_log
+   132→defender_lockout
+   133→defender_lockout_log
+   134→defender_quarantine
+   135→defender_scan
+   136→defender_scan_item
+   137→defender_unlockout
+   138→[root@vps ~]#
+   139→[root@vps ~]#
+   140→[root@vps ~]#
+   141→[root@vps ~]# # Check Yoast options (assuming no prefix)
+   142→[root@vps ~]# mysql -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+   143→> SELECT option_name, LEFT(option_value, 300) AS option_value
+   144→> FROM options
+   145→> WHERE option_name LIKE 'wpseo_%'
+   146→> LIMIT 20;
+   147→> " 2>&1
+   148→d images
+   149→mysql -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+   150→SELECT p.ID, p.post_title, p.post_name, pm.meta_value AS thumbnail_id
+   151→FROM posts p
+   152→LEFT JOIN postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_thumbnail_id'
+   153→WHERE p.post_type = 'post' AND p.+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   154→| option_name         | option_value                                                                                                                                                                                                                                                                                                 |
+   155→+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   156→| wpseo_llmstxt       | a:7:{s:23:"llms_txt_selection_mode";s:4:"auto";s:13:"about_us_page";i:0;s:12:"contact_page";i:0;s:10:"terms_page";i:0;s:19:"privacy_policy_page";i:0;s:9:"shop_page";i:0;s:20:"other_included_pages";a:0:{}}                                                                                                 |
+   157→| wpseo_social        | a:20:{s:13:"facebook_site";s:0:"";s:13:"instagram_url";s:0:"";s:12:"linkedin_url";s:0:"";s:11:"myspace_url";s:0:"";s:16:"og_default_image";s:0:"";s:19:"og_default_image_id";s:0:"";s:18:"og_frontpage_title";s:0:"";s:17:"og_frontpage_desc";s:0:"";s:18:"og_frontpage_image";s:0:"";s:21:"og_frontpage_ima |
+   158→| wpseo_titles        | a:129:{s:17:"forcerewritetitle";b:0;s:9:"separator";s:7:"sc-dash";s:16:"title-home-wpseo";s:42:"%%sitename%% %%page%% %%sep%% %%sitedesc%%";s:18:"title-author-wpseo";s:41:"%%name%%, Author at %%sitename%% %%page%%";s:19:"title-archive-wpseo";s:38:"%%date%% %%page%% %%sep%% %%sitename%%";s:18:"title- |
+   159→| wpseo_tracking_only | a:3:{s:25:"task_list_first_opened_on";s:0:"";s:22:"task_first_actioned_on";s:0:"";s:36:"frontend_inspector_first_actioned_on";s:0:"";}                                                                                                                                                                       |
+   160→+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   161→[root@vps ~]#
+   162→[root@vps ~]# # Check recent posts and their featured images
+   163→[root@vps ~]# mysql -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+   164→> SELECT p.ID, p.post_title, p.post_name, pm.meta_value AS thumbnail_id
+   165→> FROM posts p
+   166→> LEFT JOIN postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_thumbnail_id'
+   167→> WHERE p.post_type = 'post' AND p.post_status = 'publish'
+   168→> ORDER BY p.post_date DESC LIMIT 5;
+   169→> " 2>&1
+   170→+-----+----------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+--------------+
+   171→| ID  | post_title                                                                                                           | post_name                                                                                                                 | thumbnail_id |
+   172→+-----+----------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+--------------+
+   173→| 173 | Ketu North MP Eric Edem Agbana Calls For Sustainable Jobs For Ghanaian Youth                                         | ketu-north-mp-eric-edem-agbana-calls-for-sustainable-jobs-for-ghanaian-youth                                              | 174          |
+   174→| 169 | Ablakwa Donates 100 Chest Freezers To Juapong Market Women Ahead Of New Mahama 24-Hour-Economy Market                | ablakwa-donates-100-chest-freezers-to-juapong-market-women-ahead-of-new-mahama-24-hour-economy-market                     | 170          |
+   175→| 156 | Ketu North MCE Secures GH₵100,000 For New Toilet At Zongo Junction After Big Push Road Threatens Existing Facility   | ketu-north-mce-secures-gh%e2%82%b5100000-for-new-toilet-at-zongo-junction-after-big-push-road-threatens-existing-facility | 144          |
+   176→| 147 | Hon. Martin Prince Amenaki Hands Over Flood Relief Items To Ketu North NADMO For Distribution                        | hon-martin-prince-amenaki-hands-over-flood-relief-items-to-ketu-north-nadmo-for-distribution                              | 148          |
+   177→| 129 | Keta Lagoon Flood Gate To Close Gradually After 85% Progress In Water Management Works                               | keta-lagoon-flood-gate-to-close-gradually-after-85-progress-in-water-management-works                                     | 132          |
+   178→+-----+----------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+--------------+
+   179→[root@vps ~]#
+   180→[root@vps ~]#
+   181→[root@vps ~]#
+   182→[root@vps ~]#
+   183→[root@vps ~]#
+   184→[root@vps ~]#
+   185→[root@vps ~]#
+   186→[root@vps ~]# # Look at the actual HTML head for the homepage
+   187→[root@vps ~]# curl -s -k https://24hournewsonline.com/ > /tmp/home.html
+   188→/p' /tmp/home.html | head -60[root@vps ~]# echo "=== Homepage head ==="
+   189→=== Homepage head ===
+   190→[root@vps ~]# sed -n '/<head>/,/<\/head>/p' /tmp/home.html | head -60
+   191→<head>
+   192→<meta charset="UTF-8" />
+   193→<link rel="pingback" href="https://24hournewsonline.com/xmlrpc.php" />
+   194→<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+   195→
+   196→        <!-- This site is optimized with the Yoast SEO plugin v28.0 - https://yoast.com/product/yoast-seo-wordpress/ -->
+   197→        <title>Home - 24Hour News</title>
+   198→        <link rel="canonical" href="https://24hournewsonline.com/" />
+   199→        <meta property="og:locale" content="en_US" />
+   200→        <meta property="og:type" content="website" />
+   201→        <meta property="og:title" content="Home - 24Hour News" />
+   202→        <meta property="og:url" content="https://24hournewsonline.com/" />
+   203→        <meta property="og:site_name" content="24Hour News" />
+   204→        <meta property="article:modified_time" content="2026-07-16T23:35:54+00:00" />
+   205→        <meta name="twitter:card" content="summary_large_image" />
+   206→        <script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebPage","@id":"https:\/\/24hournewsonline.com\/","url":"https:\/\/24hournewsonline.com\/","name":"Home - 24Hour News","isPartOf":{"@id":"https:\/\/24hournewsonline.com\/#website"},"datePublished":"2026-07-14T03:28:13+00:00","dateModified":"2026-07-16T23:35:54+00:00","breadcrumb":{"@id":"https:\/\/24hournewsonline.com\/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https:\/\/24hournewsonline.com\/"]}]},{"@type":"BreadcrumbList","@id":"https:\/\/24hournewsonline.com\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https:\/\/24hournewsonline.com\/#website","url":"https:\/\/24hournewsonline.com\/","name":"24Hour News","description":"Truth, Timely and Trusted","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/24hournewsonline.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"}]}</script>
+   207→        <!-- / Yoast SEO plugin. -->
+   208→
+   209→
+   210→<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+   211→<link rel="alternate" type="application/rss+xml" title="24Hour News &raquo; Feed" href="https://24hournewsonline.com/feed/" />
+   212→<link rel="alternate" type="application/rss+xml" title="24Hour News &raquo; Comments Feed" href="https://24hournewsonline.com/comments/feed/" />
+   213→<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://24hournewsonline.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2F24hournewsonline.com%2F" />
+   214→<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://24hournewsonline.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2F24hournewsonline.com%2F&#038;format=xml" />
+   215→                <!-- This site uses the Google Analytics by MonsterInsights plugin v10.2.2 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+   216→                <!-- Note: MonsterInsights is not currently configured on this site. The site owner needs to authenticate with Google Analytics in the MonsterInsights settings panel. -->
+   217→                                        <!-- No tracking code set -->
+   218→                                <!-- / Google Analytics by MonsterInsights -->
+   219→                <style id="wp-img-auto-sizes-contain-inline-css">
+   220→img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+   221→/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+   222→</style>
+   223→<style id="wp-emoji-styles-inline-css">
+   224→
+   225→        img.wp-smiley, img.emoji {
+   226→                display: inline !important;
+   227→                border: none !important;
+   228→                box-shadow: none !important;
+   229→                height: 1em !important;
+   230→                width: 1em !important;
+   231→                margin: 0 0.07em !important;
+   232→                vertical-align: -0.1em !important;
+   233→                background: none !important;
+   234→                padding: 0 !important;
+   235→        }
+   236→/*# sourceURL=wp-emoji-styles-inline-css */
+   237→</style>
+   238→<style id="wp-block-library-inline-css">
+   239→:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-color]){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+   240→
+   241→/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+   242→</style>
+   243→<style id="classic-theme-styles-inline-css">
+   244→/*! This file is auto-generated */
+   245→.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+   246→/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+   247→</style>
+   248→
+   249→<style id="global-styles-inline-css">
+   250→:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+   251→[root@vps ~]#
+   252→[root@vps ~]#
+   253→[root@vps ~]#
+   254→[root@vps ~]#
+   255→
