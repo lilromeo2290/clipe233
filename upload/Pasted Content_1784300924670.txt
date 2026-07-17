@@ -1,0 +1,641 @@
+[root@vps ~]#
+[root@vps ~]#
+[root@vps ~]# sed -n '260,320p' /usr/local/apps/nginx/etc/conf.d/webuzoVH.conf
+
+        }
+}
+
+
+server {
+        listen          153.75.247.4:80;
+        listen          [2604:a00:50:1bb:216:3eff:fe34:c15c]:80;
+        server_name     24hournewsonline.com www.24hournewsonline.com mail.24hournewsonline.com;
+        if ($request_uri !~ "^/.well-known/acme-challenge/"){
+                return 301 https://24hournewsonline.com$request_uri;
+
+        }
+
+
+
+        # The Document Root
+        root            /home/clipe233/public_html/24hournewsonline.com;
+        set $fpmsocket /usr/local/apps/php84/var/fpm-clipe233.sock;
+
+
+
+
+        location ~ (\.php|phtml|shtml|/)$ {
+                try_files  $uri $uri/index.php $uri/index.php8 $uri/index.php7 $uri/index.php5 $uri/index.perl $uri/index.pl $uri/index.plx $uri/index.ppl $uri/index.cgi $uri/index.jsp $uri/index.jp $uri/index.phtml $uri/index.shtml $uri/index.xhtml $uri/index.html $uri/index.htm $uri/index.js;
+                fastcgi_pass unix:$fpmsocket;
+                fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param   SCRIPT_NAME             $fastcgi_script_name;
+                include                 fastcgi_params;
+
+        }
+        error_log       /usr/local/apps/nginx/var/log/24hournewsonline.com.err;
+        access_log      /usr/local/apps/nginx/var/log/24hournewsonline.com.log main;
+
+
+
+
+        #webmail access from /webmail
+        location ^~ /webmail {
+                proxy_set_header Host $host;
+                proxy_set_header Connection keep-alive;
+                proxy_set_header X-Original-URI $request_uri;
+                rewrite ^/webmail$ /webmail/ permanent;
+                proxy_pass http://127.0.0.1:2002/mail/;
+        }
+
+        set $noindex @maintenance;
+#DISABLED:      include         /usr/local/apps/nginx/etc/conf.d/common;
+        include /var/webuzo-data/nginx/custom/domains/24hournewsonline.com.conf;
+
+
+        # Stop proxy /.well-known folder
+        location /.well-known {
+
+        }
+}
+
+
+
+server {
+        listen          153.75.247.4:443 ssl;
+[root@vps ~]# sed -n '520,570p' /usr/local/apps/nginx/etc/conf.d/webuzoVH.conf
+}
+
+
+server {
+        listen          153.75.247.4:443 ssl;
+        listen          [2604:a00:50:1bb:216:3eff:fe34:c15c]:443 ssl;
+        server_name     24hournewsonline.com www.24hournewsonline.com mail.24hournewsonline.com;
+        # The Document Root
+        root            /home/clipe233/public_html/24hournewsonline.com;
+        ssl_certificate                         /var/webuzo/users/clipe233/ssl/24hournewsonline.com-combined.pem;
+        ssl_certificate_key                     /var/webuzo/users/clipe233/ssl/24hournewsonline.com.key;
+        ssl_dhparam                                 /etc/ssl/private/dhparam.pem;
+
+        set $fpmsocket /usr/local/apps/php84/var/fpm-clipe233.sock;
+
+
+
+
+
+        location ~ (\.php|phtml|shtml|/)$ {
+                try_files  $uri $uri/index.php $uri/index.php8 $uri/index.php7 $uri/index.php5 $uri/index.perl $uri/index.pl $uri/index.plx $uri/index.ppl $uri/index.cgi $uri/index.jsp $uri/index.jp $uri/index.phtml $uri/index.shtml $uri/index.xhtml $uri/index.html $uri/index.htm $uri/index.js;
+                fastcgi_pass unix:$fpmsocket;
+                fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param   SCRIPT_NAME             $fastcgi_script_name;
+                include                 fastcgi_params;
+        }
+        error_log       /usr/local/apps/nginx/var/log/24hournewsonline.com.err;
+        access_log      /usr/local/apps/nginx/var/log/24hournewsonline.com.log main;
+
+
+
+
+
+        #webmail access from /webmail
+        location ^~ /webmail {
+                proxy_set_header Host $host;
+                proxy_set_header Connection keep-alive;
+                proxy_set_header X-Original-URI $request_uri;
+                rewrite ^/webmail$ /webmail/ permanent;
+                proxy_pass https://127.0.0.1:2003/mail/;
+        }
+
+        set $noindex @maintenance;
+#DISABLED:      include         /usr/local/apps/nginx/etc/conf.d/common;
+        include /var/webuzo-data/nginx/custom/domains/24hournewsonline.com.conf;
+
+
+        # Stop proxy /.well-known folder
+        location /.well-known {
+
+        }
+[root@vps ~]#
+[root@vps ~]#
+[root@vps ~]#
+[root@vps ~]# WP_DB=$(grep DB_NAME /home/clipe233/public_html/24hournewsonline.com/wp-config.php | grep -oP "'\K[^']+")
+ig.php | grep -oP "'\K[^']+")
+DB_PASS=$(grep DB_PASSWORD /home/clipe233/public_html/24hournewsonline.com/wp-config.php | grep -oP "'\K[^']+")
+
+mysql -u "$DB_USER" -p"$DB_PASS" "$WP_DB" -e "
+SELECT ID, post_title, post_name, post_status, post_type
+FROM wp_posts[root@vps ~]# DB_USER=$(grep DB_USER /home/clipe233/public_html/24hournewsonline.com/wp-config.php | grep -oP "'\K[^']+")
+[root@vps ~]# DB_PASS=$(grep DB_PASSWORD /home/clipe233/public_html/24hournewsonline.com/wp-config.php | grep -oP "'\K[^']+")
+
+WHERE post_name='clipe233eng' OR post_title LIKE '%clipe233%'
+LIMIT 10;
+" 2>&1
+
+# Get permalink structure
+mysql -u "$DB_USER" -p"$DB_PASS" "$WP_DB" -e "
+SELECT option_name, option_value FROM wp_options
+WHERE option_name IN ('permalink_structure','siteurl'[root@vps ~]#
+[root@vps ~]# mysql -u "$DB_USER" -p"$DB_PASS" "$WP_DB" -e "
+> SELECT ID, post_title, post_name, post_status, post_type
+> FROM wp_posts
+> WHERE post_name='clipe233eng' OR post_title LIKE '%clipe233%'
+> LIMIT 10;
+> " 2>&1
+ERROR 1045 (28000): Access denied for user 'DB_USER
+,
+clipe233_24hournews
+ );'@'localhost' (using password: YES)
+[root@vps ~]#
+[root@vps ~]# # Get permalink structure
+[root@vps ~]# mysql -u "$DB_USER" -p"$DB_PASS" "$WP_DB" -e "
+> SELECT option_name, option_value FROM wp_options
+> WHERE option_name IN ('permalink_structure','siteurl','home');
+> " 2>&1
+ERROR 1045 (28000): Access denied for user 'DB_USER
+,
+clipe233_24hournews
+ );'@'localhost' (using password: YES)
+[root@vps ~]#
+[root@vps ~]#
+[root@vps ~]#
+[root@vps ~]# # Standard WP root files — anything else is suspicious
+[root@vps ~]# for f in index.php wp-login.php wp-cron.php wp-config.php wp-settings.php wp-blog-header.php wp-load.php wp-mail.php wp-trackback.php wp-signup.php wp-activate.php wp-links-opml.php xmlrpc.php license.txt readme.html wp-comments-post.php; do
+>   [ -f "/home/clipe233/public_html/24hournewsonline.com/$f" ] && echo "OK: $f" || echo "MISSING: $f"
+> done
+OK: index.php
+OK: wp-login.php
+OK: wp-cron.php
+OK: wp-config.php
+OK: wp-settings.php
+OK: wp-blog-header.php
+OK: wp-load.php
+OK: wp-mail.php
+OK: wp-trackback.php
+OK: wp-signup.php
+OK: wp-activate.php
+OK: wp-links-opml.php
+OK: xmlrpc.php
+OK: license.txt
+OK: readme.html
+OK: wp-comments-post.php
+[root@vps ~]#
+[root@vps ~]# echo ""
+
+[root@vps ~]# echo "=== Suspicious files in document root ==="
+=== Suspicious files in document root ===
+[root@vps ~]# ls /home/clipe233/public_html/24hournewsonline.com/*.php 2>/dev/null
+/home/clipe233/public_html/24hournewsonline.com/goods.php
+/home/clipe233/public_html/24hournewsonline.com/index.php
+/home/clipe233/public_html/24hournewsonline.com/lock.php
+/home/clipe233/public_html/24hournewsonline.com/mah.php
+/home/clipe233/public_html/24hournewsonline.com/networks.php
+/home/clipe233/public_html/24hournewsonline.com/ope1l78kgxi0m2bm35v59shqCdefault.php
+/home/clipe233/public_html/24hournewsonline.com/plugins.php
+/home/clipe233/public_html/24hournewsonline.com/product.php
+/home/clipe233/public_html/24hournewsonline.com/shop.php
+/home/clipe233/public_html/24hournewsonline.com/txets.php
+/home/clipe233/public_html/24hournewsonline.com/wp-activate.php
+/home/clipe233/public_html/24hournewsonline.com/wp-blog-header.php
+/home/clipe233/public_html/24hournewsonline.com/wp-comments-post.php
+/home/clipe233/public_html/24hournewsonline.com/wp-conffg.php
+/home/clipe233/public_html/24hournewsonline.com/wp-config.php
+/home/clipe233/public_html/24hournewsonline.com/wp-config-sample.php
+/home/clipe233/public_html/24hournewsonline.com/wp-cron.php
+/home/clipe233/public_html/24hournewsonline.com/wper.php
+/home/clipe233/public_html/24hournewsonline.com/wp-links-opml.php
+/home/clipe233/public_html/24hournewsonline.com/wp-load.php
+/home/clipe233/public_html/24hournewsonline.com/wp-log1n.php
+/home/clipe233/public_html/24hournewsonline.com/wp-login.php
+/home/clipe233/public_html/24hournewsonline.com/wp-mail.php
+/home/clipe233/public_html/24hournewsonline.com/wp-settings.php
+/home/clipe233/public_html/24hournewsonline.com/wp-signup.php
+/home/clipe233/public_html/24hournewsonline.com/wp-trackback.php
+/home/clipe233/public_html/24hournewsonline.com/xmlrpc.php
+[root@vps ~]#
+[root@vps ~]# mkdir -p /root/malware-quarantine-2026-07-17
+ds.php lock.php mah.php networks.php \
+         ope1l78k[root@vps ~]# cd /home/clipe233/public_html/24hournewsonline.com/
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Move suspicious files (backup for analysis, not execution)
+[root@vps 24hournewsonline.com]# for f in goods.php lock.php mah.php networks.php \
+>          ope1l78kgxi0m2bm35v59shqCdefault.php \
+>          plugins.php product.php shop.php txets.php \
+>          wp-conffg.php wp-log1n.php wper.php; do
+>   if [ -f "$f" ]; then
+>     mv "$f" /root/malware-quarantine-2026-07-17/
+>     echo "Quarantined: $f"
+>   fi
+> done
+Quarantined: goods.php
+Quarantined: lock.php
+ .htaccess
+cp /home/clipe233/public_html/24hournewsonline.com/.htaccess /root/malware-quarantine-2026-07-17/.htQuarantined: mah.php
+Quarantined: networks.php
+Quarantined: ope1l78kgxi0m2bm35v59shqCdefault.php
+Quarantined: plugins.php
+Quarantined: product.php
+Quarantined: shop.php
+access.malicious
+
+# Replace .htaccess with clean WordPress default
+cat > /home/clipe233/public_html/24hournewsonline.com/.htaccess <<'EOF'
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RQuarantined: txets.php
+Quarantined: wp-conffg.php
+ewriteCond %{REQUEST_FILENAMEQuarantined: wp-log1n.php
+Quarantined: wper.php
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Backup the malicious .htaccess
+[root@vps 24hournewsonline.com]# cp /home/clipe233/public_html/24hournewsonline.com/.htaccess /root/malware-quarantine-2026-07-17/.htaccess.malicious
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Replace .htaccess with clean WordPress default
+[root@vps 24hournewsonline.com]# cat > /home/clipe233/public_html/24hournewsonline.com/.htaccess <<'EOF'
+> # BEGIN WordPress
+> <IfModule mod_rewrite.c>
+> RewriteEngine On
+> RewriteBase /
+> RewriteRule ^index\.php$ - [L]
+> RewriteCond %{REQUEST_FILENAME} !-f
+> RewriteCond %{REQUEST_FILENAME} !-d
+> RewriteRule . /index.php [L]
+> </IfModule>
+> # END WordPress
+> EOF
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Fix ownership/permissions
+[root@vps 24hournewsonline.com]# chown clipe233:clipe233 /home/clipe233/public_html/24hournewsonline.com/.htaccess
+ome/clipe233/public_html/24hournewsonline.com/*.php
+ca[root@vps 24hournewsonline.com]# chmod 644 /home/clipe233/public_html/24hournewsonline.com/.htaccess
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Verify
+[root@vps 24hournewsonline.com]# ls /home/clipe233/public_html/24hournewsonline.com/*.php
+/home/clipe233/public_html/24hournewsonline.com/index.php
+/home/clipe233/public_html/24hournewsonline.com/wp-activate.php
+/home/clipe233/public_html/24hournewsonline.com/wp-blog-header.php
+/home/clipe233/public_html/24hournewsonline.com/wp-comments-post.php
+/home/clipe233/public_html/24hournewsonline.com/wp-config.php
+/home/clipe233/public_html/24hournewsonline.com/wp-config-sample.php
+/home/clipe233/public_html/24hournewsonline.com/wp-cron.php
+t /home/clipe233/public_html/24hournewsonline.c/home/clipe233/public_html/24hournewsonline.com/wp-links-opml.php
+/home/clipe233/public_html/24hournewsonline.com/wp-load.php
+/home/clipe233/public_html/24hournewsonline.com/wp-login.php
+/home/clipe233/public_html/24hournewsonline.com/wp-mail.php
+/home/clipe233/public_html/24hournewsonline.com/wp-settings.php
+/home/clipe233/public_html/24hournewsonline.com/wp-signup.php
+/home/clipe233/public_html/24hournewsonline.com/wp-trackback.php
+/home/clipe233/public_html/24hournewsonline.com/xmlrpc.php
+[root@vps 24hournewsonline.com]# cat /home/clipe233/public_html/24hournewsonline.com/.htaccess
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# cat > /var/webuzo-data/nginx/custom/domains/24hournewsonline.com.conf <<'EOF'
+> # Block WordPress brute-force attack endpoints
+> location = /wp-login.php {
+>     return 403;
+> }
+> location = /xmlrpc.php {
+>     return 403;
+> }
+> location ~* ^/wp-(login|cron)\.php$ {
+>     return 403;
+> }
+>
+> # Fix WordPress pretty permalinks — try_files catch-all
+> location / {
+>     try_files $uri $uri/ /index.php?$args;
+> }
+> EOF
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Test config
+[root@vps 24hournewsonline.com]# nginx -t
+nginx: the configuration file /usr/local/apps/nginx/etc/nginx.conf syntax is ok
+nginx: configuration file /usr/local/apps/nginx/etc/nginx.conf test is successful
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# systemctl restart nginx
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Test homepage
+[root@vps 24hournewsonline.com]# curl -s -o /dev/null -w "Homepage: HTTP %{http_code}\n" -k https://24hournewsonline.com/
+"/clipe233eng: HTTP %{http_code}\n" -k https://24hournewsonline.com/clipe233eng
+
+# Test a story URL (get one from homepage)
+STORY=$(curl -s -k https://24hournewsonline.com/ | grep -oE 'href="https://24hournewsonline.com/[a-z0-9-]+/"' | head -1 | grep -oE '/[a-z0-9-]+/')
+echo "Testing story URL: $STORY"
+curl -s -o /dev/null -w "Story: HTTP %{http_code}\n" -k "https://24hournewsonline.com$STORY"Homepage: HTTP 200
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Test the /clipe233eng page
+[root@vps 24hournewsonline.com]# curl -s -o /dev/null -w "/clipe233eng: HTTP %{http_code}\n" -k https://24hournewsonline.com/clipe233eng
+/clipe233eng: HTTP 200
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Test a story URL (get one from homepage)
+[root@vps 24hournewsonline.com]# STORY=$(curl -s -k https://24hournewsonline.com/ | grep -oE 'href="https://24hournewsonline.com/[a-z0-9-]+/"' | head -1 | grep -oE '/[a-z0-9-]+/')
+[root@vps 24hournewsonline.com]# echo "Testing story URL: $STORY"
+Testing story URL: /feed/
+[root@vps 24hournewsonline.com]# curl -s -o /dev/null -w "Story: HTTP %{http_code}\n" -k "https://24hournewsonline.com$STORY"
+Story: HTTP 200
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Find recently modified PHP files (last 14 days — likely malware)
+[root@vps 24hournewsonline.com]# find /home/clipe233/public_html/24hournewsonline.com/ -name "*.php" -mtime -14 -type f 2>/dev/null | head -30
+home/clipe233/public_html/24hournewsonline.com/wp-content/ -name "*.php" -mtime -14 -type f 2>/dev/null | /home/clipe233/public_html/24hournewsonline.com/wp-includes/php-compat/wp/qYXEloKxtE.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/rest-api/search/wp/qmcbu.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/Requests/wp/NwaFgyZzoe.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/IXR/wp/anmCMKdH.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/customize/wp/nGTZsQK.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/js/tinymce/langs/wp/seDGwH.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/block-patterns/wp/lvZtM.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Common/Contracts/embeds/wp/KfouUpnY.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Results/Enums/wp/TmiTQYK.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Providers/Models/Contracts/wp/zNfgoWfXpb.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Messages/DTO/wp/iZBOSLN.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/7975850036686749default.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/PHPMailer/wp/khxgTA.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/l10n/wp/nTTYvVW.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/css/dist/block-library/wp/XgzmgO.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/SimplePie/src/Cache/wp/vaSqy.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/SimplePie/src/Content/Type/wp/TXzCmsB.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/SimplePie/src/Parse/wp/RCjoFU.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/version.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/style-engine/4UJSu/style/css/security-bridge.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/cover/load-compat.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/terms-query/wp/bWHwYMmL.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/buttons/wp/HKUyWmrNY.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/legacy-widget/wp/BljTjxNP.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/widget-group/wp/SagebaPh.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/Lfb/block/ace.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/Lfb/block/admin-post.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/tag-cloud/wp/MVeMGthKIH.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/footnotes/wp/SjDxuSG.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/archives/wp/raWoCaxOfW.php
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Check wp-content for backdoors
+[root@vps 24hournewsonline.com]# find /home/clipe233/public_html/24hournewsonline.com/wp-content/ -name "*.php" -mtime -14 -type f 2>/dev/null | head -20
+/home/clipe233/public_html/24hournewsonline.com/wp-content/languages/themes/the/load-styles.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/languages/wp/fFHOXKma.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/advanced-cache.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/header.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/js/index.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/footer.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/breadcrumbs.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/common-scripts.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/search-live.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/mega-menus.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/tie-views.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/translation.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/theme-functions.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/functions/pagenavi.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/class-acf-updater.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/shortcodes/shortcodes.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/blocks.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/widgets/widget-weather.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/widgets/widget-comments-avatar.php
+/home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/framework/widgets/widget-social.php
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Step 1: Identify the WordPress version (so we can download matching clean files)
+[root@vps 24hournewsonline.com]# grep -E "wp_version|version" /home/clipe233/public_html/24hournewsonline.com/wp-includes/version.php | head -5
+find /home/clipe233/public_html/24hournewsonline.com/wp-includes -path "*/wp/*.php" -type f 2>/dev/null | wc -l
+find /home/clipe233/public_html/24hournewsonline.com/wp-includes -path "*/wp/*.php" -type f 2>/dev/ * Contains version information for the current WordPress release.
+ * The WordPress version string.
+ * Holds the current version number for WordPress core. Used to bust caches
+ * @global string $wp_version
+$wp_version = '7.0.1';
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Step 2: See the full extent of the infection (count suspicious files)
+[root@vps 24hournewsonline.com]# find /home/clipe233/public_html/24hournewsonline.com/wp-includes -path "*/wp/*.php" -type f 2>/dev/null | wc -l
+null | head -50
+
+# Step 3: Check what's been injected into theme files
+diff <(curl -s https://raw.githubusercontent.com/WordPress/WordPress/master/wp-content/themes/twentytwentyone/header.php 2>/dev/null) /home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/header.php 2>/dev/null | head -30
+# (Note: this won't work for sahifa since it's a premium theme, but it'll show us what's been added)
+
+# Step 4: Check siteurl in DB via wp-config (different approach since mysql access failed)
+grep -E "DB_NAME|DB_USER|DB_PASSWORD|DB_HOST|table_prefix" /home/clipe233/public_html/24hournewsonline.com/wp-config.php
+
+# Step 5: Show me 29
+[root@vps 24hournewsonline.com]# find /home/clipe233/public_html/24hournewsonline.com/wp-includes -path "*/wp/*.php" -type f 2>/dev/null | head -50
+the malicious .htaccess for context
+cat /root/malware-quarantine-2026-07-17/.htaccess.malicious
+
+# Step 6: Check if the attackers have created any new admin users
+WP_CONFIG=/home/clipe233/public_html/24hournewsonline.com/wp-config.php
+DB_NAME=$(grep -oP "define\(\s*'DB_NAME'\s*,\s*'\K[^']+" $WP_CONFIG)
+DB_USER=$(grep -oP "define\(\s*'DB_USER'\s*,\s*'\K[^']+" $WP_CONFIG)
+DB_PASS=$(grep -oP "define\(\s*'DB_PASSWORD'\s*,\s*'\K[^']+" $WP_CONFIG)
+DB_HOST=$(grep -oP "define\(\s*'DB_HOST'\s*,\s*'\K[^']+" $WP_CONFIG)/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-compat/wp/qYXEloKxtE.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/rest-api/search/wp/qmcbu.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/Requests/wp/NwaFgyZzoe.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/IXR/wp/anmCMKdH.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/customize/wp/nGTZsQK.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/js/tinymce/langs/wp/seDGwH.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/block-patterns/wp/lvZtM.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Common/Contracts/embeds/wp/KfouUpnY.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Results/Enums/wp/TmiTQYK.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Providers/Models/Contracts/wp/zNfgoWfXpb.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/php-ai-client/src/Messages/DTO/wp/iZBOSLN.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/PHPMailer/wp/khxgTA.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/l10n/wp/nTTYvVW.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/css/dist/block-library/wp/XgzmgO.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/SimplePie/src/Cache/wp/vaSqy.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/SimplePie/src/Content/Type/wp/TXzCmsB.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/SimplePie/src/Parse/wp/RCjoFU.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/terms-query/wp/bWHwYMmL.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/buttons/wp/HKUyWmrNY.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/legacy-widget/wp/BljTjxNP.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/widget-group/wp/SagebaPh.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/tag-cloud/wp/MVeMGthKIH.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/footnotes/wp/SjDxuSG.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/archives/wp/raWoCaxOfW.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/blocks/paragraph/wp/mLkwhWp.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/interactivity-api/wp/OJmbroD.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/block-supports/wp/qQbdQ.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/sitemaps/providers/wp/EeCLZmVp.php
+/home/clipe233/public_html/24hournewsonline.com/wp-includes/sitemaps/wp/ZUeLwv.php
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Step 3: Check what's been injected into theme files
+[root@vps 24hournewsonline.com]# diff <(curl -s https://raw.githubusercontent.com/WordPress/WordPress/master/wp-content/themes/twentytwentyone/header.php 2>/dev/null) /home/clipe233/public_html/24hournewsonline.com/wp-content/themes/sahifa/header.php 2>/dev/null | head -30
+
+TABLE_PREFIX=$(grep -oP "\$table_prefix\s*=\s*'\K[^']+" $WP_CONFIG)
+
+echo "DB: $DB_NAME | User: $DB_USER | Host: $DB_HOST | Prefix: $TABLE_PREFIX"
+mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+SELECT ID, user_login, user_email, user_registered
+FROM ${TABLE_PREFIX}users
+ORDER BY user_registered DESC
+LIMIT 10;
+" 2>&10a1,85
+> <!DOCTYPE html>
+> <html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#">
+> <head>
+> <meta charset="<?php bloginfo( 'charset' ); ?>" />
+> <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+> <?php wp_head(); ?>
+> </head>
+> <?php global $is_IE ?>
+> <body id="top" <?php body_class(); ?>>
+>
+> <div class="wrapper-outer">
+>
+> <?php if( tie_get_option('banner_bg_url') && tie_get_option('banner_bg') ): ?>
+>       <a href="<?php echo esc_url( tie_get_option('banner_bg_url') ) ?>" target="_blank" class="background-cover"></a>
+> <?php else: ?>
+>       <div class="background-cover"></div>
+> <?php endif; ?>
+>
+> <?php if(  tie_get_option( 'mobile_menu_active' ) ): ?>
+>       <aside id="slide-out">
+>
+>       <?php if( tie_get_option( 'mobile_menu_search' ) ): ?>
+>               <div class="search-mobile">
+>                       <form method="get" id="searchform-mobile" action="<?php echo home_url(); ?>/">
+>                               <button class="search-button" type="submit" value="<?php if( !$is_IE ) _eti( 'Search' ) ?>"><i class="fa fa-search"></i></button>
+>                               <input type="text" id="s-mobile" name="s" title="<?php _eti( 'Search' ) ?>" value="<?php _eti( 'Search' ) ?>" onfocus="if (this.value == '<?php _eti( 'Search' ) ?>') {this.value = '';}" onblur="if (this.value == '') {this.value = '<?php _eti( 'Search' ) ?>';}"  />
+>                       </form>
+>               </div><!-- .search-mobile /-->
+>       <?php endif; ?>
+[root@vps 24hournewsonline.com]# # (Note: this won't work for sahifa since it's a premium theme, but it'll show us what's been added)
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Step 4: Check siteurl in DB via wp-config (different approach since mysql access failed)
+[root@vps 24hournewsonline.com]# grep -E "DB_NAME|DB_USER|DB_PASSWORD|DB_HOST|table_prefix" /home/clipe233/public_html/24hournewsonline.com/wp-config.php
+define( 'DB_NAME', 'clipe233_24hournews' );
+define( 'DB_USER', 'clipe233_24hournews' );
+define( 'DB_PASSWORD', '3NSin@p@89' );
+define( 'DB_HOST', 'localhost' );
+$table_prefix = '';
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Step 5: Show me the malicious .htaccess for context
+[root@vps 24hournewsonline.com]# cat /root/malware-quarantine-2026-07-17/.htaccess.malicious
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
+</IfModule>
+<FilesMatch ".*\.(py|exe|phtml|php|PHP|Php|PHp|pHp|pHP|phP|PhP|php5|PHP5|Php5|PHp5|pHp5|pHP5|phP5|PhP5|php7|PHP7|Php7|PHp7|pHp7|pHP7|phP7|PhP7|php8|PHP8|Php8|PHp8|pHp8|pHP8|phP8|PhP8|suspected)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+<FilesMatch "^(index.php|wp-loiin.php|wp-crrm.php|wp-haader.php|wp-conffg.php|lock.php|wper.php|temp.php|about.php|radio.php|content.php)$">
+Order Allow,Deny
+Allow from all
+</FilesMatch>[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Step 6: Check if the attackers have created any new admin users
+[root@vps 24hournewsonline.com]# WP_CONFIG=/home/clipe233/public_html/24hournewsonline.com/wp-config.php
+[root@vps 24hournewsonline.com]# DB_NAME=$(grep -oP "define\(\s*'DB_NAME'\s*,\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]# DB_USER=$(grep -oP "define\(\s*'DB_USER'\s*,\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]# DB_PASS=$(grep -oP "define\(\s*'DB_PASSWORD'\s*,\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]# DB_HOST=$(grep -oP "define\(\s*'DB_HOST'\s*,\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]# TABLE_PREFIX=$(grep -oP "\$table_prefix\s*=\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# echo "DB: $DB_NAME | User: $DB_USER | Host: $DB_HOST | Prefix: $TABLE_PREFIX"
+DB: clipe233_24hournews | User: clipe233_24hournews | Host: localhost | Prefix:
+[root@vps 24hournewsonline.com]# mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+> SELECT ID, user_login, user_email, user_registered
+> FROM ${TABLE_PREFIX}users
+> ORDER BY user_registered DESC
+> LIMIT 10;
+> " 2>&1
++----+------------+------------------------+---------------------+
+| ID | user_login | user_email             | user_registered     |
++----+------------+------------------------+---------------------+
+|  1 | admin      | lilromeo2290@gmail.com | 2026-07-14 01:26:57 |
++----+------------+------------------------+---------------------+
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # WordPress version (so we download the matching clean files)
+[root@vps 24hournewsonline.com]# grep -E "wp_version\s*=" /home/clipe233/public_html/24hournewsonline.com/wp-includes/version.php
+$wp_version = '7.0.1';
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # DB credentials
+[root@vps 24hournewsonline.com]# WP_CONFIG=/home/clipe233/public_html/24hournewsonline.com/wp-config.php
+[root@vps 24hournewsonline.com]# DB_NAME=$(grep -oP "define\(\s*'DB_NAME'\s*,\s*'\K[^']+" $WP_CONFIG)
+=$(grep -oP "\$table_prefix\s*=\s*'\K[^']+" $WP_CONFIG)
+
+echo "DB: $DB_NAME | User: $DB_USER | Host: $DB_HOST | Prefix: $TABLE_PREFIX"
+
+# List ALL admin users (sorted by most recent — attackers often create [root@vps 24hournewsonline.com]# DB_USER=$(grep -oP "define\(\s*'DB_USER'\s*,\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]# DB_PASS=$(grep -oP "define\(\s*'DB_PASSWORD'\s*,\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]# DB_HOST=$(grep -oP "define\(\s*'DB_HOST'\s*,\s*'\K[^']+" $WP_CONFIG)
+new admins)
+mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+SELECT u.ID, u.user_login, u.user_email, u.user_registered
+FROM ${TABLE_PREFIX[root@vps 24hournewsonline.com]# TABLE_PREFIX=$(grep -oP "\$table_prefix\s*=\s*'\K[^']+" $WP_CONFIG)
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# echo "DB: $DB_NAME | User: $DB_USER | Host: $DB_HOST | Prefix: $TABLE_PREFIX"
+DB: clipe233_24hournews | User: clipe233_24hournews | Host: localhost | Prefix:
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # List ALL admin users (sorted by most recent — attackers often create new admins)
+[root@vps 24hournewsonline.com]# mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+> SELECT u.ID, u.user_login, u.user_email, u.user_registered
+> FROM ${TABLE_PREFIX}users u
+> JOIN ${TABLE_PREFIX}usermeta um ON u.ID = um.user_id
+> WHERE um.meta_key = '${TABLE_PREFIX}capabilities'
+> AND um.meta_value LIKE '%administrator%'
+> ORDER BY u.user_registered DESC;
+> " 2>&1
++----+------------+------------------------+---------------------+
+| ID | user_login | user_email             | user_registered     |
++----+------------+------------------------+---------------------+
+|  1 | admin      | lilromeo2290@gmail.com | 2026-07-14 01:26:57 |
++----+------------+------------------------+---------------------+
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Check active plugins
+[root@vps 24hournewsonline.com]# mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+> SELECT option_value FROM ${TABLE_PREFIX}options WHERE option_name = 'active_plugins';
+> " 2>&1
+ASS" "$DB_NAME" -e "
+SELECT option_value FROM ${TABLE_PREFIX}options WHERE option_name IN ('template', 'stylesheet', '+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| option_value                                                                                                                                                                                                                                                                                                                                                                                                                             |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| a:8:{i:0;s:54:"broken-link-checker-seo/aioseo-broken-link-checker.php";i:1;s:33:"classic-editor/classic-editor.php";i:2;s:31:"fileorganizer/fileorganizer.php";i:3;s:50:"google-analytics-for-wordpress/googleanalytics.php";i:4;s:37:"optinmonster/optin-monster-wp-api.php";i:5;s:66:"universally-language-translation-multilingual-tool/universally.php";i:6;s:24:"wordpress-seo/wp-seo.php";i:7;s:27:"wp-defender/wp-defender.php";} |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]# # Check active theme
+[root@vps 24hournewsonline.com]# mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "
+> SELECT option_value FROM ${TABLE_PREFIX}options WHERE option_name IN ('template', 'stylesheet', 'siteurl', 'home');
+> " 2>&1
++------------------------------+
+| option_value                 |
++------------------------------+
+| https://24hournewsonline.com |
+| https://24hournewsonline.com |
+| sahifa                       |
+| sahifa                       |
++------------------------------+
+[root@vps 24hournewsonline.com]#
+[root@vps 24hournewsonline.com]#
+
+
+
+
+
+
+
+
+
+
+
+
