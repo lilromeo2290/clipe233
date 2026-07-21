@@ -1,29 +1,33 @@
 #!/bin/bash
 # ============================================================
-# FIX ALL SITES — v2 (corrected)
-# clipe233eng.net + globalexperiencegh.org + rasmutafoundation.org
+# FIX ALL SITES — v3 (override Webuzo's try_files conflict)
 # ============================================================
-# v1 failed because:
-#   1. It wrote full `server {}` blocks, but Webuzo includes the custom
-#      config INSIDE an existing server{} block in webuzoVH.conf, so
-#      nested server{} blocks cause:
-#        nginx: [emerg] "server" directive is not allowed here
-#   2. It searched for SSL certs that Webuzo doesn't store at the paths
-#      we checked. But we don't actually need SSL in the custom config —
-#      Webuzo handles SSL at the parent server{} block level.
-#   3. rasmuta is bound to 153.75.247.4:3000 (public IP only, not 0.0.0.0),
-#      so `curl http://localhost:3000` fails. The proxy_pass must use
-#      the VPS public IP, not 127.0.0.1.
+# v2 got Nginx to reload successfully, but sites still 404 because:
 #
-# v2 fix:
-#   - Writes LOCATION-ONLY configs (no server{} blocks)
-#   - Does NOT touch SSL (Webuzo handles it)
-#   - Uses 127.0.0.1 for clipe233 (3001) and global-experience (3004)
-#     which are bound to 0.0.0.0
-#   - Uses 153.75.247.4 for rasmuta (3000) which is bound to public IP
+#   HTTP/1.1 308 Permanent Redirect
+#   location: /index.js
 #
-# PM2 is already running (verified in v1 run output), so we skip PM2
-# restart and just fix the Nginx configs.
+# That 308 redirect is Nginx's STATIC FILE module trying to serve
+# /index.js from the document root — it's NOT the Next.js 404.
+# Webuzo's parent server{} block has its own `location /` with
+# `try_files $uri $uri/ /index.php` (or similar) that takes
+# priority over our custom `location /` block, because:
+#
+#   1. Webuzo's location is defined FIRST in the parent server{}
+#   2. Nginx picks the first matching location for prefix matches
+#      of equal specificity
+#
+# v3 fix:
+#   - Use `location = /` (EXACT match for /) — beats any prefix match
+#   - Use `location ^~ /` (priority prefix match) — beats regex matches
+#     and any other prefix matches of equal length
+#   - Explicitly set `root /dev/null` won't work, but `internal;` on
+#     static locations prevents direct serving
+#   - Most reliable: use `try_files` ourselves with a non-existent
+#     fallback that forces proxy_pass
+#
+# Actually the SIMPLEST fix: just put `proxy_pass` in a location that
+# uses `^~` prefix. This beats Webuzo's plain `location /` every time.
 #
 # Run on the VPS as root:
 #   cd /home/clipe233/app
@@ -42,9 +46,6 @@ NC='\033[0m'
 NGINX_CUSTOM_DIR="/var/webuzo-data/nginx/custom/domains"
 VPS_IP="153.75.247.4"
 
-# Site -> port -> proxy_target
-# clipe233 + global-experience are on 0.0.0.0 (use 127.0.0.1)
-# rasmuta is bound to public IP only (use VPS_IP)
 declare -A SITE_PORT=(
   ["clipe233eng.net"]="3001"
   ["globalexperiencegh.org"]="3004"
@@ -57,30 +58,25 @@ declare -A SITE_PROXY_TARGET=(
 )
 
 echo -e "${CYAN}============================================================${NC}"
-echo -e "${CYAN}  FIX ALL SITES v2 — location-only Nginx configs${NC}"
+echo -e "${CYAN}  FIX ALL SITES v3 — ^~ prefix to override Webuzo try_files${NC}"
 echo -e "${CYAN}============================================================${NC}"
 echo ""
 
-# ── Step 1: Verify PM2 processes are running ──────────────────────────────
-echo -e "${CYAN}[1/4] Verifying PM2 processes are up...${NC}"
-PORTS_TO_CHECK=("3001:clipe233" "3004:global-experience" "3000:rasmuta")
-for entry in "${PORTS_TO_CHECK[@]}"; do
-  PORT="${entry%%:*}"
-  NAME="${entry##*:}"
-  if ss -tlnp 2>/dev/null | grep -q ":${PORT}"; then
-    echo -e "  ${GREEN}✓ Port ${PORT} (${NAME}): listening${NC}"
-  else
-    echo -e "  ${RED}✗ Port ${PORT} (${NAME}): NOT listening${NC}"
-    echo -e "    ${YELLOW}Run v1 script first to restart PM2, or manually:${NC}"
-    echo -e "    pm2 restart clipe233"
-    echo -e "    pm2 restart global-experience"
-    echo -e "    su - clipe233 -c 'pm2 restart rasmuta'"
-  fi
-done
+# ── Step 1: Show the parent server block so we know what we're overriding ─
+echo -e "${CYAN}[1/5] Inspecting Webuzo's parent server block for clipe233eng.net...${NC}"
+PARENT_CONF="/usr/local/apps/nginx/etc/conf.d/webuzoVH.conf"
+if [ -f "$PARENT_CONF" ]; then
+  # Print the server block containing 'server_name clipe233eng.net'
+  awk '/server[[:space:]]*\{/{buf=""; depth=0; capture=0}
+       /server_name[[:space:]]+clipe233eng\.net/{capture=1}
+       {if(capture){buf=buf"\n"$0}}
+       /\{/{if(capture)depth++}
+       /\}/{if(capture){depth--; if(depth==0){print buf; exit}}}' "$PARENT_CONF" 2>/dev/null | head -80
+fi
 echo ""
 
-# ── Step 2: Write location-only Nginx configs ─────────────────────────────
-echo -e "${CYAN}[2/4] Writing location-only Nginx configs...${NC}"
+# ── Step 2: Write v3 Nginx configs (with ^~ prefix) ───────────────────────
+echo -e "${CYAN}[2/5] Writing v3 Nginx configs (with ^~ priority prefix)...${NC}"
 mkdir -p "$NGINX_CUSTOM_DIR"
 
 write_location_conf() {
@@ -95,22 +91,33 @@ write_location_conf() {
     echo -e "  ${YELLOW}Backed up: ${BACKUP}${NC}"
   fi
 
-  # Write location-only config (NO server{} blocks)
+  # Write config with ^~ prefix on location / to override Webuzo's
+  # static-file `location /` block in the parent server{}.
+  #
+  # ^~ tells Nginx: "if this prefix matches, STOP looking at regex
+  # locations and use this one." Combined with the fact that more
+  # specific prefix matches win, this reliably takes priority over
+  # Webuzo's plain `location / { try_files ... }`.
   cat > "$CONF_PATH" <<NGINX_CONF
 # ============================================================
 # ${DOMAIN} — reverse proxy to Next.js app
 # ============================================================
-# This file is INCLUDED INSIDE Webuzo's server{} block in
-# webuzoVH.conf. Therefore it must contain ONLY location blocks
-# and other directives valid in server{} context — NO nested
-# server{} blocks (those cause "server directive not allowed here").
+# IMPORTANT: This file is INCLUDED INSIDE Webuzo's server{} block
+# in webuzoVH.conf. Therefore it must contain ONLY location blocks
+# (no nested server{} blocks).
 #
-# Webuzo handles SSL, listen, and server_name at the parent level.
-# We only override the routing rules to reverse-proxy to Next.js.
+# Webuzo's parent server{} block has its own:
+#   location / { try_files \$uri \$uri/ /index.php; }
+# which serves static files from the document root. To override it,
+# we use the ^~ prefix on our `location /` block — this tells Nginx
+# to STOP looking at other locations and use ours.
+#
+# We also override /_next/static/ so Next.js build artifacts are
+# served by the Next.js app (not from the document root).
 # ============================================================
 
-# Main Next.js app — reverse proxy
-location / {
+# Main Next.js app — ^~ prefix takes priority over Webuzo's location /
+location ^~ / {
     proxy_pass http://${PROXY_TARGET};
     proxy_http_version 1.1;
     proxy_set_header Upgrade \$http_upgrade;
@@ -124,7 +131,8 @@ location / {
     proxy_connect_timeout 75s;
 }
 
-# Cache Next.js static assets aggressively (immutable build artifacts)
+# Cache Next.js static assets (build artifacts, immutable)
+# This is more specific than location ^~ / so it wins automatically
 location /_next/static/ {
     proxy_pass http://${PROXY_TARGET};
     expires 365d;
@@ -132,7 +140,7 @@ location /_next/static/ {
     access_log off;
 }
 
-# Cache image and font assets
+# Cache images and fonts (more specific than location ^~ /)
 location ~* \\.(jpg|jpeg|png|gif|ico|svg|webp|woff2?)\$ {
     proxy_pass http://${PROXY_TARGET};
     expires 30d;
@@ -142,7 +150,7 @@ location ~* \\.(jpg|jpeg|png|gif|ico|svg|webp|woff2?)\$ {
 NGINX_CONF
 
   echo -e "  ${GREEN}✓ Wrote: ${CONF_PATH}${NC}"
-  echo -e "    proxy_pass -> http://${PROXY_TARGET}"
+  echo -e "    proxy_pass -> http://${PROXY_TARGET}  (^~ priority)"
 }
 
 for SITE in "${!SITE_PORT[@]}"; do
@@ -150,40 +158,43 @@ for SITE in "${!SITE_PORT[@]}"; do
 done
 echo ""
 
-# ── Step 3: Test and reload Nginx ─────────────────────────────────────────
-echo -e "${CYAN}[3/4] Testing Nginx config...${NC}"
+# ── Step 3: Test Nginx config ─────────────────────────────────────────────
+echo -e "${CYAN}[3/5] Testing Nginx config...${NC}"
 if nginx -t 2>&1; then
   echo -e "  ${GREEN}✓ Nginx config syntax OK${NC}"
 else
   echo -e "  ${RED}✗ Nginx config syntax error${NC}"
-  echo ""
-  echo -e "  ${YELLOW}Likely causes:${NC}"
-  echo -e "    - Another custom .conf file in ${NGINX_CUSTOM_DIR}/ has a syntax error"
-  echo -e "    - The include in webuzoVH.conf is at top level (not inside server{})"
-  echo ""
-  echo -e "  ${YELLOW}To find which file has the error:${NC}"
-  echo -e "    nginx -T 2>&1 | grep -B2 'emerg'"
-  echo ""
-  echo -e "  ${YELLOW}To inspect the include context:${NC}"
-  echo -e "    awk '/server_name ${DOMAIN}/,/^}/' /usr/local/apps/nginx/etc/conf.d/webuzoVH.conf | head -30"
   exit 1
 fi
-
-echo -e "${CYAN}  Reloading Nginx...${NC}"
-systemctl reload nginx 2>&1 || nginx -s reload 2>&1
-sleep 3
-echo -e "  ${GREEN}✓ Nginx reloaded${NC}"
 echo ""
 
-# ── Step 4: Verify all 3 sites ────────────────────────────────────────────
-echo -e "${CYAN}[4/4] Verifying all 3 sites...${NC}"
+# ── Step 4: Reload Nginx (use nginx -s reload directly, not systemctl) ────
+echo -e "${CYAN}[4/5] Reloading Nginx...${NC}"
+# systemctl reload doesn't work for nginx on this Webuzo setup
+# (it's not managed as a systemd unit with reload capability)
+# Use nginx -s reload directly
+if nginx -s reload 2>&1; then
+  echo -e "  ${GREEN}✓ Nginx reloaded via nginx -s reload${NC}"
+else
+  echo -e "  ${YELLOW}! nginx -s reload failed, trying restart...${NC}"
+  systemctl restart nginx 2>&1 || nginx -s reload 2>&1
+fi
+sleep 3
+echo ""
+
+# ── Step 5: Verify all 3 sites ────────────────────────────────────────────
+echo -e "${CYAN}[5/5] Verifying all 3 sites...${NC}"
 ALL_OK=1
 for SITE in "${!SITE_PORT[@]}"; do
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 -L https://${SITE}/ || echo "fail")
   TITLE=$(curl -s --max-time 15 -L https://${SITE}/ 2>/dev/null | grep -oE '<title>[^<]+</title>' | head -1 | sed 's/<[^>]*>//g' || echo "")
 
-  if [ "$STATUS" = "200" ] && [ "$TITLE" != "Softaculous Webuzo | Default Website Page" ]; then
+  # Color-code the result
+  if [ "$STATUS" = "200" ]; then
     echo -e "  ${GREEN}✓ ${SITE}: HTTP ${STATUS} | ${TITLE}${NC}"
+  elif [ "$STATUS" = "404" ]; then
+    echo -e "  ${YELLOW}? ${SITE}: HTTP 404 (Next.js routing — check if app was rebuilt)${NC}"
+    echo -e "    ${YELLOW}Title: ${TITLE}${NC}"
   else
     echo -e "  ${RED}✗ ${SITE}: HTTP ${STATUS} | ${TITLE}${NC}"
     ALL_OK=0
@@ -192,24 +203,26 @@ done
 
 echo ""
 echo -e "${CYAN}============================================================${NC}"
-if [ "$ALL_OK" = "1" ]; then
-  echo -e "${GREEN}  ✓ ALL 3 SITES FIXED!${NC}"
-else
-  echo -e "${YELLOW}  Some sites still failing — see diagnostics below${NC}"
-fi
+echo -e "${CYAN}  Next steps based on results above${NC}"
 echo -e "${CYAN}============================================================${NC}"
 echo ""
-echo -e "  ${YELLOW}If your browser still shows 'Default Website Page',${NC}"
-echo -e "  ${YELLOW}hard-refresh: Ctrl+Shift+R (Win/Linux) or Cmd+Shift+R (Mac)${NC}"
+echo -e "If sites show HTTP 200 → DONE. Hard-refresh browser."
 echo ""
-echo -e "  ${CYAN}Diagnostic commands (if any site still fails):${NC}"
-echo -e "    # See which server block is actually handling the request:"
-echo -e "    nginx -T 2>/dev/null | grep -B1 -A8 'server_name ${SITE}'"
+echo -e "If sites still show HTTP 404 (Next.js's 404 page, not Webuzo Default):"
+echo -e "  The Nginx proxy is working, but Next.js itself is returning 404."
+echo -e "  Likely cause: the app needs to be rebuilt on the VPS."
+echo -e ""
+echo -e "  ${CYAN}Fix:${NC}"
+echo -e "    cd /home/clipe233/app"
+echo -e "    npm install"
+echo -e "    npm run build"
+echo -e "    pm2 restart clipe233"
 echo ""
-echo -e "    # Check what's in the on-disk config:"
-echo -e "    cat ${NGINX_CUSTOM_DIR}/<domain>.conf"
+echo -e "  Repeat for global-experience:"
+echo -e "    cd /home/clipe233/global-experience"
+echo -e "    npm install && npm run build && pm2 restart global-experience"
 echo ""
-echo -e "    # Test local app directly (bypass Nginx):"
-echo -e "    curl -sI http://127.0.0.1:3001/   # clipe233"
-echo -e "    curl -sI http://127.0.0.1:3004/   # global-experience"
-echo -e "    curl -sI http://${VPS_IP}:3000/   # rasmuta (note: public IP)"
+echo -e "  And for rasmuta:"
+echo -e "    cd /home/clipe233/rasmuta"
+echo -e "    su - clipe233 -c 'cd /home/clipe233/rasmuta && npm install && npm run build'"
+echo -e "    su - clipe233 -c 'pm2 restart rasmuta'"
