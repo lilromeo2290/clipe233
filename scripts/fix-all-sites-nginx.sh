@@ -1,21 +1,29 @@
 #!/bin/bash
 # ============================================================
-# FIX ALL SITES: clipe233eng.net + globalexperiencegh.org + rasmutafoundation.org
+# FIX ALL SITES — v2 (corrected)
+# clipe233eng.net + globalexperiencegh.org + rasmutafoundation.org
 # ============================================================
-# Problem: All 3 sites show "Softaculous Webuzo | Default Website Page"
-# Root causes:
-#   1. Webuzo regenerated Nginx configs and reverted all custom reverse-proxy
-#      configs to default placeholders
-#   2. PM2 processes for clipe233 (port 3001) and global-experience (port 3004)
-#      are also down (only rasmuta on port 3000 is still running)
+# v1 failed because:
+#   1. It wrote full `server {}` blocks, but Webuzo includes the custom
+#      config INSIDE an existing server{} block in webuzoVH.conf, so
+#      nested server{} blocks cause:
+#        nginx: [emerg] "server" directive is not allowed here
+#   2. It searched for SSL certs that Webuzo doesn't store at the paths
+#      we checked. But we don't actually need SSL in the custom config —
+#      Webuzo handles SSL at the parent server{} block level.
+#   3. rasmuta is bound to 153.75.247.4:3000 (public IP only, not 0.0.0.0),
+#      so `curl http://localhost:3000` fails. The proxy_pass must use
+#      the VPS public IP, not 127.0.0.1.
 #
-# This script:
-#   1. Restarts PM2 for clipe233 (root PM2, port 3001)
-#   2. Restarts PM2 for global-experience (root PM2, port 3004)
-#   3. Verifies rasmuta PM2 (clipe233-user PM2, port 3000) is running
-#   4. Writes the correct custom Nginx config for all 3 domains
-#   5. Tests and reloads Nginx
-#   6. Verifies all 3 sites serve the Next.js app (not Default Website Page)
+# v2 fix:
+#   - Writes LOCATION-ONLY configs (no server{} blocks)
+#   - Does NOT touch SSL (Webuzo handles it)
+#   - Uses 127.0.0.1 for clipe233 (3001) and global-experience (3004)
+#     which are bound to 0.0.0.0
+#   - Uses 153.75.247.4 for rasmuta (3000) which is bound to public IP
+#
+# PM2 is already running (verified in v1 run output), so we skip PM2
+# restart and just fix the Nginx configs.
 #
 # Run on the VPS as root:
 #   cd /home/clipe233/app
@@ -23,9 +31,8 @@
 #   bash scripts/fix-all-sites-nginx.sh
 # ============================================================
 
-set -u  # don't use -e — we want to continue and report all errors at the end
+set -u
 
-# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -33,110 +40,52 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 NGINX_CUSTOM_DIR="/var/webuzo-data/nginx/custom/domains"
-SSL_DIR="/var/webuzo-data/nginx/ssl"
+VPS_IP="153.75.247.4"
 
-# Track per-site results
-declare -A SITES=(
-  ["clipe233eng.net"]="3001:/home/clipe233/app/ecosystem.config.js:clipe233:root"
-  ["globalexperiencegh.org"]="3004:/home/clipe233/global-experience/ecosystem.config.js:global-experience:root"
-  ["rasmutafoundation.org"]="3000:/home/clipe233/rasmuta/ecosystem.config.js:rasmuta:clipe233-user"
+# Site -> port -> proxy_target
+# clipe233 + global-experience are on 0.0.0.0 (use 127.0.0.1)
+# rasmuta is bound to public IP only (use VPS_IP)
+declare -A SITE_PORT=(
+  ["clipe233eng.net"]="3001"
+  ["globalexperiencegh.org"]="3004"
+  ["rasmutafoundation.org"]="3000"
+)
+declare -A SITE_PROXY_TARGET=(
+  ["clipe233eng.net"]="127.0.0.1:3001"
+  ["globalexperiencegh.org"]="127.0.0.1:3004"
+  ["rasmutafoundation.org"]="${VPS_IP}:3000"
 )
 
 echo -e "${CYAN}============================================================${NC}"
-echo -e "${CYAN}  FIX ALL SITES — Nginx reverse-proxy + PM2 restart${NC}"
+echo -e "${CYAN}  FIX ALL SITES v2 — location-only Nginx configs${NC}"
 echo -e "${CYAN}============================================================${NC}"
 echo ""
 
-# ── Step 1: PM2 diagnosis ─────────────────────────────────────────────────
-echo -e "${CYAN}[1/6] Root PM2 process list:${NC}"
-pm2 list 2>&1 || echo -e "  ${RED}pm2 command not found in root PATH${NC}"
-echo ""
-
-echo -e "${CYAN}      clipe233-user PM2 process list (if exists):${NC}"
-if id "clipe233" &>/dev/null; then
-  su - clipe233 -c "pm2 list" 2>&1 | head -20 || echo -e "  ${YELLOW}(could not list clipe233-user PM2)${NC}"
-else
-  echo -e "  ${YELLOW}(user 'clipe233' not found — rasmuta may run under a different user)${NC}"
-  echo -e "  ${YELLOW}Checking who runs port 3000...${NC}"
-  ss -tlnp 2>/dev/null | grep ':3000' || echo "  (port 3000 not listening)"
-fi
-echo ""
-
-echo -e "${CYAN}      Ports 3000-3005 listeners:${NC}"
-ss -tlnp 2>/dev/null | grep -E ':300[0-5]' || echo "  (nothing on 3000-3005)"
-echo ""
-
-# ── Step 2: Restart PM2 processes for clipe233 and global-experience ─────
-restart_pm2() {
-  local APP_NAME="$1"
-  local ECOSYSTEM_PATH="$2"
-  local PM2_USER="$3"
-
-  echo -e "${CYAN}  Restarting ${APP_NAME} (PM2 user: ${PM2_USER})...${NC}"
-
-  if [ "$PM2_USER" = "root" ]; then
-    if [ ! -f "$ECOSYSTEM_PATH" ]; then
-      echo -e "    ${RED}✗ ecosystem.config.js not found at: $ECOSYSTEM_PATH${NC}"
-      return 1
-    fi
-    cd "$(dirname "$ECOSYSTEM_PATH")"
-    pm2 delete "$APP_NAME" 2>/dev/null || true
-    pm2 start "$ECOSYSTEM_PATH" 2>&1 | tail -5
-    pm2 save 2>&1 | tail -1
+# ── Step 1: Verify PM2 processes are running ──────────────────────────────
+echo -e "${CYAN}[1/4] Verifying PM2 processes are up...${NC}"
+PORTS_TO_CHECK=("3001:clipe233" "3004:global-experience" "3000:rasmuta")
+for entry in "${PORTS_TO_CHECK[@]}"; do
+  PORT="${entry%%:*}"
+  NAME="${entry##*:}"
+  if ss -tlnp 2>/dev/null | grep -q ":${PORT}"; then
+    echo -e "  ${GREEN}✓ Port ${PORT} (${NAME}): listening${NC}"
   else
-    # Run as another user
-    if ! id -u "$PM2_USER" &>/dev/null; then
-      echo -e "    ${RED}✗ User '$PM2_USER' does not exist${NC}"
-      return 1
-    fi
-    su - "$PM2_USER" -c "cd $(dirname "$ECOSYSTEM_PATH") && pm2 delete $APP_NAME 2>/dev/null; pm2 start $ECOSYSTEM_PATH" 2>&1 | tail -5
-    su - "$PM2_USER" -c "pm2 save" 2>&1 | tail -1
-  fi
-  return 0
-}
-
-echo -e "${CYAN}[2/6] Restarting PM2 processes...${NC}"
-restart_pm2 "clipe233" "/home/clipe233/app/ecosystem.config.js" "root"
-echo ""
-restart_pm2 "global-experience" "/home/clipe233/global-experience/ecosystem.config.js" "root"
-echo ""
-# Note: rasmuta is already running on port 3000 — only restart if not
-echo -e "${CYAN}  Rasmuta — only restart if port 3000 is not listening...${NC}"
-if ss -tlnp 2>/dev/null | grep -q ':3000'; then
-  echo -e "    ${GREEN}✓ Port 3000 already listening — skipping rasmuta restart${NC}"
-else
-  echo -e "    ${YELLOW}Port 3000 not listening — restarting rasmuta...${NC}"
-  restart_pm2 "rasmuta" "/home/clipe233/rasmuta/ecosystem.config.js" "clipe233"
-fi
-echo ""
-
-# Wait for processes to come up
-echo -e "${CYAN}  Waiting 5s for processes to start...${NC}"
-sleep 5
-echo ""
-
-# ── Step 3: Verify each app responds locally ──────────────────────────────
-echo -e "${CYAN}[3/6] Local app verification:${NC}"
-declare -A PORT_STATUS
-for SITE in "${!SITES[@]}"; do
-  IFS=':' read -r PORT ECOSYSTEM APP_NAME PM2_USER <<< "${SITES[$SITE]}"
-  STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 http://localhost:${PORT}/ || echo "fail")
-  PORT_STATUS[$SITE]="$STATUS"
-  if [ "$STATUS" = "200" ]; then
-    echo -e "  ${GREEN}✓ ${SITE} (port ${PORT}): HTTP 200${NC}"
-  else
-    echo -e "  ${RED}✗ ${SITE} (port ${PORT}): HTTP ${STATUS}${NC}"
+    echo -e "  ${RED}✗ Port ${PORT} (${NAME}): NOT listening${NC}"
+    echo -e "    ${YELLOW}Run v1 script first to restart PM2, or manually:${NC}"
+    echo -e "    pm2 restart clipe233"
+    echo -e "    pm2 restart global-experience"
+    echo -e "    su - clipe233 -c 'pm2 restart rasmuta'"
   fi
 done
 echo ""
 
-# ── Step 4: Write custom Nginx configs for all 3 domains ──────────────────
-echo -e "${CYAN}[4/6] Writing Nginx custom configs...${NC}"
+# ── Step 2: Write location-only Nginx configs ─────────────────────────────
+echo -e "${CYAN}[2/4] Writing location-only Nginx configs...${NC}"
 mkdir -p "$NGINX_CUSTOM_DIR"
 
-write_nginx_conf() {
+write_location_conf() {
   local DOMAIN="$1"
-  local PORT="$2"
+  local PROXY_TARGET="$2"
   local CONF_PATH="${NGINX_CUSTOM_DIR}/${DOMAIN}.conf"
 
   # Backup existing
@@ -146,125 +95,77 @@ write_nginx_conf() {
     echo -e "  ${YELLOW}Backed up: ${BACKUP}${NC}"
   fi
 
-  # Try to find SSL certs (Webuzo sometimes uses different paths)
-  SSL_CERT=""
-  SSL_KEY=""
-  for cand in "${SSL_DIR}/${DOMAIN}.crt" "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" "/var/webuzo-data/nginx/ssl/${DOMAIN}/fullchain.pem"; do
-    if [ -f "$cand" ]; then
-      SSL_CERT="$cand"
-      break
-    fi
-  done
-  for cand in "${SSL_DIR}/${DOMAIN}.key" "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" "/var/webuzo-data/nginx/ssl/${DOMAIN}/privkey.pem"; do
-    if [ -f "$cand" ]; then
-      SSL_KEY="$cand"
-      break
-    fi
-  done
-
-  if [ -z "$SSL_CERT" ] || [ -z "$SSL_KEY" ]; then
-    echo -e "  ${RED}✗ No SSL cert found for ${DOMAIN}${NC}"
-    echo -e "    Searched:"
-    echo -e "      ${SSL_DIR}/${DOMAIN}.crt"
-    echo -e "      /etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
-    echo -e "    Skipping — fix SSL first"
-    return 1
-  fi
-
+  # Write location-only config (NO server{} blocks)
   cat > "$CONF_PATH" <<NGINX_CONF
 # ============================================================
-# ${DOMAIN} — reverse proxy to Next.js app on port ${PORT}
+# ${DOMAIN} — reverse proxy to Next.js app
 # ============================================================
-# Custom config — overrides Webuzo's default server block.
-# Loaded from /var/webuzo-data/nginx/custom/domains/
+# This file is INCLUDED INSIDE Webuzo's server{} block in
+# webuzoVH.conf. Therefore it must contain ONLY location blocks
+# and other directives valid in server{} context — NO nested
+# server{} blocks (those cause "server directive not allowed here").
+#
+# Webuzo handles SSL, listen, and server_name at the parent level.
+# We only override the routing rules to reverse-proxy to Next.js.
 # ============================================================
 
-# HTTP -> HTTPS redirect
-server {
-    listen 80;
-    listen [::]:80;
-    server_name ${DOMAIN} www.${DOMAIN};
-
-    # Let's Encrypt challenge passthrough
-    location /.well-known/acme-challenge/ {
-        root /usr/local/apps/nginx/var/www/${DOMAIN};
-    }
-
-    location / {
-        return 301 https://${DOMAIN}\$request_uri;
-    }
+# Main Next.js app — reverse proxy
+location / {
+    proxy_pass http://${PROXY_TARGET};
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade \$http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host \$host;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_cache_bypass \$http_upgrade;
+    proxy_read_timeout 300s;
+    proxy_connect_timeout 75s;
 }
 
-# HTTPS — reverse proxy
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name ${DOMAIN} www.${DOMAIN};
+# Cache Next.js static assets aggressively (immutable build artifacts)
+location /_next/static/ {
+    proxy_pass http://${PROXY_TARGET};
+    expires 365d;
+    add_header Cache-Control "public, immutable";
+    access_log off;
+}
 
-    ssl_certificate     ${SSL_CERT};
-    ssl_certificate_key ${SSL_KEY};
-    ssl_protocols       TLSv1.2 TLSv1.3;
-    ssl_ciphers         HIGH:!aNULL:!MD5;
-    ssl_session_cache   shared:SSL:10m;
-    ssl_session_timeout 10m;
-
-    # Redirect www -> non-www
-    if (\$host = 'www.${DOMAIN}') {
-        return 301 https://${DOMAIN}\$request_uri;
-    }
-
-    client_max_body_size 25M;
-
-    # Next.js app
-    location / {
-        proxy_pass http://127.0.0.1:${PORT};
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_read_timeout 300s;
-        proxy_connect_timeout 75s;
-    }
-
-    # Cache Next.js static assets aggressively
-    location /_next/static/ {
-        proxy_pass http://127.0.0.1:${PORT};
-        expires 365d;
-        add_header Cache-Control "public, immutable";
-        access_log off;
-    }
-
-    # Cache images
-    location ~* \\.(jpg|jpeg|png|gif|ico|svg|webp|woff2?)\$ {
-        proxy_pass http://127.0.0.1:${PORT};
-        expires 30d;
-        add_header Cache-Control "public";
-        access_log off;
-    }
+# Cache image and font assets
+location ~* \\.(jpg|jpeg|png|gif|ico|svg|webp|woff2?)\$ {
+    proxy_pass http://${PROXY_TARGET};
+    expires 30d;
+    add_header Cache-Control "public";
+    access_log off;
 }
 NGINX_CONF
 
-  echo -e "  ${GREEN}✓ Wrote: ${CONF_PATH} (port ${PORT})${NC}"
+  echo -e "  ${GREEN}✓ Wrote: ${CONF_PATH}${NC}"
+  echo -e "    proxy_pass -> http://${PROXY_TARGET}"
 }
 
-for SITE in "${!SITES[@]}"; do
-  IFS=':' read -r PORT ECOSYSTEM APP_NAME PM2_USER <<< "${SITES[$SITE]}"
-  write_nginx_conf "$SITE" "$PORT"
+for SITE in "${!SITE_PORT[@]}"; do
+  write_location_conf "$SITE" "${SITE_PROXY_TARGET[$SITE]}"
 done
 echo ""
 
-# ── Step 5: Test and reload Nginx ─────────────────────────────────────────
-echo -e "${CYAN}[5/6] Testing Nginx config...${NC}"
+# ── Step 3: Test and reload Nginx ─────────────────────────────────────────
+echo -e "${CYAN}[3/4] Testing Nginx config...${NC}"
 if nginx -t 2>&1; then
   echo -e "  ${GREEN}✓ Nginx config syntax OK${NC}"
 else
   echo -e "  ${RED}✗ Nginx config syntax error${NC}"
-  echo -e "  ${YELLOW}Inspecting main webuzoVH.conf for the include line...${NC}"
-  grep -n "custom/domains" /usr/local/apps/nginx/etc/conf.d/webuzoVH.conf 2>/dev/null | head -5
+  echo ""
+  echo -e "  ${YELLOW}Likely causes:${NC}"
+  echo -e "    - Another custom .conf file in ${NGINX_CUSTOM_DIR}/ has a syntax error"
+  echo -e "    - The include in webuzoVH.conf is at top level (not inside server{})"
+  echo ""
+  echo -e "  ${YELLOW}To find which file has the error:${NC}"
+  echo -e "    nginx -T 2>&1 | grep -B2 'emerg'"
+  echo ""
+  echo -e "  ${YELLOW}To inspect the include context:${NC}"
+  echo -e "    awk '/server_name ${DOMAIN}/,/^}/' /usr/local/apps/nginx/etc/conf.d/webuzoVH.conf | head -30"
   exit 1
 fi
 
@@ -274,22 +175,17 @@ sleep 3
 echo -e "  ${GREEN}✓ Nginx reloaded${NC}"
 echo ""
 
-# ── Step 6: Verify all 3 sites ────────────────────────────────────────────
-echo -e "${CYAN}[6/6] Verifying all 3 sites...${NC}"
-declare -A FINAL_STATUS
-declare -A FINAL_TITLE
+# ── Step 4: Verify all 3 sites ────────────────────────────────────────────
+echo -e "${CYAN}[4/4] Verifying all 3 sites...${NC}"
 ALL_OK=1
-
-for SITE in "${!SITES[@]}"; do
+for SITE in "${!SITE_PORT[@]}"; do
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 -L https://${SITE}/ || echo "fail")
-  TITLE=$(curl -s --max-time 15 -L https://${SITE}/ 2>/dev/null | grep -oE '<title>[^<]+</title>' | head -1 || echo "")
-  FINAL_STATUS[$SITE]="$STATUS"
-  FINAL_TITLE[$SITE]="$TITLE"
+  TITLE=$(curl -s --max-time 15 -L https://${SITE}/ 2>/dev/null | grep -oE '<title>[^<]+</title>' | head -1 | sed 's/<[^>]*>//g' || echo "")
 
-  if [ "$STATUS" = "200" ] && ! echo "$TITLE" | grep -q "Default Website Page"; then
-    echo -e "  ${GREEN}✓ ${SITE}: ${STATUS} | ${TITLE}${NC}"
+  if [ "$STATUS" = "200" ] && [ "$TITLE" != "Softaculous Webuzo | Default Website Page" ]; then
+    echo -e "  ${GREEN}✓ ${SITE}: HTTP ${STATUS} | ${TITLE}${NC}"
   else
-    echo -e "  ${RED}✗ ${SITE}: ${STATUS} | ${TITLE}${NC}"
+    echo -e "  ${RED}✗ ${SITE}: HTTP ${STATUS} | ${TITLE}${NC}"
     ALL_OK=0
   fi
 done
@@ -298,29 +194,22 @@ echo ""
 echo -e "${CYAN}============================================================${NC}"
 if [ "$ALL_OK" = "1" ]; then
   echo -e "${GREEN}  ✓ ALL 3 SITES FIXED!${NC}"
-  echo -e "${CYAN}============================================================${NC}"
-  echo ""
-  for SITE in "${!SITES[@]}"; do
-    echo -e "  ${GREEN}https://${SITE}${NC}  →  ${FINAL_TITLE[$SITE]}"
-  done
-  echo ""
-  echo -e "  ${YELLOW}If your browser still shows 'Default Website Page',${NC}"
-  echo -e "  ${YELLOW}hard-refresh: Ctrl+Shift+R (Win/Linux) or Cmd+Shift+R (Mac)${NC}"
 else
-  echo -e "${RED}  ✗ Some sites still failing${NC}"
-  echo -e "${CYAN}============================================================${NC}"
-  echo ""
-  echo -e "  ${YELLOW}Diagnostic commands:${NC}"
-  echo -e "    # Check what Nginx is actually including:"
-  echo -e "    grep -r 'clipe233eng\\|globalexperience\\|rasmuta' /usr/local/apps/nginx/etc/conf.d/"
-  echo ""
-  echo -e "    # Check the main webuzoVH.conf:"
-  echo -e "    grep -n 'custom/domains' /usr/local/apps/nginx/etc/conf.d/webuzoVH.conf"
-  echo ""
-  echo -e "    # Check PM2 process logs:"
-  echo -e "    pm2 logs clipe233 --lines 20"
-  echo -e "    pm2 logs global-experience --lines 20"
-  echo ""
-  echo -e "    # Check which Nginx server block wins for clipe233eng.net:"
-  echo -e "    nginx -T 2>/dev/null | grep -A 3 'server_name clipe233eng'"
+  echo -e "${YELLOW}  Some sites still failing — see diagnostics below${NC}"
 fi
+echo -e "${CYAN}============================================================${NC}"
+echo ""
+echo -e "  ${YELLOW}If your browser still shows 'Default Website Page',${NC}"
+echo -e "  ${YELLOW}hard-refresh: Ctrl+Shift+R (Win/Linux) or Cmd+Shift+R (Mac)${NC}"
+echo ""
+echo -e "  ${CYAN}Diagnostic commands (if any site still fails):${NC}"
+echo -e "    # See which server block is actually handling the request:"
+echo -e "    nginx -T 2>/dev/null | grep -B1 -A8 'server_name ${SITE}'"
+echo ""
+echo -e "    # Check what's in the on-disk config:"
+echo -e "    cat ${NGINX_CUSTOM_DIR}/<domain>.conf"
+echo ""
+echo -e "    # Test local app directly (bypass Nginx):"
+echo -e "    curl -sI http://127.0.0.1:3001/   # clipe233"
+echo -e "    curl -sI http://127.0.0.1:3004/   # global-experience"
+echo -e "    curl -sI http://${VPS_IP}:3000/   # rasmuta (note: public IP)"
