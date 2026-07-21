@@ -112,18 +112,18 @@ export default function SplashScreen({
           />
 
           {/* Logo watermark */}
-          <div className="mt-8 flex items-center gap-2 opacity-30">
-            <div className="relative w-6 h-6">
+          <div className="mt-8 flex items-center gap-3 opacity-50">
+            <div className="relative w-16 h-8">
               <Image
                 src="/logo.png"
                 alt=""
                 fill
-                className="object-cover rounded-sm"
+                className="object-contain"
                 priority
               />
             </div>
             <span
-              className="text-xs tracking-[0.2em] uppercase text-white"
+              className="text-sm tracking-[0.2em] uppercase text-white font-semibold"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
               CLIPE CONSULT

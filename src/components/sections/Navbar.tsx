@@ -172,7 +172,7 @@ export default function Navbar() {
               <img
                 src="/logo.png"
                 alt="CLIPE CONSULT Logo"
-                className="h-10 w-auto rounded-lg group-hover:glow-red transition-all duration-300"
+                className="h-12 lg:h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] group-hover:scale-105 transition-all duration-300"
               />
             </a>
 

@@ -54,7 +54,7 @@ export default function Footer() {
               <img
                 src="/logo.png"
                 alt="CLIPE CONSULT Logo"
-                className="h-10 w-auto rounded-lg"
+                className="h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
               />
             </div>
             <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">
