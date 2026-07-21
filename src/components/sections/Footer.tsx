@@ -50,11 +50,11 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
+            <div className="inline-flex items-center rounded-xl px-3 py-2 bg-white/90 dark:bg-white/10 backdrop-blur-sm shadow-sm shadow-black/5 mb-4">
               <img
                 src="/logo.png"
                 alt="CLIPE CONSULT Logo"
-                className="h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+                className="h-14 w-auto"
               />
             </div>
             <p className="text-gray-500 dark:text-silver/60 text-sm font-[family-name:var(--font-inter)] leading-relaxed mb-4">

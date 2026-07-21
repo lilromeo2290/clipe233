@@ -112,15 +112,17 @@ export default function SplashScreen({
           />
 
           {/* Logo watermark */}
-          <div className="mt-8 flex items-center gap-3 opacity-50">
-            <div className="relative w-16 h-8">
-              <Image
-                src="/logo.png"
-                alt=""
-                fill
-                className="object-contain"
-                priority
-              />
+          <div className="mt-8 flex items-center gap-3 opacity-80">
+            <div className="flex items-center rounded-lg px-2.5 py-1 bg-white/90 backdrop-blur-sm">
+              <div className="relative w-16 h-8">
+                <Image
+                  src="/logo.png"
+                  alt=""
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </div>
             <span
               className="text-sm tracking-[0.2em] uppercase text-white font-semibold"

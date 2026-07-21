@@ -873,7 +873,9 @@ function AdminDashboardInner({ authUser, onLogout }: { authUser: { username: str
         {/* Logo */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="CLIPE CONSULT" className="h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
+            <div className="flex items-center rounded-lg px-2 py-1 bg-white/95 backdrop-blur-sm">
+              <img src="/logo.png" alt="CLIPE CONSULT" className="h-12 w-auto object-contain" />
+            </div>
             <div>
               <h1 className="font-bold font-[family-name:var(--font-poppins)] text-sm">CLIPE CONSULT</h1>
               <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">

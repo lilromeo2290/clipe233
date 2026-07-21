@@ -169,11 +169,19 @@ export default function Navbar() {
               }}
               className="flex items-center gap-2.5 group"
             >
-              <img
-                src="/logo.png"
-                alt="CLIPE CONSULT Logo"
-                className="h-12 lg:h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] group-hover:scale-105 transition-all duration-300"
-              />
+              <div
+                className={`flex items-center rounded-xl px-2.5 py-1.5 transition-all duration-500 group-hover:scale-105 ${
+                  isScrolled
+                    ? "bg-transparent"
+                    : "bg-white/85 dark:bg-white/85 backdrop-blur-sm shadow-md shadow-black/10"
+                }`}
+              >
+                <img
+                  src="/logo.png"
+                  alt="CLIPE CONSULT Logo"
+                  className="h-12 lg:h-14 w-auto"
+                />
+              </div>
             </a>
 
             {/* Desktop Nav */}
