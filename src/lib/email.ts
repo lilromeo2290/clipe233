@@ -65,7 +65,7 @@ export async function sendContactEmail(formData: ContactFormData): Promise<boole
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
         <div style="background-color: #7B1818; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
           <h1 style="margin: 0; font-size: 24px;">New Contact Form Submission</h1>
-          <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Clipe233 Engineers Website</p>
+          <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">CLIPE CONSULT Website</p>
         </div>
         <div style="background-color: white; padding: 30px; border-radius: 0 0 8px 8px; border: 1px solid #e0e0e0; border-top: none;">
           <table style="width: 100%; border-collapse: collapse;">
@@ -125,13 +125,13 @@ export async function sendContactEmail(formData: ContactFormData): Promise<boole
           </div>
         </div>
         <div style="text-align: center; padding: 15px; color: #999; font-size: 12px;">
-          This email was sent from the Clipe233 Engineers website contact form.
+          This email was sent from the CLIPE CONSULT website contact form.
         </div>
       </div>
     `;
 
     const textBody = `
-New Contact Form Submission - Clipe233 Engineers
+New Contact Form Submission - CLIPE CONSULT
 
 Name: ${formData.name}
 Email: ${formData.email}
@@ -147,7 +147,7 @@ Reply to: ${formData.email}${formData.phone ? ` | ${formData.phone}` : ""}
     `.trim();
 
     const info = await transporter.sendMail({
-      from: `"Clipe233 Engineers Website" <${EMAIL_CONFIG.from}>`,
+      from: `"CLIPE CONSULT Website" <${EMAIL_CONFIG.from}>`,
       to: EMAIL_CONFIG.to,
       replyTo: formData.email,
       subject: subjectLine,
@@ -180,7 +180,7 @@ export async function sendAutoReply(formData: ContactFormData): Promise<boolean>
         <div style="background-color: white; padding: 30px; border-radius: 0 0 8px 8px; border: 1px solid #e0e0e0; border-top: none;">
           <p style="color: #333; font-size: 16px;">Dear ${formData.name},</p>
           <p style="color: #555; line-height: 1.6;">
-            Thank you for reaching out to Clipe233 Engineers. We have received your message and our team will get back to you within 24-48 hours.
+            Thank you for reaching out to CLIPE CONSULT. We have received your message and our team will get back to you within 24-48 hours.
           </p>
           <p style="color: #555; line-height: 1.6;">
             If your inquiry is urgent, please feel free to call us directly or reach us on WhatsApp.
@@ -195,21 +195,21 @@ export async function sendAutoReply(formData: ContactFormData): Promise<boolean>
           </p>
           <p style="color: #333; margin-top: 25px;">
             Best regards,<br>
-            <strong style="color: #7B1818;">Clipe233 Engineers</strong><br>
+            <strong style="color: #7B1818;">CLIPE CONSULT</strong><br>
             <span style="color: #888; font-size: 13px;">IT & Engineering Solutions</span>
           </p>
         </div>
         <div style="text-align: center; padding: 15px; color: #999; font-size: 12px;">
-          This is an automated message from Clipe233 Engineers.
+          This is an automated message from CLIPE CONSULT.
         </div>
       </div>
     `;
 
     await transporter.sendMail({
-      from: `"Clipe233 Engineers" <${EMAIL_CONFIG.from}>`,
+      from: `"CLIPE CONSULT" <${EMAIL_CONFIG.from}>`,
       to: formData.email,
-      subject: "We've Received Your Message - Clipe233 Engineers",
-      text: `Dear ${formData.name},\n\nThank you for reaching out to Clipe233 Engineers. We have received your message and our team will get back to you within 24-48 hours.\n\nIf your inquiry is urgent, please contact us:\nEmail: info@clipe233eng.net / clipe233eng@gmail.com\nWhatsApp: +233 249 783 736\nPhone: 053 539 9562\n\nWe look forward to working with you!\n\nBest regards,\nClipe233 Engineers\nIT & Engineering Solutions`,
+      subject: "We've Received Your Message - CLIPE CONSULT",
+      text: `Dear ${formData.name},\n\nThank you for reaching out to CLIPE CONSULT. We have received your message and our team will get back to you within 24-48 hours.\n\nIf your inquiry is urgent, please contact us:\nEmail: info@clipe233eng.net / clipe233eng@gmail.com\nWhatsApp: +233 249 783 736\nPhone: 053 539 9562\n\nWe look forward to working with you!\n\nBest regards,\nCLIPE CONSULT\nIT & Engineering Solutions`,
       html: htmlBody,
     });
 

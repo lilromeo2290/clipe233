@@ -141,7 +141,7 @@ export default function ProductsPage() {
             className="text-center"
           >
             <span className="text-falu-light text-sm font-semibold tracking-wider uppercase font-[family-name:var(--font-inter)]">
-              Clipe233 Engineers
+              CLIPE CONSULT
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
               Our{" "}
@@ -150,7 +150,7 @@ export default function ProductsPage() {
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Beyond services, Clipe233 Engineers builds ready-to-deploy software products designed to solve real business challenges. Our products are reliable, secure, easy-to-use, and scalable — crafted with the same quality and attention to detail that defines everything we do.
+              Beyond services, CLIPE CONSULT builds ready-to-deploy software products designed to solve real business challenges. Our products are reliable, secure, easy-to-use, and scalable — crafted with the same quality and attention to detail that defines everything we do.
             </p>
           </motion.div>
 

@@ -156,7 +156,7 @@ export default function ITConsultancyPage() {
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              In most cases, company owners find themselves at crossroads with their existing solutions. Clipe233 Engineers offer support to enable small and large businesses to develop and adopt various solutions, systems, networks, software, and security policies. We first ensure that we understand your business and goals. Using our expertise and knowledge, we design IT support services based on the client&apos;s needs. We offer guidance that change based on business growth to ensure that our customers get adequate support.
+              In most cases, company owners find themselves at crossroads with their existing solutions. CLIPE CONSULT offer support to enable small and large businesses to develop and adopt various solutions, systems, networks, software, and security policies. We first ensure that we understand your business and goals. Using our expertise and knowledge, we design IT support services based on the client&apos;s needs. We offer guidance that change based on business growth to ensure that our customers get adequate support.
             </p>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
               Professional IT Training — We deliver structured training programs that enhance technical knowledge and improve workforce productivity. In parallel, we support organizations with staffing solutions that connect them with experienced IT professionals for both short-term and long-term needs.

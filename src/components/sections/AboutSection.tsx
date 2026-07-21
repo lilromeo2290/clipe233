@@ -24,9 +24,9 @@ const timelineItems = [
   },
   {
     year: "2025",
-    title: "Rebranded as Clipe233 Engineers",
+    title: "Rebranded as CLIPE CONSULT",
     description:
-      "In 2025, Clipe Technologies (Clipetech) was rebranded and officially registered as Clipe233 Engineers. The rebrand marked a new era of growth, reflecting evolved capabilities and a renewed commitment to providing quality orientated products and services to each and every client that it services.",
+      "In 2025, Clipe Technologies (Clipetech) was rebranded and officially registered as CLIPE CONSULT. The rebrand marked a new era of growth, reflecting evolved capabilities and a renewed commitment to providing quality orientated products and services to each and every client that it services.",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function AboutSection() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
             From Clipetech to{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-              Clipe233 Engineers
+              CLIPE CONSULT
             </span>
           </h2>
           <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
@@ -146,7 +146,7 @@ export default function AboutSection() {
                 </h3>
                 <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
                   In 2025, Clipe Technologies (Clipetech) was rebranded and
-                  officially registered as Clipe233 Engineers. The company aims
+                  officially registered as CLIPE CONSULT. The company aims
                   to provide quality orientated products and services to each
                   and every client that it services.
                 </p>
@@ -213,7 +213,7 @@ export default function AboutSection() {
                   Our Location
                 </h3>
                 <p className="text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-                  Clipe233 Engineers main office is operated virtually from Ho,
+                  CLIPE CONSULT main office is operated virtually from Ho,
                   in the Volta Region of Ghana.
                 </p>
               </div>
@@ -345,7 +345,7 @@ export default function AboutSection() {
                 background in Algorithmic Designs, Data Centers, IT
                 Infrastructure, Software Development, Network, Management and
                 Leadership. He has been the key personnel in many project
-                executions in Clipe233 Engineers and took part in the
+                executions in CLIPE CONSULT and took part in the
                 development of most of our products.
               </p>
 

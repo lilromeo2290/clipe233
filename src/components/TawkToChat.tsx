@@ -91,7 +91,7 @@ export default function TawkToChat({ propertyId, widgetId }: TawkToProps) {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm font-[family-name:var(--font-inter)]">
-                    Clipe233 Engineers
+                    CLIPE CONSULT
                   </p>
                   <p className="text-white/70 text-xs">Typically replies in minutes</p>
                 </div>
@@ -107,14 +107,14 @@ export default function TawkToChat({ propertyId, widgetId }: TawkToProps) {
             <div className="p-4 bg-background">
               <div className="glass-card rounded-2xl rounded-tl-none p-3 mb-3">
                 <p className="text-sm text-gray-700 dark:text-silver/80 font-[family-name:var(--font-inter)]">
-                  Hi there! 👋 Thanks for visiting Clipe233 Engineers.
+                  Hi there! 👋 Thanks for visiting CLIPE CONSULT.
                 </p>
                 <p className="text-sm text-gray-700 dark:text-silver/80 font-[family-name:var(--font-inter)] mt-2">
                   How can we help you build smarter digital solutions today?
                 </p>
               </div>
               <a
-                href="https://wa.me/233249783736?text=Hello%20Clipe233%20Engineers%2C%20I%20would%20like%20to%20chat"
+                href="https://wa.me/233249783736?text=Hello%20CLIPE%20CONSULT%2C%20I%20would%20like%20to%20chat"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center bg-[#25D366] hover:bg-[#1da851] text-white font-semibold py-2.5 rounded-xl transition-colors font-[family-name:var(--font-inter)] text-sm"

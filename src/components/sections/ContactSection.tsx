@@ -381,7 +381,7 @@ export default function ContactSection() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Clipe233 Engineers Location - Ho, Volta Region, Ghana"
+              title="CLIPE CONSULT Location - Ho, Volta Region, Ghana"
               className="w-full"
             />
           </div>

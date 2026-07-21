@@ -167,7 +167,7 @@ export default function ClipeSMSCRMPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6">
               <MessageSquare className="h-4 w-4 text-falu-light" />
               <span className="text-sm font-semibold text-falu-light font-[family-name:var(--font-inter)]">
-                Clipe233 Engineers
+                CLIPE CONSULT
               </span>
             </div>
 

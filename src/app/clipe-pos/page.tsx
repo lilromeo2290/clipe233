@@ -220,7 +220,7 @@ export default function ClipePOSPage() {
             className="text-center"
           >
             <span className="text-falu-light text-sm font-semibold tracking-wider uppercase font-[family-name:var(--font-inter)]">
-              Clipe233 Products
+              CLIPE CONSULT Products
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
               Clipe{" "}

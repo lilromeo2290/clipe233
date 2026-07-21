@@ -9,7 +9,7 @@ export async function GET() {
     if (!db) {
       return NextResponse.json({
         status: "healthy",
-        service: "Clipe233 Engineers API",
+        service: "CLIPE CONSULT API",
         version: "1.0.0",
         timestamp: new Date().toISOString(),
         services: {
@@ -40,7 +40,7 @@ export async function GET() {
 
     return NextResponse.json({
       status: "healthy",
-      service: "Clipe233 Engineers API",
+      service: "CLIPE CONSULT API",
       version: "1.0.0",
       timestamp: new Date().toISOString(),
       services: {
@@ -68,7 +68,7 @@ export async function GET() {
     return NextResponse.json(
       {
         status: "degraded",
-        service: "Clipe233 Engineers API",
+        service: "CLIPE CONSULT API",
         error: "Database connection failed",
         timestamp: new Date().toISOString(),
       },

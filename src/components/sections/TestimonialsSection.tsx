@@ -9,7 +9,7 @@ const testimonials = [
     name: "Dr. Kofi Mensah",
     role: "Director, Volta Education Network",
     content:
-      "Clipe233 Engineers transformed how our schools manage operations. Their school management system reduced our administrative workload by 60% and improved parent engagement significantly. The team was professional, responsive, and truly understood our unique requirements as an educational institution.",
+      "CLIPE CONSULT transformed how our schools manage operations. Their school management system reduced our administrative workload by 60% and improved parent engagement significantly. The team was professional, responsive, and truly understood our unique requirements as an educational institution.",
     rating: 5,
     metric: "60% reduction in admin workload",
   },
@@ -17,7 +17,7 @@ const testimonials = [
     name: "Ama Osei",
     role: "Founder, Ho Retail Hub",
     content:
-      "The e-commerce platform built by Clipe233 Engineers has been a game-changer for our retail business. Within three months of launch, our online sales exceeded our physical store revenue. Their attention to user experience and payment integration was exceptional.",
+      "The e-commerce platform built by CLIPE CONSULT has been a game-changer for our retail business. Within three months of launch, our online sales exceeded our physical store revenue. Their attention to user experience and payment integration was exceptional.",
     rating: 5,
     metric: "3x revenue increase online",
   },
@@ -25,7 +25,7 @@ const testimonials = [
     name: "Mr. Emmanuel Ketaman Evortepe",
     role: "CEO Fafaa FM & President Duamenefa Foundation, Dzodze",
     content:
-      "From our website to the live streaming setup, Clipe233 Engineers delivered everything perfectly. Our online viewers and listeners has grown. They understood the spiritual and technical needs of our ministry and exceeded all expectations.",
+      "From our website to the live streaming setup, CLIPE CONSULT delivered everything perfectly. Our online viewers and listeners has grown. They understood the spiritual and technical needs of our ministry and exceeded all expectations.",
     rating: 5,
     metric: "Growing online viewers & listeners",
   },

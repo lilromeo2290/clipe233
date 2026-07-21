@@ -10,7 +10,7 @@ const slides = [
     image: "/slide-1.jpg",
     headline: ["Building", "Innovations,", "Engineering", "Excellence"],
     subheadline:
-      "Clipe233 Engineers delivers innovative software, networking, branding, and digital transformation solutions tailored for businesses and organizations across Ghana and beyond.",
+      "CLIPE CONSULT delivers innovative software, networking, branding, and digital transformation solutions tailored for businesses and organizations across Ghana and beyond.",
     badge: "Engineering Digital Possibilities Since 2016",
   },
   {
@@ -149,7 +149,7 @@ export default function HeroSection() {
           >
             <img
               src={slide.image}
-              alt="Clipe233 Engineers"
+              alt="CLIPE CONSULT"
               className="w-full h-full object-cover"
             />
           </motion.div>

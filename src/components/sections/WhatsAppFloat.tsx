@@ -25,7 +25,7 @@ export default function WhatsAppFloat() {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm font-[family-name:var(--font-inter)]">
-                    Clipe233 Engineers
+                    CLIPE CONSULT
                   </p>
                   <p className="text-white/70 text-xs font-[family-name:var(--font-inter)]">
                     Typically replies within minutes

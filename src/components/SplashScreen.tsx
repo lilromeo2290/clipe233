@@ -126,7 +126,7 @@ export default function SplashScreen({
               className="text-xs tracking-[0.2em] uppercase text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Clipe233 Engineers
+              CLIPE CONSULT
             </span>
           </div>
         </div>

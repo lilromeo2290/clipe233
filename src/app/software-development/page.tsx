@@ -141,10 +141,10 @@ export default function SoftwareDevelopmentPage() {
               </span>
             </h1>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">
-              Clipe233 Engineers designs and creates quality software applications which are reliable, secure, easy-to-use, affordable, easy-to-deploy, and scalable. Our development team enables our customers to meet technology challenges by assisting them throughout the software development process.
+              CLIPE CONSULT designs and creates quality software applications which are reliable, secure, easy-to-use, affordable, easy-to-deploy, and scalable. Our development team enables our customers to meet technology challenges by assisting them throughout the software development process.
             </p>
             <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed mt-4">
-              Whether you are a start-up or a mid-sized company, Clipe233 is always happy to assist at all stages of software development. Our clients have selected us because of our impeccable track record and extensive knowledge and expertise in supporting SMEs and startups translate their concepts into great software applications.
+              Whether you are a start-up or a mid-sized company, CLIPE CONSULT is always happy to assist at all stages of software development. Our clients have selected us because of our impeccable track record and extensive knowledge and expertise in supporting SMEs and startups translate their concepts into great software applications.
             </p>
           </motion.div>
 

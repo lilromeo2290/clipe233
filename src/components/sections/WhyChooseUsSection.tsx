@@ -66,7 +66,7 @@ export default function WhyChooseUsSection() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6 font-[family-name:var(--font-poppins)]">
             Why Businesses{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-falu-light to-red-400">
-              Choose Clipe233
+              Choose CLIPE CONSULT
             </span>
           </h2>
           <p className="max-w-3xl mx-auto text-lg text-gray-500 dark:text-silver/70 font-[family-name:var(--font-inter)] leading-relaxed">

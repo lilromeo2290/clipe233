@@ -559,7 +559,7 @@ function AdminLogin({ onLogin }: { onLogin: (user: { username: string; role: str
           <div className="w-16 h-16 rounded-2xl bg-falu/20 flex items-center justify-center mx-auto mb-4">
             <ShieldCheck className="h-8 w-8 text-falu-light" />
           </div>
-          <h1 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-white">Clipe233 Admin</h1>
+          <h1 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-white">CLIPE CONSULT Admin</h1>
           <p className="text-silver/50 font-[family-name:var(--font-inter)] text-sm mt-1">Sign in to manage your website</p>
         </div>
 
@@ -614,7 +614,7 @@ function AdminLogin({ onLogin }: { onLogin: (user: { username: string; role: str
         </div>
 
         <p className="text-center text-silver/30 text-xs font-[family-name:var(--font-inter)] mt-6">
-          Clipe233 Engineers &copy; {new Date().getFullYear()} — Admin CMS
+          CLIPE CONSULT &copy; {new Date().getFullYear()} — Admin CMS
         </p>
       </div>
     </div>
@@ -873,9 +873,9 @@ function AdminDashboardInner({ authUser, onLogout }: { authUser: { username: str
         {/* Logo */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Clipe233" className="h-10 w-auto rounded-lg object-contain" />
+            <img src="/logo.png" alt="CLIPE CONSULT" className="h-10 w-auto rounded-lg object-contain" />
             <div>
-              <h1 className="font-bold font-[family-name:var(--font-poppins)] text-sm">Clipe233</h1>
+              <h1 className="font-bold font-[family-name:var(--font-poppins)] text-sm">CLIPE CONSULT</h1>
               <span className="text-xs text-silver/50 font-[family-name:var(--font-inter)]">
                 Admin CMS
               </span>
@@ -3520,7 +3520,7 @@ function SettingsView({
       label: "Site Info",
       icon: Globe,
       fields: [
-        { key: "site_name", label: "Site Name", placeholder: "Clipe233" },
+        { key: "site_name", label: "Site Name", placeholder: "CLIPE CONSULT" },
         { key: "site_description", label: "Site Description", placeholder: "Technology solutions company" },
         { key: "site_keywords", label: "Site Keywords (SEO)", placeholder: "tech, software, ghana" },
       ],
