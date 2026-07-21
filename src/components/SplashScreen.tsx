@@ -115,7 +115,7 @@ export default function SplashScreen({
           <div className="mt-8 flex items-center gap-2 opacity-30">
             <div className="relative w-6 h-6">
               <Image
-                src="/clipe233eng-Logo.jpg"
+                src="/logo.png"
                 alt=""
                 fill
                 className="object-cover rounded-sm"
