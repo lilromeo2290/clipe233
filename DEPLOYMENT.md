@@ -171,10 +171,10 @@ ADMIN_PASSWORD="YourStrongPassword123!"
 # Email (Gmail SMTP)
 SMTP_HOST="smtp.gmail.com"
 SMTP_PORT="587"
-SMTP_USER="clipe233eng@gmail.com"
+SMTP_USER="clipeconsult@gmail.com"
 SMTP_PASS="your-gmail-app-password"   # Get this from Google Account → App Passwords
-EMAIL_FROM="clipe233eng@gmail.com"
-EMAIL_TO="clipe233eng@gmail.com, info@clipe233eng.net"
+EMAIL_FROM="clipeconsult@gmail.com"
+EMAIL_TO="clipeconsult@gmail.com, info@clipeconsult.com"
 ```
 
 Save and exit (`Ctrl+X`, then `Y`, then `Enter`).
@@ -378,7 +378,7 @@ Open your browser and visit:
 ### Test the contact form:
 1. Fill out the contact form at `/contact`
 2. Submit
-3. Check `clipe233eng@gmail.com` and `info@clipe233eng.net` — both should receive the email
+3. Check `clipeconsult@gmail.com` and `info@clipeconsult.com` — both should receive the email
 
 ### Check live chat:
 - The Tawk.to chat bubble should appear in the bottom-right corner

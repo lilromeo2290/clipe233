@@ -26,9 +26,9 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@clipe233eng.net",
-    subValue: "clipe233eng@gmail.com",
-    href: "mailto:info@clipe233eng.net",
+    value: "info@clipeconsult.com",
+    subValue: "clipeconsult@gmail.com",
+    href: "mailto:info@clipeconsult.com",
   },
   {
     icon: Phone,

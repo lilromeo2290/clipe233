@@ -258,9 +258,9 @@ async function main() {
   // ─── Blog Posts ────────────────────────────────────────────────────────────
   // First create an admin user
   const adminUser = await prisma.user.upsert({
-    where: { email: "clipe233eng@gmail.com" },
+    where: { email: "clipeconsult@gmail.com" },
     update: { name: "Clipe233 Admin", role: "admin" },
-    create: { email: "clipe233eng@gmail.com", name: "Clipe233 Admin", role: "admin" },
+    create: { email: "clipeconsult@gmail.com", name: "Clipe233 Admin", role: "admin" },
   });
 
   const blogPosts = [
@@ -328,7 +328,7 @@ async function main() {
     { key: "site_name", value: "Clipe Consult" },
     { key: "site_description", value: "Engineering Digital Possibilities. We deliver innovative software, networking, branding, and digital transformation solutions for modern businesses." },
     { key: "site_keywords", value: "IT Solutions Ghana, Software Development, Website Design, Networking, IT Consultancy, Clipe233" },
-    { key: "contact_email", value: "clipe233eng@gmail.com" },
+    { key: "contact_email", value: "clipeconsult@gmail.com" },
     { key: "contact_phone", value: "+233 24 978 3736" },
     { key: "whatsapp_number", value: "233249783736" },
     { key: "address", value: "Ho, Volta Region, Ghana" },

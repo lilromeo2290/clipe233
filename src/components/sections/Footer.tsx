@@ -148,12 +148,6 @@ export default function Footer() {
             <div className="mt-6 space-y-2">
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Mail className="h-4 w-4 text-falu-light" />
-                <a href="mailto:info@clipe233eng.net" className="hover:text-falu-light transition-colors">
-                  info@clipe233eng.net
-                </a>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
-                <Mail className="h-4 w-4 text-falu-light" />
                 <a href="mailto:info@clipeconsult.com" className="hover:text-falu-light transition-colors">
                   info@clipeconsult.com
                 </a>

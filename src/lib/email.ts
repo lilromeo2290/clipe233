@@ -2,8 +2,8 @@ import nodemailer from "nodemailer";
 
 // Email configuration
 const EMAIL_CONFIG = {
-  from: process.env.EMAIL_FROM || "clipe233eng@gmail.com",
-  to: process.env.EMAIL_TO || "clipe233eng@gmail.com, info@clipe233eng.net",
+  from: process.env.EMAIL_FROM || "clipeconsult@gmail.com",
+  to: process.env.EMAIL_TO || "clipeconsult@gmail.com, info@clipeconsult.com",
 };
 
 // Create reusable transporter
@@ -186,7 +186,7 @@ export async function sendAutoReply(formData: ContactFormData): Promise<boolean>
             If your inquiry is urgent, please feel free to call us directly or reach us on WhatsApp.
           </p>
           <div style="margin: 20px 0; padding: 15px; background-color: #f5f5f5; border-radius: 4px;">
-            <p style="margin: 5px 0; color: #333;"><strong>Email:</strong> <a href="mailto:info@clipe233eng.net" style="color: #7B1818;">info@clipe233eng.net</a> / <a href="mailto:clipe233eng@gmail.com" style="color: #7B1818;">clipe233eng@gmail.com</a></p>
+            <p style="margin: 5px 0; color: #333;"><strong>Email:</strong> <a href="mailto:info@clipeconsult.com" style="color: #7B1818;">info@clipeconsult.com</a> / <a href="mailto:clipeconsult@gmail.com" style="color: #7B1818;">clipeconsult@gmail.com</a></p>
             <p style="margin: 5px 0; color: #333;"><strong>WhatsApp:</strong> <a href="https://wa.me/233249783736" style="color: #7B1818;">+233 249 783 736</a></p>
             <p style="margin: 5px 0; color: #333;"><strong>Phone:</strong> <a href="tel:+233535399562" style="color: #7B1818;">053 539 9562</a></p>
           </div>
@@ -209,7 +209,7 @@ export async function sendAutoReply(formData: ContactFormData): Promise<boolean>
       from: `"CLIPE CONSULT" <${EMAIL_CONFIG.from}>`,
       to: formData.email,
       subject: "We've Received Your Message - CLIPE CONSULT",
-      text: `Dear ${formData.name},\n\nThank you for reaching out to CLIPE CONSULT. We have received your message and our team will get back to you within 24-48 hours.\n\nIf your inquiry is urgent, please contact us:\nEmail: info@clipe233eng.net / clipe233eng@gmail.com\nWhatsApp: +233 249 783 736\nPhone: 053 539 9562\n\nWe look forward to working with you!\n\nBest regards,\nCLIPE CONSULT\nIT & Engineering Solutions`,
+      text: `Dear ${formData.name},\n\nThank you for reaching out to CLIPE CONSULT. We have received your message and our team will get back to you within 24-48 hours.\n\nIf your inquiry is urgent, please contact us:\nEmail: info@clipeconsult.com / clipeconsult@gmail.com\nWhatsApp: +233 249 783 736\nPhone: 053 539 9562\n\nWe look forward to working with you!\n\nBest regards,\nCLIPE CONSULT\nIT & Engineering Solutions`,
       html: htmlBody,
     });
 
