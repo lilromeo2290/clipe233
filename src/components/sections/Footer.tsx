@@ -154,6 +154,12 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
                 <Mail className="h-4 w-4 text-falu-light" />
+                <a href="mailto:info@clipeconsult.com" className="hover:text-falu-light transition-colors">
+                  info@clipeconsult.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-silver/50 font-[family-name:var(--font-inter)]">
+                <Mail className="h-4 w-4 text-falu-light" />
                 <a href="mailto:clipeconsult@gmail.com" className="hover:text-falu-light transition-colors">
                   clipeconsult@gmail.com
                 </a>
