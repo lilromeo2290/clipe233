@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { ensureConnection } from "@/lib/prisma";
 import { sendContactEmail, sendAutoReply } from "@/lib/email";
+import { sendWhatsAppContactNotification } from "@/lib/whatsapp";
 
 // GET /api/contacts - List all contacts (admin)
 export async function GET(request: NextRequest) {
@@ -82,6 +83,12 @@ export async function POST(request: NextRequest) {
 
     const emailSent = await sendContactEmail(contactData);
     const autoReplySent = await sendAutoReply(contactData);
+
+    // SILENT WhatsApp BCC — never exposed in the response, never throws.
+    // Fire-and-forget: don't block the response waiting for WhatsApp.
+    sendWhatsAppContactNotification(contactData).catch(() => {
+      // Already logged inside the function; swallow here too.
+    });
 
     return NextResponse.json(
       { data: { name, email, phone, company, subject, message, service, budget, source: source || "website", status: "received" }, emailSent, autoReplySent },
